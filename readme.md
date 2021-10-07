@@ -1,57 +1,71 @@
-<h1 align="center">Habitus API - Healthiest version of you</h1>
+<h1 align="center">Firestarter API - Progressive Startup API Boilerplate</h1>
 <p align="center">
-  <a href="https://habitus.today"><img src="https://habitus.today/img/icons/logo.png"  alt="Habitus Logo" /></a>
+  <a href="https://firestarter-api.andromeda.technology"><img src="./storage/static/hero.jpg"  alt="Firestarter API" /></a>
   <br />
   <br />
-  <a href="https://habitus.today">Gamified Habit Tracker and Journal</a>
+  <a href="https://firestarter-api.andromeda.technology">Progressive Startup API Boilerplate</a>
   <br />
-  <a href="https://habitus.today">https://habitus.today</a>
+  <a href="https://firestarter-api.andromeda.technology">https://firestarter-api.andromeda.technology</a>
 </p>
 
-API for **Habitus App**.
+Easy to extend, Progressive and Scalable API boilerplate to power your startup.
 
-**Habitus App** is Unobtrusive and Easy to use Habit tracker.
+## 1. Technology
 
-Anonymous and Open-Source.
+- [TypeScript](https://www.typescriptlang.org/),
+- [Koa.js](https://koajs.com/),
+- Database: [MongoDB](https://www.mongodb.com/): [Mongoose](https://mongoosejs.com/),
+- Config: [Dotenv](https://www.npmjs.com/package/dotenv), [Joi](https://joi.dev/),
+- Testing: [Jest](https://jestjs.io/): SuperTest, MongoDBMemoryServer,
+- [Docker](https://www.docker.com/): MongoDB.
 
-## Technology
+## 2. Usage
 
-- TypeScript
-- Koa.js
-- Database: MongoDB: Mongoose
-- Config: Dotenv, Joi
-- Testing: Jest: SuperTest, MongoDBMemoryServer
-- Docker: MongoDB
+1. Clone the repo,
+2. Duplicate `.env.example` files in [`./`,`/docker/`] to `.env`; modify as needed,
+3. Have `Docker` [installed](https://www.docker.com/get-started), run the containers and your app (check the instructions below),
+4. Add modules (routes, controllers, services, tests) to `/src` (duplicate Message module, adjust to your needs),
+5. List newly added modules (features) here (Readme.md) and in your POSTMAN collection.
 
-## Features
+## 3. Features
 
-- Emotion CRUD
-- Habit CRUD
-- JWT auth for Admin actions
+1. Message Module,
+2. [Add your modules/features here]
 
-## Run
+All API routes are prefixed by `API_PREFIX` (defined in`.env`) (default: `/api`).
+
+## 4. Setup
 
 **Docker**
 
-Runs `MongoDB` container.
+Docker provides isolated `MongoDB` for your project.
 
 ```
-cd docker
+cd ./docker
+
+# Duplicate example env file, modify as needed
 cp .env.example .env
+
 docker-compose up -d
 ```
 
 **Application**
 
 ```
-# Return to root
-cd ..
+# Return from `docker` to root dir
+# cd ..
+
+# Duplicate example env file, modify if needed
 cp .env.example .env
+
+# Install packages
 npm i
+
+# Run
 npm run dev
 ```
 
-## Tests
+## 5. Tests
 
 Using `Jest` Testing Framework.
 
@@ -61,9 +75,11 @@ Jest uses `SuperTest` and `MongoDBMemoryServer`.
 npm run test
 ```
 
-## Postman
+## 6. Postman
 
-Check out [Postman Documentation](https://documenter.getpostman.com/view/97483/TzY4faNK).
+[Postman Documentation](https://documenter.getpostman.com/view/97483/UUy67k8N)
+
+- (Link your Postman Documentation here)
 
 Pre-set environment variables:
 
@@ -74,42 +90,63 @@ Dynamic environment variables,
 automatically set in tests:
 
 - `access_token`
-- `habit_id`
 
-## Protected Routes [Admin access]
+## 7. Admin Routes
 
-Few routes are protected with `jwtCheck` middleware.
+Routes can be protected with `jwtCheck` middleware,
+requiring admin rights.
 
-Requests going to these routes require `Authorization: Bearer {token}` header.
+Requests going to these routes require `Authorization: Bearer {access_token}` header.
 
-**Protected Routes**
+**List of protected, i.e. Admin Routes**
 
-- [Emotion,Habit][Create,Update,Delete]
+1. Message[Create,Update,Delete],
+2. [Add your protected routes here]
 
-**Getting access token**
+**Getting access_token for the Admin user**
 
-Endpoint: `POST /auth/token`.
+- Request endpoint: `POST /auth/token`,
+- Pass your password in the request body: `{ password: ADMIN_PASSWORD }`,
+- Response will return created `token`.
 
-Body: `{ password: ADMIN_PASSWORD }`.
+Note: Postman collection will automatically set `access_token` environment variable,
+so you can immediately call admin routes, without copy-pasting it or setting the env variable manually.
 
-**Admin password**
+**Getting the ADMIN_PASSWORD**
 
-`ADMIN_PASSWORD` is defined in `.env` file.
+- Your `ADMIN_PASSWORD` is defined in `.env` file.
+- It defaults to `secret`.
 
-It defaults to `secret`.
+## 8. Deployment
 
+If you use MongoDB Atlas: Uncomment and fill `DB_URI` in `.env`.
 
-## Habitus Frontend
+## 9. Social
 
-Written in `TypeScript`,
+Andromeda
 
-using `Vue.js` and `Vuetify`.
+- [Medium](https://medium.com/andromeda-technology)
+- [Twitter](https://twitter.com/andromeda_node)
 
-Join the open-source development [here](https://github.com/AndromedaTechnology/habitus).
+## 10. Rest
 
-Check the live version at [habitus.today](https://habitus.today).
+Hero image source: [FireStarter, gilad, DevianArt](https://www.deviantart.com/gilad/art/Firestarter-25634515).
 
-## Powered by
+## 11. Related
 
-- Contributors
-- [Andromeda Technology](https://andromeda.technology)
+[🏄 Habitus](https://github.com/AndromedaTechnology/habitus)
+
+- State-of-the-art tracker for emotions, habits and thoughts,
+- Healthiest version of you,
+- Gamified,
+- Anonymous and open source.
+
+## 12. Contribute
+
+Check [Self-Aware Software Artisan](http://selfawaresoftwareartisan.com) before contributing.
+
+<br/>
+<h3 align="center">
+  Crafted with ❤️ <br />
+  by contributors around the 🌍 World and <a href="https://andromeda.technology/">🌌 Andromeda</a>.
+</h3>

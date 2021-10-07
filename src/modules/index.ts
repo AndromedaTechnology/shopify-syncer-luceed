@@ -1,15 +1,9 @@
 import combineRouters from "koa-combine-routers";
 
-import rootRouter from "./root/root.module";
-import authRouter from "./auth/auth.module";
-import emotionRouter from "./emotion/emotion.module";
-import habitRouter from "./habit/habit.module";
+import routerRoot from "./root/root.module";
+import routerAuth from "./auth/auth.module";
+import routerMessage from "./message/message.module";
 
-const router = combineRouters(
-    rootRouter,
-    authRouter,
-    emotionRouter,
-    habitRouter
-);
+const router = combineRouters(routerRoot, routerAuth, routerMessage);
 
 export default router;

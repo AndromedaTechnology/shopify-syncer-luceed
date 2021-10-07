@@ -1,11 +1,11 @@
-import { Server } from 'http';
+import { Server } from "http";
 import supertest from "supertest";
-import mongoose, { Mongoose } from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose, { Mongoose } from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 import { app } from "../../index";
-import emotionService from './emotion.service';
-import { databaseSetup } from '../../database';
+import messageService from "./message.service";
+import { databaseSetup } from "../../database";
 
 // Server
 let server: Server;
@@ -39,51 +39,51 @@ afterAll(async () => {
 });
 
 let itemId: mongoose.Types.ObjectId | undefined;
-const itemName = "Inspired";
-const itemNameUpdated = "Tenacious";
+const content = "Inspired";
+const contentUpdated = "Tenacious";
 
-describe("emotion.service", () => {
+describe("message.service", () => {
   it("create", async () => {
-    const response = await emotionService.create({
-      name: itemName
+    const response = await messageService.create({
+      content: content,
     });
 
     expect(response).toBeDefined();
     expect(response._id).toBeDefined();
-    expect(response.name).toEqual(itemName);
+    expect(response.content).toEqual(content);
 
     itemId = response._id;
   });
 
   it("findAll", async () => {
-    const response = await emotionService.findAll();
+    const response = await messageService.findAll();
 
     expect(response).toBeDefined();
-    expect(response[0].name).toEqual(itemName);
+    expect(response[0].content).toEqual(content);
   });
 
   it("find", async () => {
-    const response = await emotionService.find(itemId!);
+    const response = await messageService.find(itemId!);
 
     expect(response).toBeDefined();
     expect(response._id).toEqual(itemId);
   });
 
   it("update", async () => {
-    const response = await emotionService.update(itemId!, {
-      name: itemNameUpdated
+    const response = await messageService.update(itemId!, {
+      content: contentUpdated,
     });
 
     expect(response).toBeDefined();
     expect(response._id).toEqual(itemId);
-    expect(response.name).toEqual(itemNameUpdated);
+    expect(response.content).toEqual(contentUpdated);
   });
 
   it("delete", async () => {
-    const response = await emotionService.delete(itemId!);
+    const response = await messageService.delete(itemId!);
 
     expect(response).toBeDefined();
     expect(response._id).toEqual(itemId);
-    expect(response.name).toEqual(itemNameUpdated);
+    expect(response.content).toEqual(contentUpdated);
   });
 });

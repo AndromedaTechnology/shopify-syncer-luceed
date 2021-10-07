@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import { RouterContext } from "koa-router";
 
-import { EmotionDto } from './emotion.model';
-import emotionService from "./emotion.service";
+import { MessageDto } from "./message.model";
+import messageService from "./message.service";
 
-class EmotionController {
+class MessageController {
   async findAll(ctx: RouterContext) {
-    ctx.body = await emotionService.findAll();
+    ctx.body = await messageService.findAll();
     return ctx;
   }
 
   async find(ctx: RouterContext) {
     try {
-      const item = await emotionService.find(
-        mongoose.Types.ObjectId(ctx.params.id),
+      const item = await messageService.find(
+        mongoose.Types.ObjectId(ctx.params.id)
       );
       ctx.body = item;
     } catch (e) {
@@ -24,7 +24,7 @@ class EmotionController {
 
   async create(ctx: RouterContext) {
     try {
-      const item = await emotionService.create(ctx.request.body as EmotionDto);
+      const item = await messageService.create(ctx.request.body as MessageDto);
       ctx.body = item;
     } catch (e) {
       ctx.throw(422);
@@ -34,9 +34,9 @@ class EmotionController {
 
   async update(ctx: RouterContext) {
     try {
-      const item = await emotionService.update(
+      const item = await messageService.update(
         mongoose.Types.ObjectId(ctx.params.id),
-        ctx.request.body as EmotionDto
+        ctx.request.body as MessageDto
       );
       ctx.body = item;
     } catch (e) {
@@ -48,8 +48,8 @@ class EmotionController {
 
   async delete(ctx: RouterContext) {
     try {
-      const item = await emotionService.delete(
-        mongoose.Types.ObjectId(ctx.params.id),
+      const item = await messageService.delete(
+        mongoose.Types.ObjectId(ctx.params.id)
       );
       ctx.body = item;
     } catch (e) {
@@ -60,4 +60,4 @@ class EmotionController {
   }
 }
 
-export default new EmotionController();
+export default new MessageController();

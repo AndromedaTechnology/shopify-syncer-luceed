@@ -2,6 +2,8 @@ version: "3.7"
 services:
   mongodb_container:
     image: mongo:latest
+    container_name: "${MONGO_CONTAINER_NAME}"
+    hostname: "${MONGO_HOSTNAME}"
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"

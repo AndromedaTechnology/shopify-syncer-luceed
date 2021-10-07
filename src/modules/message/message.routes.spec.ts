@@ -1,12 +1,12 @@
-import { Server } from 'http';
+import { Server } from "http";
 import supertest from "supertest";
-import { Mongoose } from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Mongoose } from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
-import config from '../../config';
+import config from "../../config";
 import { app } from "../../index";
-import { databaseSetup } from '../../database';
-import authService from '../auth/auth.service';
+import { databaseSetup } from "../../database";
+import authService from "../auth/auth.service";
 
 // Server
 let server: Server;
@@ -45,39 +45,42 @@ afterAll(async () => {
 });
 
 let itemId: string;
-const itemName = "Inspired";
-const itemNameUpdated = "Tenacious";
+const itemContent = "Inspired";
+const itemContentUpdated = "Tenacious";
 
 const responseType = "application/json";
 
-describe("emotion.routes", () => {
+describe("message.routes", () => {
   it("create", async () => {
-    const response = await request.post(config.api_prefix + "/emotions")
+    const response = await request
+      .post(config.api_prefix + "/messages")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        name: itemName
+        content: itemContent,
       });
 
     expect(response.status).toEqual(200);
     expect(response.type).toEqual(responseType);
     expect(response.body).toBeDefined();
     expect(response.body._id).toBeDefined();
-    expect(response.body.name).toEqual(itemName);
+    expect(response.body.content).toEqual(itemContent);
 
     itemId = response.body._id;
   });
 
   it("findAll", async () => {
-    const response = await request.get(config.api_prefix + "/emotions");
+    const response = await request.get(config.api_prefix + "/messages");
 
     expect(response.status).toEqual(200);
     expect(response.type).toEqual(responseType);
     expect(response.body).toBeDefined();
-    expect(response.body[0].name).toEqual(itemName);
+    expect(response.body[0].content).toEqual(itemContent);
   });
 
   it("find", async () => {
-    const response = await request.get(config.api_prefix + `/emotions/${itemId}`);
+    const response = await request.get(
+      config.api_prefix + `/messages/${itemId}`
+    );
 
     expect(response.status).toEqual(200);
     expect(response.type).toEqual(responseType);
@@ -86,27 +89,29 @@ describe("emotion.routes", () => {
   });
 
   it("update", async () => {
-    const response = await request.patch(config.api_prefix + `/emotions/${itemId}`)
+    const response = await request
+      .patch(config.api_prefix + `/messages/${itemId}`)
       .set("Authorization", `Bearer ${token}`)
       .send({
-        name: itemNameUpdated
+        content: itemContentUpdated,
       });
 
     expect(response.status).toEqual(200);
     expect(response.type).toEqual(responseType);
     expect(response.body).toBeDefined();
     expect(response.body._id).toEqual(itemId);
-    expect(response.body.name).toEqual(itemNameUpdated);
+    expect(response.body.content).toEqual(itemContentUpdated);
   });
 
   it("delete", async () => {
-    const response = await request.delete(config.api_prefix + `/emotions/${itemId}`)
+    const response = await request
+      .delete(config.api_prefix + `/messages/${itemId}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toEqual(200);
     expect(response.type).toEqual(responseType);
     expect(response.body).toBeDefined();
     expect(response.body._id).toEqual(itemId);
-    expect(response.body.name).toEqual(itemNameUpdated);
+    expect(response.body.content).toEqual(itemContentUpdated);
   });
 });
