@@ -147,7 +147,7 @@ Check [Self-Aware Software Artisan](http://selfawaresoftwareartisan.com) before 
 
 <br/>
 <h5 align="center">
-  Started in <a href="https://en.wikipedia.org/wiki/Croatia">Europe, Croatia 🇭🇷</a>
+  <a href="https://startedincroatia.com">Started in Europe, Croatia 🇭🇷</a>
 </h5>
 <h3 align="center">
   Crafted with ❤️ <br />
