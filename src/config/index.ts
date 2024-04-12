@@ -26,6 +26,15 @@ const envSchema = Joi.object()
     DB_DATABASE: Joi.string().optional().default("database"),
     DB_USER: Joi.string().optional().default("user"),
     DB_PASSWORD: Joi.string().optional().default(""),
+
+    // Shopify API
+    SHOPIFY_SHOP_NAME: Joi.string().optional().default(""),
+    SHOPIFY_SHOP_LOCATION_ID: Joi.string().optional().default(""),
+    SHOPIFY_ACCESS_TOKEN: Joi.string().optional().default(""),
+
+    // LUCEED API
+    LUCEED_USERNAME: Joi.string().optional().default(""),
+    LUCEED_PASSWORD: Joi.string().optional().default(""),
   })
   .unknown()
   .required();
@@ -50,6 +59,15 @@ export interface IConfig {
   api_prefix: string;
   admin_password: string;
   db_uri: string;
+
+  // Shopify API
+  shopify_shop_name: string;
+  shopify_shop_location_id: string;
+  shopify_access_token: string;
+
+  // Luceed API
+  luceed_username: string;
+  luceed_password: string;
 }
 
 const db_uri_additional = `?authSource=admin&w=1`;
@@ -63,5 +81,14 @@ const config: IConfig = {
   api_prefix: envVars.API_PREFIX,
   admin_password: envVars.ADMIN_PASSWORD,
   db_uri: envVars.DB_URI ?? db_uri, // If available, env.DB_URI is preferred over other db vars
+
+  // Shopify API
+  shopify_shop_name: envVars.SHOPIFY_SHOP_NAME,
+  shopify_shop_location_id: envVars.SHOPIFY_SHOP_LOCATION_ID,
+  shopify_access_token: envVars.SHOPIFY_ACCESS_TOKEN,
+
+  // Luceed API
+  luceed_username: envVars.LUCEED_USERNAME,
+  luceed_password: envVars.LUCEED_PASSWORD,
 };
 export default config;

@@ -11,6 +11,7 @@
     "test:watch": "npm run test -- --watchAll"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "dotenv": "^10.0.0",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
@@ -22,6 +23,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.0.0",
     "koa2-cors": "^2.0.6",
+    "limiter": "^2.1.0",
     "mongodb-memory-server": "^6.9.6",
     "mongoose": "^5.12.12",
     "ts-node": "^10.0.0",
