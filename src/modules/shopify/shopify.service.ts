@@ -8,8 +8,9 @@ import {
 } from "./shopify.interface";
 import shopifyLocationsService from "./shopifyLocations.service";
 import shopifyInventoryService from "./shopifyInventory.service";
-import { ILuceedProduct } from "./luceed.interface";
-import { limiter } from "./root.service";
+import { ILuceedProduct } from "../root/luceed.interface";
+import { limiter } from "../root/root.service";
+import shopifyHelper from "./shopify.helper";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -340,7 +341,8 @@ class ShopifyService {
     }
 
     let products = response?.products ?? [];
-    const nextLink = this.shopifyResponseHeaderGetNextLink(responseHeaders);
+    const nextLink =
+      shopifyHelper.shopifyResponseHeaderGetNextLink(responseHeaders);
     if (nextLink) {
       const childProducts = await this.fetchProducts(
         undefined,
@@ -352,31 +354,6 @@ class ShopifyService {
       products = [...products, ...childProducts];
     }
     return products ?? [];
-  }
-
-  public shopifyResponseHeaderGetNextLink(
-    axiosResponseHeaders: any
-  ): string | undefined {
-    let responseLinks1 =
-      axiosResponseHeaders?.link?.match(/(?<=\<).+?(?=\>; rel=\"next\")/g) ??
-      [];
-    let responseLinks2 =
-      axiosResponseHeaders?.link?.match(
-        /(?<=; rel=\"previous\", \<).+?(?=\>)/g
-      ) ?? [];
-
-    let responseLinks: Array<string> = [];
-    if (responseLinks2 && responseLinks2.length === 1) {
-      responseLinks = [responseLinks2[0]];
-    } else if (responseLinks1 && responseLinks1.length === 1) {
-      responseLinks = [responseLinks1[0]];
-    }
-
-    let nextLink;
-    if (responseLinks && responseLinks.length) {
-      nextLink = responseLinks[0];
-    }
-    return nextLink;
   }
 
   /**

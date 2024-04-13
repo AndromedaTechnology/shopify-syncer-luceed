@@ -1,7 +1,8 @@
 import luceedService from "./luceed.service";
-import shopifyService from "./shopify.service";
+import shopifyService from "../shopify/shopify.service";
 
 import { RateLimiter } from "limiter";
+import shopifyOrdersService from "../shopify/shopifyOrders.service";
 
 export const limiter = new RateLimiter({
   tokensPerInterval: 2,
@@ -30,9 +31,11 @@ export const limiter = new RateLimiter({
  */
 class RootService {
   async findAll() {
+    const orders = await shopifyOrdersService.fetchOrders(undefined, false);
+    shopifyOrdersService.printOrders(orders);
     // shopifyService.fetchProducts();
-    const luceedProducts = await luceedService.fetchProductsWithInventory();
-    await shopifyService.syncLuceedShopifyProducts(luceedProducts);
+    // const luceedProducts = await luceedService.fetchProductsWithInventory();
+    // await shopifyService.syncLuceedShopifyProducts(luceedProducts);
 
     return {
       msg: "Hello Root",

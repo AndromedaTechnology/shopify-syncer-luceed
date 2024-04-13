@@ -6,7 +6,7 @@ import {
   IShopifyLocationResponse,
   IShopifyLocationsResponse,
 } from "./shopify.interface";
-import { limiter } from "./root.service";
+import { limiter } from "../root/root.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;

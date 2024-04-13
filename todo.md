@@ -1,5 +1,10 @@
 # TODO
 
+## Cronjobs
+
+1. Order sync (Shopify -> Luceed) - every 5 minutes
+2. Inventory sync (Luceed --> Shopify) - every 30 minutes
+
 ## Luceed Order sync
 
 - Luceed: Create order
@@ -14,13 +19,13 @@
 
 ## Shopify Webhooks
 
+- DONE: Shopify: Webhook: OrderCreated
+- TODO: Shopify: Webhook: OrderUpdated
+- TODO: Shopify: Webhook: OrderDeleted
+
 - Shopify: Webhook: CustomerCreated
 - Shopify: Webhook: CustomerUpdated
 - Shopify: Webhook: CustomerDeleted
-
-- Shopify: Webhook: OrderCreated
-- Shopify: Webhook: OrderUpdated
-- Shopify: Webhook: OrderDeleted
 
 ## Product sync
 

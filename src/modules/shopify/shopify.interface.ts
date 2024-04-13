@@ -91,3 +91,118 @@ export interface IShopifyInventoryLevel {
 export interface IShopifySetInventoryLevelResponse {
   inventory_level: IShopifyInventoryLevel;
 }
+
+/**
+ * Orders
+ */
+
+export interface IShopifyOrderLineItem {
+  id: string;
+  vendor: string;
+  variant_id: number;
+  variant_title: string;
+  variant_inventory_management: string;
+  sku: string;
+  name: string;
+  title: string;
+  price: string;
+  quantity: number;
+  current_quantity: number;
+  requires_shipping: boolean;
+
+  taxable: boolean;
+  /**
+   * 0.00
+   */
+  total_discount: string;
+
+  // product_exists: true;
+  product_exists: boolean;
+  // product_id: 921728736;
+  product_id: number;
+
+  fulfillable_quantity: number;
+  fulfillment_service: string;
+  fulfillment_status: string;
+}
+
+export interface IShopifyOrder {
+  /**
+   * Returned
+   */
+  id: number;
+  /**
+   * Returned.
+   * ID of order on Webshop.
+   */
+  name: string;
+  number: number;
+  order_number: number;
+  order_status_url: string;
+
+  line_items?: Array<IShopifyOrderLineItem>;
+
+  payment_terms?: any;
+  refunds: Array<any>;
+  shipping_address: any;
+  shipping_lines: Array<any>;
+
+  note?: string;
+  created_at?: string;
+  confirmed?: boolean;
+
+  /**
+   * What is this?
+   */
+  fulfillment_status?: any;
+
+  /**
+   * [paid]
+   */
+  financial_status?: string;
+  currency?: string;
+  /**
+   * "199.99"
+   */
+  subtotal_price?: string;
+  current_subtotal_price?: string;
+  current_total_price?: string;
+  current_total_tax?: string;
+  /**
+   * 0.00
+   */
+  total_discounts?: string;
+
+  /**
+   * Customer
+   */
+  phone?: string;
+  email?: string;
+  contact_email?: string;
+  customer_locale?: string;
+  /**
+   * What is this?
+   */
+  billing_address?: any;
+  /**
+   * What is this?
+   */
+  customer?: any;
+  /**
+   * What is this?
+   */
+  fulfillments?: any;
+
+  /**
+   * Other
+   */
+  po_number?: any;
+  updated_at?: any;
+  processed_at?: any;
+  cancelled_at?: any;
+  cart_token?: any;
+  checkout_id?: any;
+}
+export interface IShopifyOrdersResponse {
+  orders: Array<IShopifyOrder>;
+}
