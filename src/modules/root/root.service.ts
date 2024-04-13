@@ -1,4 +1,4 @@
-import luceedService from "./luceed.service";
+import luceedService from "../luceed/luceed.service";
 import shopifyService from "../shopify/shopify.service";
 
 import { RateLimiter } from "limiter";

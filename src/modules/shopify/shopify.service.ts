@@ -8,7 +8,7 @@ import {
 } from "./shopify.interface";
 import shopifyLocationsService from "./shopifyLocations.service";
 import shopifyInventoryService from "./shopifyInventory.service";
-import { ILuceedProduct } from "../root/luceed.interface";
+import { ILuceedProduct } from "../luceed/luceed.interface";
 import { limiter } from "../root/root.service";
 import shopifyHelper from "./shopify.helper";
 
