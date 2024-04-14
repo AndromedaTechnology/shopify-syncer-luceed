@@ -57,7 +57,8 @@ class ShopifyProductService {
       if (!variant || !variant.id) {
         throw "product exists, but variant doesnt";
         /**
-         * TODO: Then create default Variant and attach to product
+         * Then create default Variant and attach to product
+         * TODO: Test if variant is created/getted/fetched(touched) and everything passes
          */
       }
       const productUpdated = await this.updateProduct(
