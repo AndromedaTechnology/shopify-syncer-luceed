@@ -2,12 +2,11 @@ import axios from "axios";
 
 import config from "../../config";
 import {
-  ILuceedInventoryResponse,
   ILuceedOrder,
-  ILuceedOrderCreateDto,
-  ILuceedOrderCreateResponse,
-  ILuceedOrderResponse,
-} from "./luceed.interface";
+  ILuceedCreateOrder,
+  ILuceedOrdersResponse,
+  ILuceedCreateOrdersResponse,
+} from "./luceedOrder.interface";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
@@ -48,7 +47,7 @@ class LuceedOrdersService {
    */
   async fetchOrders(statusi: string): Promise<Array<ILuceedOrder>> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/statusi/[${statusi}]`;
-    let response: ILuceedOrderResponse | undefined = undefined;
+    let response: ILuceedOrdersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
         method: "get",
@@ -74,10 +73,13 @@ class LuceedOrdersService {
   }
 
   /**
+   * Nalozi prodaje – kreiranje naloga prodaje u Luceed-u
+   *
+   * Docs: page 133
    */
-  async createOrder(data: ILuceedOrderCreateDto): Promise<string | undefined> {
+  async createOrder(data: ILuceedCreateOrder): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/NaloziProdaje/snimi/`;
-    let response: ILuceedOrderCreateResponse | undefined = undefined;
+    let response: ILuceedCreateOrdersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
         method: "post",

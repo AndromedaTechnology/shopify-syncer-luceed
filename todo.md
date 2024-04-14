@@ -1,5 +1,10 @@
 # TODO
 
+## Update product, from Luceed to Shopify, if exists
+
+- prices
+- title
+
 ## Cronjobs
 
 1. Order sync (Shopify -> Luceed) - every 5 minutes
