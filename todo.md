@@ -1,61 +1,61 @@
 # TODO
 
-## TODO: Shopify Product update: Create default variant if non-existent
+- TODO: Shopify.prices
+-- Set ProductVariant[mpc,vpc,nc]
+-- set mpc, nc - for shopify products
 
-## DONE: TODO: Test: Update product, from Luceed to Shopify, if exists
+- TODO: Luceed [Create] Customer
 
-- TODO: Set variant.id when updating product and variant
+- WIP: Luceed [Create] Order
 
-- prices
-- title
+- TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
 
-## TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
+- DONE: TODO: Test: Shopify: Touch/Update product and variant
+-- DONE: Shopify Product update: Create default variant if non-existent
+-- DONE: Update product, from Luceed to Shopify, if exists
+-- DONE: Set variant.id when updating product and variant
+-- DONE: Update
+--- prices (mpc,vpc,nc)
+--- title
 
-## WIP: DONE: TODO: Shopify Get orders
-
-- filter those needed to save to Luceed
-- Save in MongoDB - `synced_orders.id` - add new row for each saved order to Luceed (from Shopify)
-
-## WIP: Luceed [Create] Order
-
-## Luceed [Create] Customer
+- WIP: DONE: TODO: Shopify Get orders
+-- filter those needed to save to Luceed
+-- Save in MongoDB - `synced_orders.id` - add new row for each saved order to Luceed (from Shopify)
 
 ## Product sync
 
-- Shopify.prices
--- Set ProductVariant[mpc,vpc,nc]
--- set mpc, nc - for shopify products
+- Disable [showing,selling] for some products,
 
 - Shopify.this is a physical product = true
 -- set on all products
 
-- Disable [showing,selling] for some products,
-
-- Shopify.Debounce
--- "Exceeded 2 calls per second for api client."
-
-- Shopify.Paginate
+- DONE: TODO: Test: Shopify.Paginate
 -- InventoryItems
 
-- luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
+- DONE: TODO: Test: luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
 -- Handle: Remove 000 prefixes from Luceed.handle
 -- then break
 
 ## Production
 
 - save for webshop location
+-- Find location for production.webshop - set in .env
 
 ## Other
 
 - Too big response size - Koa.js - for sync process,
-- Sync DECIMAL amount to inventory (current only integer)
+
+- Not needed?: Sync DECIMAL amount to inventory (current only integer)
+-- Meat is not selling
+-- We have 4 pieces and that's it, it's not needed to know exact size. That goes by variants etc.? Not needed.
 
 - Webshop has MPC or VPC prices?,
-- Price: 2 or 3 decimal points?,
+- TODO: Check: Price: 2 or 3 decimal points?,
 
-- Match Shopify.sku with Luceed.aritkl
+- DONE: TODO: Test: Match Shopify.sku with Luceed.aritkl
 -- Currently matching handle (to find if product exists in shopify)
 --- Match this with SKU, as we have that saved properly.
+-- Handle and SKU MUST BE THE SAME!
 
 - Show [raspolozivo,dostupno] for amount on webshop?
 
@@ -66,10 +66,12 @@
 
 ## Later
 
-- Shopify webhooks - Order[Created,Updated,Deleted]
+- TODO: Shopify [Updated,Deleted] Order
+-- To update in Luceed, if user updated in Shopify
 
-## Shopify [Updated,Deleted] Order
+- TODO: Luceed [Update,Delete] Order
+-- To send email update to Shopify customer
 
-## TODO: Luceed [Update,Delete] Order
+- Later: Luceed [Update,Delete] Customer
 
-## Luceed [Update,Delete] Customer
+- Later: Shopify webhooks - Order[Created,Updated,Deleted]
