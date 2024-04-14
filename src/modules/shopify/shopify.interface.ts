@@ -1,3 +1,6 @@
+export interface IShopifyCreateProductVariantResponse {
+  variant: IShopifyProductVariant;
+}
 export interface IShopifyProductVariantsResponse {
   variants: Array<IShopifyProductVariant>;
 }

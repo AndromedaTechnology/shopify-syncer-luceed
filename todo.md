@@ -2,8 +2,6 @@
 
 ## TODO: Shopify Product update: Create default variant if non-existent
 
-## TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
-
 ## DONE: TODO: Test: Update product, from Luceed to Shopify, if exists
 
 - TODO: Set variant.id when updating product and variant
@@ -11,9 +9,12 @@
 - prices
 - title
 
+## TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
+
 ## WIP: DONE: TODO: Shopify Get orders
 
 - filter those needed to save to Luceed
+- Save in MongoDB - `synced_orders.id` - add new row for each saved order to Luceed (from Shopify)
 
 ## WIP: Luceed [Create] Order
 

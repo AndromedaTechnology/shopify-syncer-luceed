@@ -48,8 +48,12 @@ class ShopifyProductService {
        * and then set it here (as variant.id, to know which variant to update).
        */
       const productId = product.id;
-      const variant =
-        await shopifyProductVariantService.getOrFetchProductVariant(product);
+      const variant = await shopifyProductVariantService.touchProductVariant(
+        product,
+        productHandle,
+        productPrice,
+        isDebug
+      );
       if (!variant || !variant.id) {
         throw "product exists, but variant doesnt";
         /**
