@@ -1,6 +1,6 @@
 # Luceed API pitanja
 
-## TODO: Za pitati
+## DONE 2
 
 0. Za pocetak cemo raditi samo Placanje POUZECEM.
 0.1. Sto je potrebno podesiti (pri NaloguProdaje, stavkama proizvoda na nalogu ili placanjima na nalogu)?
@@ -32,7 +32,7 @@
 7.2. Ovime mozemo tocno matchirati order iz Shopifya, prema orderu u Luceedu. Da znamo gdje sto treba aktivirati, obrisati ili promijeniti u slucaju potrebe.
 7.3. Ovo je `narudzba` field na NaloguProdaje? Trebamo li jos sto postaviti vezano uz Narudzbu ili NalogProdaje?
 
-## DONE
+## DONE 1
 
 1. Nalog (Narudzba s Webshopa) se moze SPREMITI putem Luceed API-ja KOLIKO GOD ZELIMO?
 1.1. Mozemo testirati i kreirati koliko god naloga? (Ne brinemo o nikakvim efektima na Luceed?)
