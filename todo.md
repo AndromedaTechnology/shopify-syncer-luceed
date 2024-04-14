@@ -1,23 +1,21 @@
 # TODO
 
-## Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
+## TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
 
-## Update product, from Luceed to Shopify, if exists
+## DONE: TODO: Test: Update product, from Luceed to Shopify, if exists
+
+- TODO: Set variant.id when updating product and variant
 
 - prices
 - title
 
-## DONE: Shopify Get orders
+## WIP: DONE: TODO: Shopify Get orders
 
 - filter those needed to save to Luceed
 
-## Shopify [Updated,Deleted] Order
-
 ## WIP: Luceed [Create] Order
 
-## TODO: Luceed [Update,Delete] Order
-
-## Luceed [Create,Update,Delete] Customer
+## Luceed [Create] Customer
 
 ## Product sync
 
@@ -66,3 +64,9 @@
 ## Later
 
 - Shopify webhooks - Order[Created,Updated,Deleted]
+
+## Shopify [Updated,Deleted] Order
+
+## TODO: Luceed [Update,Delete] Order
+
+## Luceed [Update,Delete] Customer
