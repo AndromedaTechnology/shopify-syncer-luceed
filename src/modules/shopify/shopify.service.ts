@@ -124,16 +124,27 @@ class ShopifyService {
 
     if (product && product.id) {
       /**
-       * Update
+       * Update Product
        * TODO: Test!
-       * TODO: Variant needs to have ID defined on it, when updating!
+       *
+       * Variant needs to have ID defined on it, when updating!
        * So, get default product variant ID,
        * and then set it here (as variant.id, to know which variant to update).
        */
       const productId = product.id;
+      const variant = await shopifyProductService.getOrFetchProductVariant(
+        product
+      );
+      if (!variant || !variant.id) {
+        throw "product exists, but variant doesnt";
+        /**
+         * TODO: Then create default Variant and attach to product
+         */
+      }
       const productUpdated = await shopifyProductService.updateProduct(
         productId,
         productHandle,
+        variant.id,
         productHandle,
         productPrice,
         {

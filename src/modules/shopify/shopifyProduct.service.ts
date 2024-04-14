@@ -8,6 +8,7 @@ import {
   IShopifyProductVariant,
   IShopifyProductsResponse,
   IShopifyProductCreateResponse,
+  IShopifyProductVariantsResponse,
 } from "./shopify.interface";
 import shopifyHelper from "./shopify.helper";
 
@@ -24,6 +25,24 @@ class ShopifyProductService {
     return {
       msg: "Hello Shopify",
     };
+  }
+
+  async getOrFetchProductVariant(
+    product: IShopifyProduct
+  ): Promise<IShopifyProductVariant | undefined> {
+    if (!product || !product.id) {
+      return undefined;
+    }
+    let variant = this.getProductVariant(product);
+    if (!variant || !variant.id) {
+      const variants = await this.fetchProductVariants(product.id);
+      if (!variants || !variants.length) {
+        throw "product fetch variants - returned nothing";
+      }
+      // We return only first one. As more we shouldn't have
+      variant = variants[0];
+    }
+    return variant;
   }
 
   getProductVariant(
@@ -115,19 +134,22 @@ class ShopifyProductService {
    * and default variant
    *
    * @prop productId needs to be fetched before
+   * @prop variantId needs to be fetched before.
+   * @prop variantId we have only 1 variant per product (default one), always.
    */
   async updateProduct(
     productId: string,
     productHandle: string,
-    productSKU: string,
-    productPrice: string,
+    variantId: number,
+    variantSKU: string,
+    variantPrice: string,
     data: IShopifyProduct,
     isDebug = true
   ): Promise<IShopifyProduct | undefined> {
-    if (!productId) {
-      throw "productId required";
+    if (!productId || !productHandle) {
+      throw "productId productHandle required";
     }
-    if (!productHandle || !productSKU || !productPrice) {
+    if (!variantId || !variantSKU || !variantPrice) {
       throw "handle sku price required";
     }
     if (!data) {
@@ -145,10 +167,10 @@ class ShopifyProductService {
       handle: productHandle,
       variants: [
         {
-          // id: variantId, // TODO:
-          sku: productSKU,
+          id: variantId,
+          sku: variantSKU,
+          price: variantPrice,
           inventory_management: "shopify",
-          price: productPrice,
         },
       ],
     };
@@ -268,17 +290,34 @@ class ShopifyProductService {
   }
 
   /**
-   * Get [InventoryItems and Levels]
-   * per Location
-   *
-   * TODO: Paginate
+   * With Pagination
+   * - TODO: Check if it works.
    */
-  async fetchProductVariants(productId: string) {
-    var url = `https://${shopName}.myshopify.com/admin/api/2024-01/products/${productId}/variants.json`;
-    let response;
+  async fetchProductVariants(
+    productId: string,
+    paginationLimit = 250,
+    urlParam?: string,
+    isDebug = true
+  ): Promise<Array<IShopifyProductVariant>> {
+    var url;
+    if (urlParam) {
+      url = urlParam;
+    } else {
+      url = `https://${shopName}.myshopify.com/admin/api/2024-01/products/${productId}/variants.json`;
+      if (paginationLimit) {
+        if (true) {
+          url += "?";
+        } else {
+          url += "&";
+        }
+        url += `limit=${paginationLimit}`;
+      }
+    }
+    let response: IShopifyProductVariantsResponse | undefined = undefined;
+    let responseHeaders: any;
     try {
       const remainingRequests = await limiter.removeTokens(1);
-      response = await axios({
+      const axiosResponse = await axios({
         method: "get",
         url: url,
         // data: reqData,
@@ -288,11 +327,25 @@ class ShopifyProductService {
           "X-Shopify-Access-Token": accessToken,
         },
       });
+      response = axiosResponse?.data;
+      responseHeaders = axiosResponse?.headers;
     } catch (error) {
       console.log(error);
+      throw error;
     }
-    console.log("--product-variants-" + productId, response?.data);
-    return response?.data;
+    console.log("--product-variants-" + productId, response);
+    let variants = response?.variants ?? [];
+    const nextLink =
+      shopifyHelper.shopifyResponseHeaderGetNextLink(responseHeaders);
+    if (nextLink) {
+      const childVariants = await this.fetchProductVariants(
+        productId,
+        paginationLimit,
+        nextLink
+      );
+      variants = [...variants, ...childVariants];
+    }
+    return variants ?? [];
   }
 }
 

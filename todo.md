@@ -1,5 +1,7 @@
 # TODO
 
+## TODO: Shopify Product update: Create default variant if non-existent
+
 ## TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
 
 ## DONE: TODO: Test: Update product, from Luceed to Shopify, if exists
