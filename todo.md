@@ -1,5 +1,7 @@
 # TODO
 
+## Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
+
 ## Update product, from Luceed to Shopify, if exists
 
 - prices
