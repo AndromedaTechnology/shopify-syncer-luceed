@@ -7,32 +7,17 @@
 - prices
 - title
 
-## Cronjobs
+## DONE: Shopify Get orders
 
-1. Order sync (Shopify -> Luceed) - every 5 minutes
-2. Inventory sync (Luceed --> Shopify) - every 30 minutes
+- filter those needed to save to Luceed
 
-## Luceed Order sync
+## Shopify [Updated,Deleted] Order
 
-- Luceed: Create order
-- Luceed: Update order
-- Luceed: Delete order
+## WIP: Luceed [Create] Order
 
-## Luceed Customer sync
+## TODO: Luceed [Update,Delete] Order
 
-- Luceed: Create customer
-- Luceed: Update customer
-- Luceed: Delete customer
-
-## Shopify Webhooks
-
-- DONE: Shopify: Webhook: OrderCreated
-- TODO: Shopify: Webhook: OrderUpdated
-- TODO: Shopify: Webhook: OrderDeleted
-
-- Shopify: Webhook: CustomerCreated
-- Shopify: Webhook: CustomerUpdated
-- Shopify: Webhook: CustomerDeleted
+## Luceed [Create,Update,Delete] Customer
 
 ## Product sync
 
@@ -72,3 +57,12 @@
 --- Match this with SKU, as we have that saved properly.
 
 - Show [raspolozivo,dostupno] for amount on webshop?
+
+## Cronjobs
+
+1. Order sync (Shopify -> Luceed) - every 5 minutes
+2. Inventory sync (Luceed --> Shopify) - every 30 minutes
+
+## Later
+
+- Shopify webhooks - Order[Created,Updated,Deleted]
