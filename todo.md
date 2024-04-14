@@ -1,12 +1,12 @@
 # TODO
 
-- TODO: Shopify.prices
--- Set ProductVariant[mpc,vpc,nc]
--- set mpc, nc - for shopify products
-
 - TODO: Luceed [Create] Customer
 
 - WIP: Luceed [Create] Order
+
+- TODO: Shopify.prices
+-- Set ProductVariant[mpc,vpc,nc]
+-- set mpc, nc - for shopify products
 
 - TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
 
