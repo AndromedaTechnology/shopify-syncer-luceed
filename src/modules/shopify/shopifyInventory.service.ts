@@ -3,26 +3,52 @@ import axios from "axios";
 import config from "../../config";
 import {
   IShopifyInventoryLevel,
+  IShopifyProduct,
   IShopifySetInventoryLevelResponse,
 } from "./shopify.interface";
 import { limiter } from "../root/root.service";
+import shopifyProductVariantService from "./shopifyProductVariant.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
 
 class ShopifyInventoryService {
-  async findAll() {
-    /**
-     * Item Levels
-     * per Location
-     */
-    // await this.getItemsAndLevelsPerLocation("74681876713");
-    // await this.getLevelsPerItemPerLocation("74681876713", "49070355349737");
-    // await this.setLevelsPerItemPerLocation("74681876713", "49070355349737", 10);
+  /**
+   * Set product inventory amount in shopify
+   * in defualt passed location
+   */
+  async setProductInventory(
+    product: IShopifyProduct,
+    locationDefaultId: number,
+    productAmount: number,
+    isDebug = true
+  ): Promise<IShopifyInventoryLevel | undefined> {
+    const productVariant = shopifyProductVariantService.getProductVariant(
+      product!
+    );
+    const productVariantInventoryItemId = productVariant?.inventory_item_id;
+    if (isDebug) {
+      console.log(
+        "--product-variant",
+        productVariant,
+        productVariantInventoryItemId
+      );
+    }
+    if (!productVariantInventoryItemId) {
+      throw "productVariantInventoryItemId not found, so can't continue";
+    }
 
-    return {
-      msg: "Hello Shopify Inventory",
-    };
+    const inventoryLevel = await this.setLevelsPerItemPerLocation(
+      locationDefaultId,
+      productVariantInventoryItemId,
+      productAmount,
+      true,
+      true
+    );
+    if (!inventoryLevel) {
+      throw "inventory level not set";
+    }
+    return inventoryLevel;
   }
 
   /**

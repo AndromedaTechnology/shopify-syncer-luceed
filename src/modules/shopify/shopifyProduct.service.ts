@@ -5,12 +5,11 @@ import { limiter } from "../root/root.service";
 
 import {
   IShopifyProduct,
-  IShopifyProductVariant,
   IShopifyProductsResponse,
   IShopifyProductCreateResponse,
-  IShopifyProductVariantsResponse,
 } from "./shopify.interface";
 import shopifyHelper from "./shopify.helper";
+import shopifyProductVariantService from "./shopifyProductVariant.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -27,30 +26,74 @@ class ShopifyProductService {
     };
   }
 
-  async getOrFetchProductVariant(
-    product: IShopifyProduct
-  ): Promise<IShopifyProductVariant | undefined> {
-    if (!product || !product.id) {
-      return undefined;
-    }
-    let variant = this.getProductVariant(product);
-    if (!variant || !variant.id) {
-      const variants = await this.fetchProductVariants(product.id);
-      if (!variants || !variants.length) {
-        throw "product fetch variants - returned nothing";
+  /**
+   * Create or Update product
+   * Make sure it exists.
+   */
+  async touchProduct(
+    product: IShopifyProduct | undefined,
+    productHandle: string,
+    productTitle: string,
+    productVendor: string,
+    productPrice: string,
+    isDebug = true
+  ) {
+    if (product && product.id) {
+      /**
+       * Update Product
+       * TODO: Test!
+       *
+       * Variant needs to have ID defined on it, when updating!
+       * So, get default product variant ID,
+       * and then set it here (as variant.id, to know which variant to update).
+       */
+      const productId = product.id;
+      const variant =
+        await shopifyProductVariantService.getOrFetchProductVariant(product);
+      if (!variant || !variant.id) {
+        throw "product exists, but variant doesnt";
+        /**
+         * TODO: Then create default Variant and attach to product
+         */
       }
-      // We return only first one. As more we shouldn't have
-      variant = variants[0];
+      const productUpdated = await this.updateProduct(
+        productId,
+        productHandle,
+        variant.id,
+        productHandle,
+        productPrice,
+        {
+          title: productTitle,
+          handle: productHandle,
+          vendor: productVendor,
+        },
+        false
+      );
+      product = productUpdated;
+      if (isDebug) {
+        console.log("--productUpdated", productUpdated);
+      }
+    } else if (!product) {
+      /**
+       * Create
+       */
+      const productCreated = await this.createProduct(
+        productHandle,
+        productHandle,
+        productPrice,
+        {
+          title: productTitle,
+          handle: productHandle,
+          vendor: productVendor,
+        },
+        false
+      );
+      product = productCreated;
+      if (isDebug) {
+        console.log("--productCreated", productCreated);
+      }
     }
-    return variant;
-  }
-
-  getProductVariant(
-    product: IShopifyProduct
-  ): IShopifyProductVariant | undefined {
-    return product.variants && product.variants.length
-      ? product.variants[0]
-      : undefined;
+    return product;
   }
 
   /**
@@ -287,65 +330,6 @@ class ShopifyProductService {
       products = [...products, ...childProducts];
     }
     return products ?? [];
-  }
-
-  /**
-   * With Pagination
-   * - TODO: Check if it works.
-   */
-  async fetchProductVariants(
-    productId: string,
-    paginationLimit = 250,
-    urlParam?: string,
-    isDebug = true
-  ): Promise<Array<IShopifyProductVariant>> {
-    var url;
-    if (urlParam) {
-      url = urlParam;
-    } else {
-      url = `https://${shopName}.myshopify.com/admin/api/2024-01/products/${productId}/variants.json`;
-      if (paginationLimit) {
-        if (true) {
-          url += "?";
-        } else {
-          url += "&";
-        }
-        url += `limit=${paginationLimit}`;
-      }
-    }
-    let response: IShopifyProductVariantsResponse | undefined = undefined;
-    let responseHeaders: any;
-    try {
-      const remainingRequests = await limiter.removeTokens(1);
-      const axiosResponse = await axios({
-        method: "get",
-        url: url,
-        // data: reqData,
-
-        headers: {
-          "Content-Type": "application/json",
-          "X-Shopify-Access-Token": accessToken,
-        },
-      });
-      response = axiosResponse?.data;
-      responseHeaders = axiosResponse?.headers;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-    console.log("--product-variants-" + productId, response);
-    let variants = response?.variants ?? [];
-    const nextLink =
-      shopifyHelper.shopifyResponseHeaderGetNextLink(responseHeaders);
-    if (nextLink) {
-      const childVariants = await this.fetchProductVariants(
-        productId,
-        paginationLimit,
-        nextLink
-      );
-      variants = [...variants, ...childVariants];
-    }
-    return variants ?? [];
   }
 }
 

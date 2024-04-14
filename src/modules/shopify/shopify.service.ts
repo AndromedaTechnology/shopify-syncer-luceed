@@ -7,17 +7,6 @@ import shopifyInventoryService from "./shopifyInventory.service";
 import { ILuceedProduct } from "../luceed/luceedProduct.interface";
 
 class ShopifyService {
-  async findAll(isDebug = true) {
-    // await this.fetchProducts("8463331983593");
-    // await this.fetchProductVariants("8463331983593");
-    // const productByHandle = await this.fetchProductByHandle("handle-001");
-    // console.warn("product-handle-result", productByHandle);
-
-    return {
-      msg: "Hello Shopify",
-    };
-  }
-
   public async syncLuceedShopifyProducts(
     luceedProducts: Array<ILuceedProduct>,
     isDebug = true
@@ -122,62 +111,17 @@ class ShopifyService {
       console.log("--product", productHandle, product);
     }
 
-    if (product && product.id) {
-      /**
-       * Update Product
-       * TODO: Test!
-       *
-       * Variant needs to have ID defined on it, when updating!
-       * So, get default product variant ID,
-       * and then set it here (as variant.id, to know which variant to update).
-       */
-      const productId = product.id;
-      const variant = await shopifyProductService.getOrFetchProductVariant(
-        product
-      );
-      if (!variant || !variant.id) {
-        throw "product exists, but variant doesnt";
-        /**
-         * TODO: Then create default Variant and attach to product
-         */
-      }
-      const productUpdated = await shopifyProductService.updateProduct(
-        productId,
-        productHandle,
-        variant.id,
-        productHandle,
-        productPrice,
-        {
-          title: productTitle,
-          handle: productHandle,
-          vendor: productVendor,
-        },
-        false
-      );
-      product = productUpdated;
-      if (isDebug) {
-        console.log("--productUpdated", productUpdated);
-      }
-    } else if (!product) {
-      /**
-       * Create
-       */
-      const productCreated = await shopifyProductService.createProduct(
-        productHandle,
-        productHandle,
-        productPrice,
-        {
-          title: productTitle,
-          handle: productHandle,
-          vendor: productVendor,
-        },
-        false
-      );
-      product = productCreated;
-      if (isDebug) {
-        console.log("--productCreated", productCreated);
-      }
-    }
+    /**
+     * Touch product
+     */
+    product = await shopifyProductService.touchProduct(
+      product,
+      productHandle,
+      productTitle,
+      productVendor,
+      productPrice,
+      isDebug
+    );
 
     /**
      * Something went wrong.
@@ -188,34 +132,19 @@ class ShopifyService {
       throw "product not found before, and not created - so can't continue";
     }
 
-    const productVariant = shopifyProductService.getProductVariant(product!);
-    const productVariantInventoryItemId = productVariant?.inventory_item_id;
-    if (isDebug) {
-      console.log(
-        "--product-variant",
-        productVariant,
-        productVariantInventoryItemId
-      );
-    }
-    if (!productVariantInventoryItemId) {
-      throw "productVariantInventoryItemId not found, so can't continue";
-    }
+    /**
+     * Set inventory
+     */
+    const inventoryLevel = await shopifyInventoryService.setProductInventory(
+      product,
+      locationDefaultId,
+      productAmount,
+      isDebug
+    );
 
-    const inventoryLevel =
-      await shopifyInventoryService.setLevelsPerItemPerLocation(
-        locationDefaultId,
-        productVariantInventoryItemId,
-        productAmount,
-        true,
-        true
-      );
-    if (!inventoryLevel) {
-      throw "inventory level not set";
-    }
     if (isDebug) {
       console.log(
         "--set-inventory-level-" + locationDefaultId,
-        productVariantInventoryItemId,
         productAmount,
         inventoryLevel
       );
