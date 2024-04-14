@@ -145,6 +145,7 @@ class ShopifyProductService {
       handle: productHandle,
       variants: [
         {
+          // id: variantId, // TODO:
           sku: productSKU,
           inventory_management: "shopify",
           price: productPrice,
