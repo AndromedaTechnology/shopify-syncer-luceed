@@ -1,5 +1,26 @@
 # Luceed API pitanja
 
+## Za pitati - Customers/Partneri
+
+1. Gdje dohvatiti sve postojece poslovne partnere, napravljene preko Webshopa? (Fizicke osobe)
+1.1. U dokumentaciji ne vidimo LISTU za poslovne partnere, vec samo filtriranje (po mailu, id-u itd.).
+1.2. Moze li se dohvatiti LISTA svih partnera?
+2. Koja je razlika izmedju USERS i PARTNERI?
+2.1. Sto sve obuhvaca USERS? Da li su partneri takodjer dio USERS-a?
+3. Mjesto - ovo je na PARTNERu field.
+3.1. Treba ovo postaviti ili ostaviti prazno?
+3.2. Kako ovo sto jednostavnije dohvatiti putem API-a?
+3.3. Sto ako korisnik unese mjesto drugacije nego je u Luceed bazi?
+3.4. Na koji nacin da isprogramiramo dohvat i odabir mjesta (ID-a mjesta) za postavljanje na PARTNERU (prilikom kreiranja partnera)?
+4. Kako gledamo promjenu statusa naloga prodaje u SCC-u?
+4.1. Da mozemo poslati mail kupcu, kad je narudzba prihvacena, pripremljena, poslana i dostavljena.
+4.2. Moramo povlaciti svaki puta sve naloge i provjeravati status ili mozete pozvati nas API i obavijestiti nas putem websocketa recimo?
+5. Pri kreiranju kupca - navodimo tip_cijene V?
+5.1. To znaci da na webshopu moramo prikazati sve VELEPRODAJNE cijene?
+5.2. Moramo prije toga postaviti sve VELEPRODAJNE cijene s ili BEZ PDV-a? (bilo je nekog govora da ovo treba biti promijenjeno)
+6. Pri kreiranju kupca - maticni_broj, mjesto - unosimo?
+7. Jos su nam tu neka manja pitanja oko UID-jeva i slicnih stvari - pa predlazem da napravimo meeting cca pola sata danas (ako ste u mogucnosti), i kroz dva-tri dana ako bude trebalo nakon ovog sastanka.
+
 ## DONE 2
 
 0. Za pocetak cemo raditi samo Placanje POUZECEM.
