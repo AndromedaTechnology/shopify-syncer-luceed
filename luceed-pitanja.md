@@ -1,5 +1,40 @@
 # Luceed API pitanja
 
+## TODO:
+
+1. Zasto u nalogu prodaje tip cijene mora biti M?
+A u customeru imamo tip cijene V defaultno?
+
+2. Pise da prilikom kreiranja naloga prodaje - trebamo poslati poseban field - cijena S PDV-om.
+Da li to znaci da cijene trebaju biti Veleprodajne ili maloprodajne na webu? S pdvom?
+Da li to znaci da u stavkama naloga prodaje takodjer moramo navesti cijene s pdvom?
+
+3. Dostava
+Dakle, definiramo jednu sifru - Webshop dostava - stavimo fiksnu cijenu.
+I uvijek u narudzbu ukljucimo (pod nalogProdaje, pod stavke) i taj artikli tj. uslugu dostave?
+
+4. Potreban ID-SID (UID?) za placanje pouzecem
+Ovo navodimo pod nalogom prodaje, pod vrste placanja.
+
+5. Pri kreiranju naloga - moramo poslati 3 fielda - za skladiste - instrukcije Luceedu
+
+- sa_skladista - ovdje ide UID? koja je sifra tocna?
+- na_skladiste - ovdje ide UID? koja je sifra tocna?
+- skladisni dokument MSM (medjuskaldisnica maloprodaje) - koji je tocan naziv fielda za skladisni dokument? i tocna vrijednost?
+
+6. Kako dobivamo i kada saljemo racun na email kupca?
+Primarno, za placanje pouzecem.
+
+Trebamo li fiskalizirati racun prilikom slanja paketa i i ubaciti u paket?
+Mozemo i poslati na mail (ovo je opcionalno)? (Prije ili nakon dostave paketa)?
+
+
+7. Za stanje skladista
+
+trebamo iskljucivo pozivati za - slati sifru - skladiste malorpdoaje 10?
+ne za sve, jer ce onda vracati i za webshop skladiste?
+
+
 ## Za pitati - Customers/Partneri
 
 1. Gdje dohvatiti sve postojece poslovne partnere, napravljene preko Webshopa? (Fizicke osobe)
