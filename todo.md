@@ -1,8 +1,12 @@
 # TODO
 
+- TODO: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
+
+- TODO: Sync Shopify Order.Customer to Luceed (not saved yet) (check customer, by email)
+
 - DONE: TEST: Luceed [Create] Customer
 
-- TODO: Luceed [Create] Order
+- DONE: TEST: Luceed [Create] Order
 
 - TODO: Shopify.prices
 -- Set ProductVariant[mpc,vpc,nc]
