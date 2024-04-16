@@ -40,9 +40,9 @@
 -- Handle: Remove 000 prefixes from Luceed.handle
 -- then break
 
-## Production
+## Shopify: Production
 
-- save for webshop location
+- save for webshop location inventory
 -- Find location for production.webshop - set in .env
 
 ## Other
