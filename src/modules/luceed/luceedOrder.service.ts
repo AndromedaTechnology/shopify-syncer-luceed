@@ -102,8 +102,6 @@ class LuceedOrdersService {
    *
    * Note about UID(s): UID= ID-SID.
    *
-   * TODO: Embed stavke and placanja, from method props.
-   *
    * @param {string} orderDate    * DATE type
    * @param {string} orderDate    * TODO: Convert to date before calling CreateOrder() and passing param.
    */
