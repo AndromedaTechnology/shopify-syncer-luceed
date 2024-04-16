@@ -39,6 +39,10 @@ class LuceedInventoryService {
 
   /**
    * http://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[0,1000]
+   *
+   * gledati skladište 10 čiji je UID 1-3228
+   *
+   * Svi podaci vezano za stanje i skladište bi se trebali gledati sa skladišta 10 - Skladište Maloprodaje.
    */
   async fetchInventory(): Promise<Array<ILuceedInventoryItem>> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/stanjezalihe/skladiste`;

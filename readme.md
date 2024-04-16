@@ -8,6 +8,10 @@
   <a href="https://firestarter-api.andromeda.technology">https://firestarter-api.andromeda.technology</a>
 </p>
 
+## Luceed
+
+- Na Webshopu navodimo samo MPC cijene (ne VPC)
+
 Easy to extend, Progressive and Scalable API boilerplate to power your startup.
 
 ## 1. Technology

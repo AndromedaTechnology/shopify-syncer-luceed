@@ -5,6 +5,8 @@ import { ILuceedInventoryItem } from "./luceedInventory.interface";
 
 /**
  * Luceed
+ *
+ * Note about UID(s): UID= ID-SID.
  */
 class LuceedService {
   async findAll() {

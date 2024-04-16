@@ -32,8 +32,10 @@ export interface ILuceedCreateOrder {
    * REQUIRED
    *
    * Datum narudžbe
+   * DATE type
+   * TODO: Convert to date before calling CreateOrder() and passing param.
    */
-  datum?: Date;
+  datum?: string;
 
   /**
    * REQUIRED
@@ -42,12 +44,19 @@ export interface ILuceedCreateOrder {
   skladiste?: string;
 
   /**
-   * REQUIRED
+   * REQUIRED, but optional if partner_uid sent.
    *
    * Šifra partnera iz Luceed-a
    * Upisuje se partner na kojeg glasi nalog
    */
   partner?: string;
+  /**
+   * REQUIRED
+   *
+   * Šifra partnera iz Luceed-a
+   * Upisuje se partner na kojeg glasi nalog
+   */
+  partner_uid?: string;
 
   /**
    * TODO: Cemu ovo sluzi?
@@ -60,8 +69,7 @@ export interface ILuceedCreateOrder {
 
   /**
    * REQUIRED
-   * * TODO: Cemu ovo sluzi?
-   * Ovo je custom field, ovdje spremamo Shopify order number?
+   * Ovo je custom field, ovdje spremamo Shopify order number.
    *
    * narudzba
    * Broj narudžbe od kupca
@@ -112,6 +120,43 @@ export interface ILuceedCreateOrder {
    * Lista grupa stavaka
    */
   grupe?: Array<ILuceedCreateOrderGroup>;
+
+  /**
+   * REQUIRED but optional.
+   * Can be sent as status_uid.
+   *
+   * We send "Storno", instead of UID here.
+   */
+  status?: string;
+  status_uid?: string;
+
+  /**
+   * REQUIRED
+   *
+   * Internal props
+   * Skladiste - from, to, document
+   *
+   * Šifra skladišta sa kojeg se isporučuje roba u Luceed-u
+   */
+  sa__skladiste_uid?: string;
+  /**
+   * REQUIRED
+   *
+   * Internal props
+   * Skladiste - from, to, document
+   *
+   * UID skladišta na koje se isporučuje roba u Luceed-u
+   */
+  na__skladiste_uid?: string;
+  /**
+   * REQUIRED
+   *
+   * Internal props
+   * Skladiste - from, to, document
+   *
+   * Oznaka skladišnog dokumenta s kojim će roba biti isporučena u Luceed-u
+   */
+  skl_dokument?: string;
 }
 export interface ILuceedCreateOrderProduct {
   /**

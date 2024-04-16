@@ -12,6 +12,27 @@ const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
 
 /**
+ * Statusi
+ *
+ * Page 97 of docs.
+ * Check if this is complete and true list.
+ *
+ * Used to query NaloziProdaje, by statusi.
+ */
+export const LuceedStatusi = [
+  "Novi",
+  "Prikupljen",
+  "U dostavi",
+  "Nije isporučeno - ne želi primiti",
+  "Nije isporučeno - nema novaca",
+  "Nije isporučeno - nema nikoga kod kuće",
+  "Isporučeno",
+  "Primljeno na skladište",
+  "Storno",
+  "Utovareno na vozilo",
+];
+
+/**
  * Luceed
  */
 class LuceedOrdersService {
@@ -41,11 +62,13 @@ class LuceedOrdersService {
 
   /**
    * TODO: Set default statusi
-   * http://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[0,1000]
+   * TODO: Check if statusi properly set. (via param constructor)
    *
    * @param statusi Statusi se upisuju u obliku [status1,status2,....]
    */
-  async fetchOrders(statusi: string): Promise<Array<ILuceedOrder>> {
+  async fetchOrders(
+    statusi: string = LuceedStatusi.toString()
+  ): Promise<Array<ILuceedOrder>> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/statusi/[${statusi}]`;
     let response: ILuceedOrdersResponse | undefined = undefined;
     try {
@@ -53,14 +76,12 @@ class LuceedOrdersService {
         method: "get",
         url: url,
         // data: reqData,
-
         auth: {
           username: luceedUsername,
           password: luceedPassword,
         },
         headers: {
           "Content-Type": "application/json",
-          // "X-Shopify-Access-Token": accessToken,
         },
       });
       console.log("--luceed-orders-", axiosResponse);
@@ -74,18 +95,57 @@ class LuceedOrdersService {
 
   /**
    * Nalozi prodaje – kreiranje naloga prodaje u Luceed-u
-   *
    * Docs: page 133
+   *
+   * Note about UID(s): UID= ID-SID.
+   *
+   * @param {string} orderDate    * DATE type
+   * @param {string} orderDate    * TODO: Convert to date before calling CreateOrder() and passing param.
    */
-  async createOrder(data: ILuceedCreateOrder): Promise<string | undefined> {
+  async createOrder(
+    orderDate: string,
+    narudzba: string,
+    luceedPartnerUid: string,
+    data: ILuceedCreateOrder
+  ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/NaloziProdaje/snimi/`;
     let response: ILuceedCreateOrdersResponse | undefined = undefined;
+
+    data = {
+      ...data,
+      datum: orderDate,
+      narudzba: narudzba ?? "Shopify Order Test",
+      /**
+       * Partner / customer
+       */
+      partner_uid: luceedPartnerUid,
+      /**
+       * Skladiste
+       * Add skladiste props
+       * - `sa_skladista` - maloprodaja skladiste sifra
+       * - `skl_dokument=MSM` - medjuskladisnica maloprodaje - automatski prebacuje robu iz maloprodaje na webshop
+       * - `na_skladiste` - webshop skladiste sifra
+       *
+       * This will make sure products are transfered between warehouses, on 'fiscal bill' creation.
+       */
+      sa__skladiste_uid: config.luceed_nalog_prodaje_sa__skladiste_uid, // Maloprodaja
+      na__skladiste_uid: config.luceed_nalog_prodaje_na__skladiste_uid, // Webshop virtual skladiste
+      skl_dokument: config.luceed_nalog_prodaje_skl_dokument,
+
+      /**
+       * Status
+       * TODO: For testing!! ONLY! Remove later!
+       *
+       * status=99 (Storno) - to mark it for deletion - for testing purposes.
+       * Later - remove this status.
+       */
+      status: "Storno",
+    };
     try {
       const axiosResponse = await axios({
         method: "post",
         url: url,
         data: data,
-
         auth: {
           username: luceedUsername,
           password: luceedPassword,
