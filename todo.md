@@ -1,8 +1,8 @@
 # TODO
 
-- TODO: Luceed [Create] Customer
+- DONE: TEST: Luceed [Create] Customer
 
-- WIP: Luceed [Create] Order
+- TODO: Luceed [Create] Order
 
 - TODO: Shopify.prices
 -- Set ProductVariant[mpc,vpc,nc]
