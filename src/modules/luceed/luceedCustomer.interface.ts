@@ -1,4 +1,12 @@
+export interface ILuceedCreateCustomerRequest {
+  partner: Array<ILuceedCustomer>;
+}
 export interface ILuceedCustomer {
+  /**
+   * REQUIRED
+   * ALWAYS SET TO WEBSHOP_CUSTOMERS UID
+   */
+  parent__partner_uid?: string;
   /**
    * REQUIRED
    *

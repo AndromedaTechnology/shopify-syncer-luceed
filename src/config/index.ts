@@ -41,6 +41,7 @@ const envSchema = Joi.object()
     LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID: Joi.string()
       .optional()
       .default(""),
+    LUCEED_PARTNER_PARENT_UID: Joi.string().optional().default(""),
   })
   .unknown()
   .required();
@@ -78,6 +79,7 @@ export interface IConfig {
   luceed_nalog_prodaje_na__skladiste_uid: string;
   luceed_nalog_prodaje_skl_dokument: string;
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid: string;
+  luceed_partner_parent_uid: string;
 }
 
 const db_uri_additional = `?authSource=admin&w=1`;
@@ -107,5 +109,6 @@ const config: IConfig = {
   luceed_nalog_prodaje_skl_dokument: envVars.LUCEED_NALOG_PRODAJE_SKL_DOKUMENT,
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid:
     envVars.LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID,
+  luceed_partner_parent_uid: envVars.LUCEED_PARTNER_PARENT_UID,
 };
 export default config;
