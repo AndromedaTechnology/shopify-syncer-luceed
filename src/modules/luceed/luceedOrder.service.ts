@@ -6,6 +6,8 @@ import {
   ILuceedCreateOrder,
   ILuceedOrdersResponse,
   ILuceedCreateOrdersResponse,
+  ILuceedCreateOrderProduct,
+  ILuceedCreateOrderPayment,
 } from "./luceedOrder.interface";
 
 const luceedUsername = config.luceed_username;
@@ -61,10 +63,11 @@ class LuceedOrdersService {
   }
 
   /**
-   * TODO: Set default statusi
-   * TODO: Check if statusi properly set. (via param constructor)
+   * Fetch Order
    *
    * @param statusi Statusi se upisuju u obliku [status1,status2,....]
+   * @param statusi Set default statusi
+   * @param statusi TODO: Check if statusi properly set. (via param constructor)
    */
   async fetchOrders(
     statusi: string = LuceedStatusi.toString()
@@ -99,6 +102,8 @@ class LuceedOrdersService {
    *
    * Note about UID(s): UID= ID-SID.
    *
+   * TODO: Embed stavke and placanja, from method props.
+   *
    * @param {string} orderDate    * DATE type
    * @param {string} orderDate    * TODO: Convert to date before calling CreateOrder() and passing param.
    */
@@ -106,6 +111,8 @@ class LuceedOrdersService {
     orderDate: string,
     narudzba: string,
     luceedPartnerUid: string,
+    stavke: Array<ILuceedCreateOrderProduct>,
+    placanja: Array<ILuceedCreateOrderPayment>,
     data: ILuceedCreateOrder
   ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/NaloziProdaje/snimi/`;
