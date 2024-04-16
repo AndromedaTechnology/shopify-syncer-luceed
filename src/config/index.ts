@@ -38,6 +38,9 @@ const envSchema = Joi.object()
     LUCEED_NALOG_PRODAJE_SA__SKLADISTE_UID: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_NA__SKLADISTE_UID: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_SKL_DOKUMENT: Joi.string().optional().default(""),
+    LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID: Joi.string()
+      .optional()
+      .default(""),
   })
   .unknown()
   .required();
@@ -74,6 +77,7 @@ export interface IConfig {
   luceed_nalog_prodaje_sa__skladiste_uid: string;
   luceed_nalog_prodaje_na__skladiste_uid: string;
   luceed_nalog_prodaje_skl_dokument: string;
+  luceed_nalog_prodaje_vrsta_placanja_pouzece_uid: string;
 }
 
 const db_uri_additional = `?authSource=admin&w=1`;
@@ -101,5 +105,7 @@ const config: IConfig = {
   luceed_nalog_prodaje_na__skladiste_uid:
     envVars.LUCEED_NALOG_PRODAJE_NA__SKLADISTE_UID,
   luceed_nalog_prodaje_skl_dokument: envVars.LUCEED_NALOG_PRODAJE_SKL_DOKUMENT,
+  luceed_nalog_prodaje_vrsta_placanja_pouzece_uid:
+    envVars.LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID,
 };
 export default config;

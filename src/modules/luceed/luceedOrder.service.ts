@@ -111,12 +111,30 @@ class LuceedOrdersService {
     orderDate: string,
     narudzba: string,
     luceedPartnerUid: string,
-    stavke: Array<ILuceedCreateOrderProduct>,
-    placanja: Array<ILuceedCreateOrderPayment>,
+    /**
+     * Stavke
+     */
+    stavke: Array<ILuceedCreateOrderProduct> = [],
+    /**
+     * Pouzece
+     * "vrsta_placanja_uid": "12-3228",
+     * "naziv": "Pouzeće",
+     * "fiskalna_oznaka": "T"
+     */
+    placanjeIznos: string,
     data: ILuceedCreateOrder
   ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/NaloziProdaje/snimi/`;
     let response: ILuceedCreateOrdersResponse | undefined = undefined;
+
+    /**
+     * Placanje
+     */
+    const placanje: ILuceedCreateOrderPayment = {
+      iznos: placanjeIznos,
+      vrsta_placanja_uid:
+        config.luceed_nalog_prodaje_vrsta_placanja_pouzece_uid,
+    };
 
     data = {
       ...data,
@@ -147,6 +165,16 @@ class LuceedOrdersService {
        * Later - remove this status.
        */
       status: "Storno",
+
+      /**
+       * Stavke
+       */
+      stavke: stavke,
+
+      /**
+       * Payment
+       */
+      placanja: [placanje],
     };
     try {
       const axiosResponse = await axios({

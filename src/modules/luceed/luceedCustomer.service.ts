@@ -74,6 +74,15 @@ class LuceedCustomerService {
    * @returns customerUID
    */
   async createCustomer(
+    ime: string,
+    prezime: string,
+    telefon: string,
+    mobitel: string,
+    email: string,
+    postanskiBroj: string,
+    mjestoUid: string,
+    adresa: string,
+    maticniBroj: string,
     data: ILuceedCustomer,
     startPosition = 0,
     amountToReturn = 1000,
@@ -81,6 +90,39 @@ class LuceedCustomerService {
   ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/snimi/`;
     let response: ILuceedCreateCustomerResponse | undefined = undefined;
+
+    data = {
+      ...data,
+      ime: ime,
+      prezime: prezime,
+      enabled: "D",
+      tip_komitenta: "F",
+
+      /**
+       * Contact
+       */
+      mobitel: mobitel,
+      telefon: telefon,
+      e_mail: email,
+
+      /**
+       * Location
+       *
+       * TODO: Explain every field,
+       * optional/required.
+       * Way to get it's value.
+       *
+       * Adresa, maticni_broj su required?
+       * Sto je maticni broj?
+       */
+      postanski_broj: postanskiBroj,
+      mjesto_uid: mjestoUid,
+      adresa: adresa,
+      maticni_broj: maticniBroj,
+
+      tip_cijene: "M",
+    };
+
     try {
       const axiosResponse = await axios({
         method: "post",

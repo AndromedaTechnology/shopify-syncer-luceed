@@ -163,7 +163,8 @@ export interface ILuceedCreateOrderProduct {
    * REQUIRED
    * Šifra artikla u Luceed-u
    */
-  artikl: string;
+  artikl_uid: string;
+  artikl?: string;
   /**
    * REQUIRED
    * Količina na narudžbi
@@ -192,7 +193,8 @@ export interface ILuceedCreateOrderPayment {
   /**
    * REQUIRED
    */
-  vrsta_placanja: string;
+  vrsta_placanja_uid?: string;
+  vrsta_placanja?: string;
   /**
    * REQUIRED
    */

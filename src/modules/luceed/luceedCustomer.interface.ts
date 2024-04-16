@@ -15,6 +15,14 @@ export interface ILuceedCustomer {
    * ime je za fizicku osobu
    */
   ime?: string;
+  /**
+   * REQUIRED?
+   *
+   * naziv ili ime
+   *
+   * prezime je za fizicku osobu
+   */
+  prezime?: string;
 
   /**
    * REQUIRED
@@ -32,18 +40,28 @@ export interface ILuceedCustomer {
    */
   tip_komitenta?: string;
 
-  adresa?: string;
-  telefon?: string;
+  /**
+   * CONTACT
+   */
   mobitel?: string;
+  telefon?: string;
   e_mail?: string;
-  postanski_broj?: string;
 
   /**
-   * TODO: Sto je ovo? Potrebno?
+   * REQUIRED.
    * Tip cijene, V ako ništa nije upisano (veleprodajna/maloprodajna)
    * [V/M]
+   *
+   * M mora biti, maloprodajna cijena.
    */
   tip_cijene?: string;
+
+  /**
+   * LOCATION
+   */
+
+  adresa?: string;
+  postanski_broj?: string;
   /**
    * TODO: Sto je ovo? Potrebno?
    */
@@ -51,6 +69,7 @@ export interface ILuceedCustomer {
   /**
    * TODO: Sto je ovo? Potrebno?
    */
+  mjesto_uid?: string;
   mjesto?: string;
 
   /**
