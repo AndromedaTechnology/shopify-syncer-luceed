@@ -49,7 +49,8 @@
 -- Meat is not selling
 -- We have 4 pieces and that's it, it's not needed to know exact size. That goes by variants etc.? Not needed.
 
-- Webshop has MPC or VPC prices?,
+- DONE: Webshop has MPC or VPC prices?, MPC! DONE!
+
 - TODO: Check: Price: 2 or 3 decimal points?,
 
 - DONE: TODO: Test: Match Shopify.sku with Luceed.aritkl
@@ -57,7 +58,7 @@
 --- Match this with SKU, as we have that saved properly.
 -- Handle and SKU MUST BE THE SAME!
 
-- Show [raspolozivo,dostupno] for amount on webshop?
+- DONE: Show [raspolozivo,stanje] for amount on webshop? Rasplozivo (as stanje is hard value, raspolozivo takes reservations into account)
 
 ## Cronjobs
 
