@@ -8,6 +8,7 @@ import {
   ILuceedCreateOrdersResponse,
   ILuceedCreateOrderProduct,
   ILuceedCreateOrderPayment,
+  ILuceedCreateOrdersRequest,
 } from "./luceedOrder.interface";
 
 const luceedUsername = config.luceed_username;
@@ -70,15 +71,17 @@ class LuceedOrdersService {
    * @param statusi TODO: Check if statusi properly set. (via param constructor)
    */
   async fetchOrders(
-    statusi: string = LuceedStatusi.toString()
+    // orderUid?: string,
+    // statusi: string = LuceedStatusi.toString()
+    statusi: string = "01,02"
   ): Promise<Array<ILuceedOrder>> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/statusi/[${statusi}]`;
+    // var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/uid/[${orderUid}]`;
     let response: ILuceedOrdersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
         method: "get",
         url: url,
-        // data: reqData,
         auth: {
           username: luceedUsername,
           password: luceedPassword,
@@ -120,7 +123,7 @@ class LuceedOrdersService {
      * "fiskalna_oznaka": "T"
      */
     placanjeIznos: string,
-    data: ILuceedCreateOrder
+    orderData: ILuceedCreateOrder
   ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/NaloziProdaje/snimi/`;
     let response: ILuceedCreateOrdersResponse | undefined = undefined;
@@ -134,9 +137,10 @@ class LuceedOrdersService {
         config.luceed_nalog_prodaje_vrsta_placanja_pouzece_uid,
     };
 
-    data = {
-      ...data,
-      datum: orderDate,
+    orderData = {
+      ...orderData,
+      datum: orderDate ?? new Date().toDateString(),
+      nalog_prodaje_b2b: narudzba ?? "Shopify Order Test",
       narudzba: narudzba ?? "Shopify Order Test",
       /**
        * Partner / customer
@@ -156,13 +160,19 @@ class LuceedOrdersService {
       skl_dokument: config.luceed_nalog_prodaje_skl_dokument,
 
       /**
+       * TODO: Remove for testing
+       */
+      skladiste_uid: config.luceed_nalog_prodaje_sa__skladiste_uid,
+
+      /**
        * Status
        * TODO: For testing!! ONLY! Remove later!
        *
        * status=99 (Storno) - to mark it for deletion - for testing purposes.
        * Later - remove this status.
        */
-      status: "Storno",
+      // status: "Storno",
+      status: config.luceed_nalog_status,
 
       /**
        * Stavke
@@ -173,6 +183,9 @@ class LuceedOrdersService {
        * Payment
        */
       placanja: [placanje],
+    };
+    const data: ILuceedCreateOrdersRequest = {
+      nalozi_prodaje: [orderData],
     };
     try {
       const axiosResponse = await axios({

@@ -1,6 +1,43 @@
 # Luceed API pitanja
 
-## TODO:
+## TODO: Kreiranje Naloga Prodaje
+
+1. Create Nalog prodaje: Na nalogu prodaje `nalog_prodaje_b2b` je required data.
+Od kud je ovo, gdje ovo dobiti?
+Ovo postavljamo na istu vrijednost kao i `narudzba` field (orderId is Shopifya)?
+
+2. Create Nalog prodaje: za "status": "Storno"...
+Vraca da ne moze naci taj status.
+Koji je UID za ovo?
+
+Trenutacno saljemo {status: "01"}.
+Da li je ovo predvidjeno (01)?
+
+3. Create nalog prodaje: Vraca gresku pj_id mora biti postavljen
+Postavili smo sa skladista, na skladiste i skl. dokument.
+No, bez ovoga {"skladiste_uid":"1-3228"} (sklasite maloprodaje),
+vraca `pj_id mora biti postavljeno`.
+Pa smo stavili {"skladiste_uid":"1-3228"} i sad kreiranje narudzbe radi.
+
+Zbog cega i je li ovo sad dobro?
+Na skladiste_uid treba biti MALOPRODAJA ili WEBSHOP?
+S time da imamo i sa, na skladiste i skl. dokument (MSM) postavljeno.
+
+4. Create nalog prodaje: Na koji nacin Luceed API postavlja `nalogProdaje.za_naplatu`?
+
+Postavili smo `nalogProdaje.stavke[0].kolicina` = 12 (12 komada za 1 (jedan, jedini) proizvod, pod stavkama).
+I stavili smo pod `nalogProdaje.placanja.iznos=123.45`.
+
+Luceed API je postavio `nalogProdaje.za_naplatu` na `356.25`.
+
+Kako postavljati placanja.iznos?
+Moramo izracunati finalnu cijenu narudzbe (kolicina * MPC za svaki proizvod?)?
+
+5. Treba nam popis svih dostupnih Statusa (01, 02, ... ili nazivi ili UID - najbolje sve).
+
+Ne mozemo pronaci endpoint koji ih vraca u dokumentaciji.
+
+## DONE
 
 1. Zasto u nalogu prodaje tip cijene mora biti M?
 A u customeru imamo tip cijene V defaultno?

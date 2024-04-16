@@ -8,7 +8,7 @@ export interface ILuceedCreateOrdersResponse {
    */
   result: Array<string>;
 }
-export interface ILuceedCreateOrdersInput {
+export interface ILuceedCreateOrdersRequest {
   nalozi_prodaje: Array<ILuceedCreateOrder>;
 }
 export interface ILuceedCreateOrder {
@@ -16,7 +16,7 @@ export interface ILuceedCreateOrder {
   nalog_prodaje_uid?: string;
 
   /**
-   * REQUIRED
+   * REQUIRED!
    * TODO: What is this?
    *
    * PK naloga prodaje iz B2B aplikacije
@@ -129,6 +129,12 @@ export interface ILuceedCreateOrder {
    */
   status?: string;
   status_uid?: string;
+
+  /**
+   * TODO: Remove after testing.?
+   * Without this, Luceed API returns "pj_id" needs to be set (not null).
+   */
+  skladiste_uid?: string;
 
   /**
    * REQUIRED
