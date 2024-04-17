@@ -162,7 +162,7 @@ class LuceedService {
      * Set inventory
      */
     const inventoryLevel = await shopifyInventoryService.setProductInventory(
-      product,
+      product!,
       locationDefaultId,
       productAmount,
       isDebug

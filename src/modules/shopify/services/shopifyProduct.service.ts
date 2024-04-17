@@ -47,7 +47,8 @@ class ShopifyProductService {
       is_created: false,
       product: undefined,
     };
-    if (product && product.id) {
+
+    if (product && product!.id) {
       /**
        * Update Product
        * TODO: Test!
@@ -56,14 +57,15 @@ class ShopifyProductService {
        * So, get default product variant ID,
        * and then set it here (as variant.id, to know which variant to update).
        */
-      const productId = product.id;
+      const productId = product!.id;
       const variant = await shopifyProductVariantService.touchProductVariant(
-        product,
+        product!,
         productHandle,
         productPrice,
         isDebug
       );
-      if (!variant || !variant.id) {
+
+      if (!variant || !variant!.id) {
         throw "product exists, but variant doesnt";
         /**
          * Then create default Variant and attach to product
@@ -71,9 +73,9 @@ class ShopifyProductService {
          */
       }
       const productUpdated = await this.updateProduct(
-        productId,
+        productId!,
         productHandle,
-        variant.id,
+        variant!.id!,
         productHandle,
         productPrice,
         {
@@ -246,7 +248,7 @@ class ShopifyProductService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
-        method: "post",
+        method: "put",
         url: url,
         data: {
           product: data,
