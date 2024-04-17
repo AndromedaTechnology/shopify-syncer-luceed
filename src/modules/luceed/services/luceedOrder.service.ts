@@ -115,7 +115,7 @@ class LuceedOrdersService {
     placanjeIznos: string,
     orderData: ILuceedCreateOrder = {}
   ): Promise<string | undefined> {
-    var url = `http://luceedapi.tomsoft.hr:3816/NaloziProdaje/snimi/`;
+    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/snimi/`;
     let response: ILuceedCreateOrdersResponse | undefined = undefined;
 
     /**
