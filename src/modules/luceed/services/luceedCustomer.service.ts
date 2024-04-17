@@ -1,13 +1,13 @@
 import axios from "axios";
 
-import config from "../../config";
+import config from "../../../config";
 
 import {
   ILuceedCustomer,
   ILuceedCustomersResponse,
   ILuceedCreateCustomerResponse,
   ILuceedCreateCustomerRequest,
-} from "./luceedCustomer.interface";
+} from "../interfaces/luceedCustomer.interface";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;

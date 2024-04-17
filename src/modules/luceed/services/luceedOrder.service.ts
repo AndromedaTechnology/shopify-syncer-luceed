@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import config from "../../config";
+import config from "../../../config";
 import {
   ILuceedOrder,
   ILuceedCreateOrder,
@@ -9,7 +9,7 @@ import {
   ILuceedCreateOrderProduct,
   ILuceedCreateOrderPayment,
   ILuceedCreateOrdersRequest,
-} from "./luceedOrder.interface";
+} from "../interfaces/luceedOrder.interface";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
@@ -39,16 +39,6 @@ export const LuceedStatusi = [
  * Luceed
  */
 class LuceedOrdersService {
-  async findAll() {
-    /**
-     * TODO: Set default statusi
-     */
-    await this.fetchOrders();
-    return {
-      msg: "Hello Luceed Orders",
-    };
-  }
-
   private printProducts(orders: Array<ILuceedOrder>) {
     for (const order of orders) {
       console.log({

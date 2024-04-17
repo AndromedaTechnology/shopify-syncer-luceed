@@ -1,7 +1,7 @@
-import { ILuceedProduct } from "./luceedProduct.interface";
+import { ILuceedProduct } from "../interfaces/luceedProduct.interface";
 import luceedProductService from "./luceedProduct.service";
 import luceedInventoryService from "./luceedInventory.service";
-import { ILuceedInventoryItem } from "./luceedInventory.interface";
+import { ILuceedInventoryItem } from "../interfaces/luceedInventory.interface";
 
 /**
  * Luceed
@@ -9,14 +9,6 @@ import { ILuceedInventoryItem } from "./luceedInventory.interface";
  * Note about UID(s): UID= ID-SID.
  */
 class LuceedService {
-  async findAll() {
-    await this.fetchProductsWithInventory();
-
-    return {
-      msg: "Hello Luceed",
-    };
-  }
-
   async fetchProductsWithInventory(
     isDebug = true
   ): Promise<Array<ILuceedProduct>> {

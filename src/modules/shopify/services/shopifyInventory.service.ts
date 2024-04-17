@@ -1,12 +1,12 @@
 import axios from "axios";
 
-import config from "../../config";
+import config from "../../../config";
 import {
   IShopifyInventoryLevel,
   IShopifyProduct,
   IShopifySetInventoryLevelResponse,
-} from "./shopify.interface";
-import { limiter } from "../root/root.service";
+} from "../interfaces/shopify.interface";
+import { limiter } from "../../root/root.service";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
 
 const shopName = config.shopify_shop_name;

@@ -1,12 +1,12 @@
 import axios from "axios";
 
-import config from "../../config";
+import config from "../../../config";
 import {
   IShopifyLocation,
   IShopifyLocationResponse,
   IShopifyLocationsResponse,
-} from "./shopify.interface";
-import { limiter } from "../root/root.service";
+} from "../interfaces/shopify.interface";
+import { limiter } from "../../root/root.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;

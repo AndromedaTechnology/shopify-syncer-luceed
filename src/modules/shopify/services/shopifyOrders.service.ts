@@ -1,10 +1,13 @@
 import axios from "axios";
 
-import config from "../../config";
+import config from "../../../config";
 
-import shopifyHelper from "./shopify.helper";
-import { limiter } from "../root/root.service";
-import { IShopifyOrder, IShopifyOrdersResponse } from "./shopify.interface";
+import shopifyHelper from "../helpers/shopify.helper";
+import { limiter } from "../../root/root.service";
+import {
+  IShopifyOrder,
+  IShopifyOrdersResponse,
+} from "../interfaces/shopify.interface";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;

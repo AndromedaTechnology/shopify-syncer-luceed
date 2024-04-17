@@ -1,14 +1,14 @@
 import axios from "axios";
 
-import config from "../../config";
-import { limiter } from "../root/root.service";
+import config from "../../../config";
+import { limiter } from "../../root/root.service";
 
 import {
   IShopifyProduct,
   IShopifyProductsResponse,
   IShopifyProductCreateResponse,
-} from "./shopify.interface";
-import shopifyHelper from "./shopify.helper";
+} from "../interfaces/shopify.interface";
+import shopifyHelper from "../helpers/shopify.helper";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
 
 const shopName = config.shopify_shop_name;
