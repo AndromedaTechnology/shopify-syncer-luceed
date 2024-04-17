@@ -3,10 +3,16 @@ import luceedProductService from "./luceedProduct.service";
 import luceedInventoryService from "./luceedInventory.service";
 import { ILuceedInventoryItem } from "../interfaces/luceedInventory.interface";
 import shopifyInventoryService from "../../shopify/services/shopifyInventory.service";
-import shopifyProductService from "../../shopify/services/shopifyProduct.service";
+import shopifyProductService, {
+  IShopifySyncStatusProduct,
+} from "../../shopify/services/shopifyProduct.service";
 import { IShopifyProduct } from "../../shopify/interfaces/shopify.interface";
 import config from "../../../config";
 import shopifyLocationsService from "../../shopify/services/shopifyLocations.service";
+
+export interface IShopifySyncStatusProducts {
+  products_created_cnt?: number;
+}
 
 /**
  * Luceed
@@ -17,10 +23,14 @@ class LuceedService {
   public async syncLuceedShopifyProducts(
     luceedProducts: Array<ILuceedProduct>,
     isDebug = true
-  ) {
+  ): Promise<IShopifySyncStatusProducts> {
     if (!luceedProducts || !luceedProducts.length) {
       throw "no luceed products to sync";
     }
+
+    let productsStatus: IShopifySyncStatusProducts = {
+      products_created_cnt: 0,
+    };
 
     /**
      * Shopify Location Default
@@ -79,7 +89,7 @@ class LuceedService {
       /**
        * Sync
        */
-      await this.syncLuceedShopifyProduct(
+      const productSyncStatus = await this.syncLuceedShopifyProduct(
         shopifyProducts,
         productHandle!,
         productTitle!,
@@ -92,7 +102,14 @@ class LuceedService {
         Math.floor(productAmount),
         locationDefault?.id!
       );
+      if (productSyncStatus.is_created) {
+        productsStatus = {
+          products_created_cnt: productsStatus.products_created_cnt ?? 0 + 1,
+        };
+      }
     }
+
+    return productsStatus;
   }
 
   private async syncLuceedShopifyProduct(
@@ -104,7 +121,11 @@ class LuceedService {
     productAmount: number,
     locationDefaultId: number,
     isDebug = true
-  ): Promise<IShopifyProduct> {
+  ): Promise<IShopifySyncStatusProduct> {
+    let response: IShopifySyncStatusProduct = {
+      product: undefined,
+      is_created: false,
+    };
     /**
      * TODO: Remove prefixes (000?)
      */
@@ -119,7 +140,7 @@ class LuceedService {
     /**
      * Touch product
      */
-    product = await shopifyProductService.touchProduct(
+    response = await shopifyProductService.touchProduct(
       product,
       productHandle,
       productTitle,
@@ -154,7 +175,7 @@ class LuceedService {
       //   inventoryLevel
       // );
     }
-    return product;
+    return response;
   }
 }
 

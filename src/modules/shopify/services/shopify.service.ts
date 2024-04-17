@@ -9,13 +9,23 @@ import { ILuceedCustomer } from "../../luceed/interfaces/luceedCustomer.interfac
 import { ILuceedProduct } from "../../luceed/interfaces/luceedProduct.interface";
 import luceedProductService from "../../luceed/services/luceedProduct.service";
 
+export interface IShopifyOrderSyncStatus {
+  orders_created_cnt?: number;
+  customers_created_cnt?: number;
+}
 class ShopifyService {
   async syncShopifyOrdersToLuceed(
     shopifyOrders: Array<IShopifyOrder>,
     luceedOrders: Array<ILuceedOrder>,
     luceedProducts: Array<ILuceedProduct>
-  ) {
-    if (!shopifyOrders) return;
+  ): Promise<IShopifyOrderSyncStatus> {
+    if (!shopifyOrders) {
+      return {};
+    }
+    let response: IShopifyOrderSyncStatus = {
+      orders_created_cnt: 0,
+      customers_created_cnt: 0,
+    };
     for (const shopifyOrder of shopifyOrders) {
       const luceedOrder = this.getLuceedOrderByShopifyOrderId(
         shopifyOrder.name,
@@ -26,9 +36,15 @@ class ShopifyService {
           shopifyOrder,
           luceedProducts
         );
+        if (luceedOrderId) {
+          response = {
+            ...response,
+            orders_created_cnt: response?.orders_created_cnt ?? 0 + 1,
+          };
+        }
       }
-      return;
     }
+    return response;
   }
 
   async createLuceedOrder(

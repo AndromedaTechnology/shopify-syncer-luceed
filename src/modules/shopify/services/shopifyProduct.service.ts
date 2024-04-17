@@ -14,6 +14,11 @@ import shopifyProductVariantService from "./shopifyProductVariant.service";
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
 
+export interface IShopifySyncStatusProduct {
+  is_created?: boolean;
+  product?: IShopifyProduct;
+}
+
 class ShopifyProductService {
   async findAll(isDebug = true) {
     // await this.fetchProducts("8463331983593");
@@ -37,7 +42,11 @@ class ShopifyProductService {
     productVendor: string,
     productPrice: string,
     isDebug = true
-  ) {
+  ): Promise<IShopifySyncStatusProduct> {
+    let response: IShopifySyncStatusProduct = {
+      is_created: false,
+      product: undefined,
+    };
     if (product && product.id) {
       /**
        * Update Product
@@ -94,11 +103,20 @@ class ShopifyProductService {
         false
       );
       product = productCreated;
+
+      response = {
+        ...response,
+        is_created: true,
+      };
       if (isDebug) {
         // console.log("--productCreated", productCreated);
       }
     }
-    return product;
+    response = {
+      ...response,
+      product: product,
+    };
+    return response;
   }
 
   /**
