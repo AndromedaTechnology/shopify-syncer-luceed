@@ -7,6 +7,7 @@ import {
   ILuceedCustomersResponse,
   ILuceedCreateCustomerResponse,
   ILuceedCreateCustomerRequest,
+  ILuceedCustomersByEmailResponse,
 } from "../interfaces/luceedCustomer.interface";
 
 const luceedUsername = config.luceed_username;
@@ -69,7 +70,7 @@ class LuceedCustomerService {
   async fetchCustomersByEmail(email: string): Promise<Array<ILuceedCustomer>> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/email/${email}`;
     // var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
-    let response: ILuceedCustomersResponse | undefined = undefined;
+    let response: ILuceedCustomersByEmailResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
         method: "get",
@@ -90,7 +91,7 @@ class LuceedCustomerService {
       throw error;
     }
     // console.log("--luceed-customers-email", email, response);
-    return response?.result[0]?.partneri ?? [];
+    return response?.result[0]?.partner ?? [];
   }
 
   /**
@@ -152,7 +153,7 @@ class LuceedCustomerService {
     const data: ILuceedCreateCustomerRequest = {
       partner: [customerData],
     };
-
+    // console.log("-data-create-customer", data);
     try {
       const axiosResponse = await axios({
         method: "post",

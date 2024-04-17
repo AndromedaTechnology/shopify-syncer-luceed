@@ -22,37 +22,46 @@ class ShopifyService {
         luceedOrders
       );
       if (!luceedOrder) {
-        /**
-         * PARTNER
-         */
-        const luceedPartner = await this.getLuceedCustomerByEmail(shopifyOrder);
-        if (!luceedPartner || !luceedPartner.partner_uid) continue;
-
-        /**
-         * STAVKE
-         */
-        let stavke: Array<ILuceedCreateOrderProduct> =
-          await this.getLuceedStavkeFromShopifyOrder(
-            shopifyOrder,
-            luceedProducts
-          );
-
-        /**
-         * PLACANJE
-         */
-        let placanjeIznos: string | undefined =
-          await this.getLuceedPlacanjeIznosFromShopifyOrder(shopifyOrder);
-        if (!placanjeIznos) continue;
-
-        await luceedOrderService.createOrder(
-          shopifyOrder.created_at?.toString() ?? new Date().toString(),
-          shopifyOrder.name,
-          luceedPartner.partner_uid!,
-          stavke,
-          placanjeIznos
+        const luceedOrderId = await this.createLuceedOrder(
+          shopifyOrder,
+          luceedProducts
         );
       }
+      return;
     }
+  }
+
+  async createLuceedOrder(
+    shopifyOrder: IShopifyOrder,
+    luceedProducts: Array<ILuceedProduct>
+  ): Promise<string | undefined> {
+    /**
+     * PARTNER
+     */
+    const luceedPartner = await this.getLuceedCustomerByEmail(shopifyOrder);
+    if (!luceedPartner || !luceedPartner.partner_uid) return;
+
+    /**
+     * STAVKE
+     */
+    let stavke: Array<ILuceedCreateOrderProduct> =
+      await this.getLuceedStavkeFromShopifyOrder(shopifyOrder, luceedProducts);
+
+    /**
+     * PLACANJE
+     */
+    let placanjeIznos: string | undefined =
+      await this.getLuceedPlacanjeIznosFromShopifyOrder(shopifyOrder);
+    if (!placanjeIznos) return;
+
+    const luceedOrderId = await luceedOrderService.createOrder(
+      shopifyOrder.created_at?.toString() ?? new Date().toString(),
+      shopifyOrder.name,
+      luceedPartner.partner_uid!,
+      stavke,
+      placanjeIznos
+    );
+    return luceedOrderId;
   }
 
   /**
@@ -127,16 +136,17 @@ class ShopifyService {
   private async getLuceedCustomerByEmail(
     shopifyOrder: IShopifyOrder
   ): Promise<ILuceedCustomer | undefined> {
+    const email = this.getShopifyOrderEmail(shopifyOrder);
     /**
      * No email for customer - skip ORDER
      */
-    if (!shopifyOrder.email) return undefined;
+    if (!email) return undefined;
 
     let luceedPartner = undefined;
     const luceedPartners = await luceedCustomerService.fetchCustomersByEmail(
-      shopifyOrder.email
+      email
     );
-    if (!luceedPartners || !(luceedPartners.length === 0)) {
+    if (!luceedPartners || luceedPartners.length === 0) {
       luceedPartner = await this.createLuceedCustomerFromShopifyOrder(
         shopifyOrder
       );
@@ -146,6 +156,14 @@ class ShopifyService {
 
     return luceedPartner;
   }
+  getShopifyOrderEmail(shopifyOrder: IShopifyOrder): string | undefined {
+    const email =
+      shopifyOrder.email ??
+      shopifyOrder.contact_email ??
+      shopifyOrder.customer?.email ??
+      undefined;
+    return email;
+  }
 
   /**
    * TODO: Check
@@ -153,18 +171,28 @@ class ShopifyService {
   private async createLuceedCustomerFromShopifyOrder(
     shopifyOrder: IShopifyOrder
   ): Promise<ILuceedCustomer | undefined> {
+    const email = this.getShopifyOrderEmail(shopifyOrder);
+
+    if (!email) return undefined;
     if (!shopifyOrder.customer) return undefined;
-    if (!shopifyOrder.customer.email) return undefined;
     const luceedCustomerId = await luceedCustomerService.createCustomer(
-      shopifyOrder.customer.first_name,
-      shopifyOrder.customer.last_name,
-      shopifyOrder.customer.phone,
-      shopifyOrder.customer.phone,
-      shopifyOrder.customer.email
+      shopifyOrder.customer!.first_name,
+      shopifyOrder.customer!.last_name,
+      shopifyOrder.customer!.phone,
+      shopifyOrder.customer!.phone,
+      email
     );
+    // console.log({
+    //   luceedCustomerId: luceedCustomerId,
+    //   first_name: shopifyOrder.customer.first_name,
+    //   last_name: shopifyOrder.customer.last_name,
+    //   phone: shopifyOrder.customer.phone,
+    //   email: email,
+    // });
+    // return undefined;
     if (!luceedCustomerId) return undefined;
     const luceedCustomers = await luceedCustomerService.fetchCustomersByEmail(
-      shopifyOrder.customer.email
+      email!
     );
     return luceedCustomers && luceedCustomers.length
       ? luceedCustomers[0]

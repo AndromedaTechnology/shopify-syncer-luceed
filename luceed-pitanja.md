@@ -1,5 +1,17 @@
 # Luceed API pitanja
 
+## TODO:
+
+1. Kreirao sam 1 customera - Webshop Customer
+Ispod tog customera (sa `parent partner uid`) postavljam sve nove korisnike,
+tako da imamo grupirano sve s weba pod jednom stavkom.
+
+I onda povlacim partnere preko emaila, i vraca prazno.
+Znaci ne mozemo tako?
+
+Moramo sve bez parent_uid-a kreirat?
+To je samo za istog partnera, a razlicite adrese?
+
 ## TODO: Kreiranje Naloga Prodaje
 
 1. Create Nalog prodaje: Na nalogu prodaje `nalog_prodaje_b2b` je required data.

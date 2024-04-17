@@ -91,6 +91,16 @@ export interface ILuceedCustomer {
    */
   oib?: string;
 }
+/**
+ * For some reason this is a bug in Luceed.
+ * Here should be partneri, not partner.
+ * As it returns array of items.
+ *
+ * So, this interface is needed, to disambiugate from regular response.
+ */
+export interface ILuceedCustomersByEmailResponse {
+  result: Array<{ partner: Array<ILuceedCustomer> }>;
+}
 export interface ILuceedCustomersResponse {
   result: Array<{ partneri: Array<ILuceedCustomer> }>;
 }
