@@ -2,9 +2,9 @@
 
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 
-- TODO: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
+- DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
 
-- TODO: Sync Shopify Order.Customer to Luceed (not saved yet) (check customer, by email)
+- DONE: Check: Sync Shopify Order.Customer to Luceed (not saved yet) (check customer, by email)
 
 - DONE: TEST: Luceed [Create] Customer
 
