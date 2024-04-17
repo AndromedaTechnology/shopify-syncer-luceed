@@ -2,6 +2,11 @@ import { ILuceedProduct } from "../interfaces/luceedProduct.interface";
 import luceedProductService from "./luceedProduct.service";
 import luceedInventoryService from "./luceedInventory.service";
 import { ILuceedInventoryItem } from "../interfaces/luceedInventory.interface";
+import shopifyInventoryService from "../../shopify/services/shopifyInventory.service";
+import shopifyProductService from "../../shopify/services/shopifyProduct.service";
+import { IShopifyProduct } from "../../shopify/interfaces/shopify.interface";
+import config from "../../../config";
+import shopifyLocationsService from "../../shopify/services/shopifyLocations.service";
 
 /**
  * Luceed
@@ -9,69 +14,149 @@ import { ILuceedInventoryItem } from "../interfaces/luceedInventory.interface";
  * Note about UID(s): UID= ID-SID.
  */
 class LuceedService {
-  async fetchProductsWithInventory(
+  public async syncLuceedShopifyProducts(
+    luceedProducts: Array<ILuceedProduct>,
     isDebug = true
-  ): Promise<Array<ILuceedProduct>> {
-    /**
-     * Fetch Products
-     */
-    let products: Array<ILuceedProduct> = [];
-    try {
-      products = await luceedProductService.fetchProducts();
-      if (isDebug) {
-        luceedProductService.printProducts(products);
-      }
-    } catch (error) {
-      throw error;
+  ) {
+    if (!luceedProducts || !luceedProducts.length) {
+      throw "no luceed products to sync";
     }
 
     /**
-     * Fetch Inventory
+     * Shopify Location Default
      */
-
-    let inventoryItems: Array<ILuceedInventoryItem> = [];
-    try {
-      inventoryItems = await luceedInventoryService.fetchInventory();
-    } catch (error) {
-      throw error;
-    }
-    if (isDebug) {
-      console.log(inventoryItems);
-    }
-
-    /**
-     * Merge products and inventory
-     */
-    const merged: Array<ILuceedProduct> = this.mergeProductsWithInventory(
-      products,
-      inventoryItems
+    const locationDefault = await shopifyLocationsService.getLocation(
+      config.shopify_shop_location_id
     );
-    if (isDebug) {
-      luceedProductService.printProducts(merged);
-      console.log("LUCEED Products TOTAL", merged?.length);
+    console.log("--default-location", locationDefault);
+    if (!locationDefault || !locationDefault.id) {
+      throw "default location not available";
     }
 
-    return merged;
+    /**
+     * Shopify Products
+     */
+    const shopifyProducts: Array<IShopifyProduct> =
+      await shopifyProductService.fetchProducts(
+        undefined,
+        undefined,
+        250,
+        true
+      );
+    if (isDebug) {
+      console.log("--shopifyProducts", shopifyProducts.length);
+    }
+
+    /**
+     * Loop luceed shopifyProducts
+     */
+    for (const luceedProduct of luceedProducts) {
+      const productTitle = luceedProduct.naziv;
+      const productVendor = luceedProduct.glavni_dobavljac_naziv;
+      let productHandle = luceedProduct.artikl;
+      /**
+       * TODO: Refactor
+       * Remove leading zeroes
+       */
+      if (productHandle) {
+        const productHandleInt = parseInt(productHandle);
+        productHandle = productHandleInt.toString();
+      }
+      const productAmount = luceedProduct.raspolozivo_kol ?? 0;
+      // console.log("productHandle", productHandle);
+      // break;
+      /**
+       * TODO: Price: 2 or 3 decimal points
+       */
+      const productPrice = luceedProduct.mpc?.toString() ?? "0.00";
+
+      /**
+       * TODO: undefined - returned by luceed?
+       */
+      if (productAmount === undefined) continue;
+      if (!productTitle) continue;
+      if (!productHandle) continue;
+      if (!productVendor) continue;
+
+      /**
+       * Sync
+       */
+      await this.syncLuceedShopifyProduct(
+        shopifyProducts,
+        productHandle!,
+        productTitle!,
+        productVendor!,
+        productPrice,
+        /**
+         * TODO: We floor (not to send decimal to Shopify)
+         * TODO: Support decimal for meat etc.
+         */
+        Math.floor(productAmount),
+        locationDefault?.id!
+      );
+    }
   }
 
-  private mergeProductsWithInventory(
-    products: Array<ILuceedProduct>,
-    inventoryItems: Array<ILuceedInventoryItem>
-  ): Array<ILuceedProduct> {
-    products = products.map((product) => {
-      const productInventoryItem = luceedInventoryService.getProductInventory(
-        product,
-        inventoryItems
+  private async syncLuceedShopifyProduct(
+    products: Array<IShopifyProduct>,
+    productHandle: string,
+    productTitle: string,
+    productVendor: string,
+    productPrice: string,
+    productAmount: number,
+    locationDefaultId: number,
+    isDebug = true
+  ): Promise<IShopifyProduct> {
+    /**
+     * TODO: Remove prefixes (000?)
+     */
+    let product = shopifyProductService.getProductByHandle(
+      products,
+      productHandle
+    );
+    if (isDebug) {
+      console.log("--product", productHandle, product);
+    }
+
+    /**
+     * Touch product
+     */
+    product = await shopifyProductService.touchProduct(
+      product,
+      productHandle,
+      productTitle,
+      productVendor,
+      productPrice,
+      isDebug
+    );
+
+    /**
+     * Something went wrong.
+     * Product to available before, and not created now.
+     * Break.
+     */
+    if (!product) {
+      throw "product not found before, and not created - so can't continue";
+    }
+
+    /**
+     * Set inventory
+     */
+    const inventoryLevel = await shopifyInventoryService.setProductInventory(
+      product,
+      locationDefaultId,
+      productAmount,
+      isDebug
+    );
+
+    if (isDebug) {
+      console.log(
+        "--set-inventory-level-" + locationDefaultId,
+        productAmount,
+        inventoryLevel
       );
-      return {
-        ...product,
-        raspolozivo: productInventoryItem?.raspolozivo,
-        raspolozivo_kol: productInventoryItem?.raspolozivo_kol,
-        stanje: productInventoryItem?.stanje,
-        stanje_kol: productInventoryItem?.stanje_kol,
-      };
-    });
-    return products;
+    }
+    return product;
   }
 }
 

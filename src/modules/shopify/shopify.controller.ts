@@ -1,7 +1,6 @@
 import { RouterContext } from "koa-router";
 
 import shopifyService from "./services/shopify.service";
-import luceedService from "../luceed/services/luceed.service";
 import shopifyOrdersService from "./services/shopifyOrders.service";
 import shopifyProductService from "./services/shopifyProduct.service";
 
@@ -26,7 +25,8 @@ class ShopifyController {
   }
 
   async syncShopifyOrdersToLuceed(ctx: RouterContext) {
-    const response = null;
+    const orders = await shopifyOrdersService.fetchOrders(undefined, false);
+    const response = await shopifyService.syncShopifyOrdersToLuceed(orders);
     ctx.body = response;
     return ctx;
   }

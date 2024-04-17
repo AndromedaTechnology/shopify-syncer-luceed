@@ -1,12 +1,12 @@
 import { RouterContext } from "koa-router";
 
 import luceedService from "./services/luceed.service";
+import luceedProductInventory from "./services/luceedProductInventory.service";
 import luceedOrderService from "./services/luceedOrder.service";
-import shopifyService from "../shopify/services/shopify.service";
 
 class LuceedController {
   async findAllProducts(ctx: RouterContext) {
-    const response = await luceedService.fetchProductsWithInventory();
+    const response = await luceedProductInventory.fetchProductsWithInventory();
     ctx.body = response;
     return ctx;
   }
@@ -18,8 +18,9 @@ class LuceedController {
    * SYNC
    */
   async syncLuceedProductsToShopify(ctx: RouterContext) {
-    const luceedProducts = await luceedService.fetchProductsWithInventory();
-    const response = await shopifyService.syncLuceedShopifyProducts(
+    const luceedProducts =
+      await luceedProductInventory.fetchProductsWithInventory();
+    const response = await luceedService.syncLuceedShopifyProducts(
       luceedProducts
     );
     ctx.body = response;
