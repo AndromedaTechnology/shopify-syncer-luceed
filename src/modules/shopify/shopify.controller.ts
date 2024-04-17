@@ -3,6 +3,8 @@ import { RouterContext } from "koa-router";
 import shopifyService from "./services/shopify.service";
 import shopifyOrdersService from "./services/shopifyOrders.service";
 import shopifyProductService from "./services/shopifyProduct.service";
+import luceedOrderService from "../luceed/services/luceedOrder.service";
+import luceedProductService from "../luceed/services/luceedProduct.service";
 
 class ShopifyController {
   /**
@@ -25,8 +27,17 @@ class ShopifyController {
   }
 
   async syncShopifyOrdersToLuceed(ctx: RouterContext) {
-    const orders = await shopifyOrdersService.fetchOrders(undefined, false);
-    const response = await shopifyService.syncShopifyOrdersToLuceed(orders);
+    const shopifyOrders = await shopifyOrdersService.fetchOrders(
+      undefined,
+      false
+    );
+    const luceedOrders = await luceedOrderService.fetchOrders();
+    const luceedProducts = await luceedProductService.fetchProducts();
+    const response = await shopifyService.syncShopifyOrdersToLuceed(
+      shopifyOrders,
+      luceedOrders,
+      luceedProducts
+    );
     ctx.body = response;
     return ctx;
   }

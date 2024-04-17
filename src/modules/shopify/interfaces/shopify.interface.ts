@@ -141,6 +141,9 @@ export interface IShopifyOrder {
   /**
    * Returned.
    * ID of order on Webshop.
+   * TODO: Check if this is ALWAYS returned.
+   *
+   * This is used to set `narudzba` in LuceedNalogProdaje.
    */
   name: string;
   number: number;
@@ -184,6 +187,10 @@ export interface IShopifyOrder {
    * Customer
    */
   phone?: string;
+  /**
+   * TODO: Is email or contact_email to BE USED for checking if Luceed customer is already created?
+   * Is email always returned?
+   */
   email?: string;
   contact_email?: string;
   customer_locale?: string;
@@ -194,7 +201,7 @@ export interface IShopifyOrder {
   /**
    * What is this?
    */
-  customer?: any;
+  customer?: IShopifyCustomer;
   /**
    * What is this?
    */
@@ -212,4 +219,12 @@ export interface IShopifyOrder {
 }
 export interface IShopifyOrdersResponse {
   orders: Array<IShopifyOrder>;
+}
+
+export interface IShopifyCustomer {
+  id?: number;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  phone?: string;
 }

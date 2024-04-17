@@ -97,23 +97,23 @@ class LuceedCustomerService {
    * @returns customerUID
    */
   async createCustomer(
-    ime: string,
-    prezime: string,
-    telefon: string,
-    mobitel: string,
-    email: string,
-    postanskiBroj: string,
-    mjestoUid: string,
-    adresa: string,
-    maticniBroj: string,
-    customerData: ILuceedCustomer,
+    ime?: string,
+    prezime?: string,
+    telefon?: string,
+    mobitel?: string,
+    email?: string,
+    postanskiBroj?: string,
+    mjestoUid?: string,
+    adresa?: string,
+    maticniBroj?: string,
+    customerData: ILuceedCustomer = {},
     isDebug = true
   ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/snimi/`;
     let response: ILuceedCreateCustomerResponse | undefined = undefined;
 
     customerData = {
-      ...customerData,
+      ...(customerData ?? {}),
       parent__partner_uid: config.luceed_partner_parent_uid,
       ime: ime,
       prezime: prezime,

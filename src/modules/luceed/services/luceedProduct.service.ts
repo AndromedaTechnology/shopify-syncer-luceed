@@ -21,6 +21,11 @@ class LuceedProductService {
     };
   }
 
+  removeLeadingZeroes(productSku: string): string {
+    const productHandleInt = parseInt(productSku);
+    productSku = productHandleInt.toString();
+    return productSku;
+  }
   printProducts(products: Array<ILuceedProduct>) {
     for (const artikl of products) {
       console.log({

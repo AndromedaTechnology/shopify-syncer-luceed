@@ -55,12 +55,10 @@ class LuceedService {
       const productVendor = luceedProduct.glavni_dobavljac_naziv;
       let productHandle = luceedProduct.artikl;
       /**
-       * TODO: Refactor
        * Remove leading zeroes
        */
       if (productHandle) {
-        const productHandleInt = parseInt(productHandle);
-        productHandle = productHandleInt.toString();
+        productHandle = luceedProductService.removeLeadingZeroes(productHandle);
       }
       const productAmount = luceedProduct.raspolozivo_kol ?? 0;
       // console.log("productHandle", productHandle);

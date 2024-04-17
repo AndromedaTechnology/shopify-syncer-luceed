@@ -3,6 +3,12 @@ export interface ILuceedCreateCustomerRequest {
 }
 export interface ILuceedCustomer {
   /**
+   * UID of this partner
+   *
+   * Used to reference Customer in NalogProdaje
+   */
+  partner_uid?: string;
+  /**
    * REQUIRED
    * ALWAYS SET TO WEBSHOP_CUSTOMERS UID
    */
