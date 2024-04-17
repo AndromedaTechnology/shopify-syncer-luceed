@@ -28,7 +28,7 @@ class LuceedService {
     const locationDefault = await shopifyLocationsService.getLocation(
       config.shopify_shop_location_id
     );
-    console.log("--default-location", locationDefault);
+    // console.log("--default-location", locationDefault);
     if (!locationDefault || !locationDefault.id) {
       throw "default location not available";
     }
@@ -44,7 +44,7 @@ class LuceedService {
         true
       );
     if (isDebug) {
-      console.log("--shopifyProducts", shopifyProducts.length);
+      // console.log("--shopifyProducts", shopifyProducts.length);
     }
 
     /**
@@ -113,7 +113,7 @@ class LuceedService {
       productHandle
     );
     if (isDebug) {
-      console.log("--product", productHandle, product);
+      // console.log("--product", productHandle, product);
     }
 
     /**
@@ -148,11 +148,11 @@ class LuceedService {
     );
 
     if (isDebug) {
-      console.log(
-        "--set-inventory-level-" + locationDefaultId,
-        productAmount,
-        inventoryLevel
-      );
+      // console.log(
+      //   "--set-inventory-level-" + locationDefaultId,
+      //   productAmount,
+      //   inventoryLevel
+      // );
     }
     return product;
   }

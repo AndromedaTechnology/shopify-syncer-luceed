@@ -62,12 +62,12 @@ class LuceedInventoryService {
           // "X-Shopify-Access-Token": accessToken,
         },
       });
-      console.log("--luceed-inventory-", axiosResponse);
+      // console.log("--luceed-inventory-", axiosResponse);
       response = axiosResponse?.data;
     } catch (error) {
       console.log(error);
     }
-    console.log("--luceed-inventory-", response);
+    // console.log("--luceed-inventory-", response);
     return response?.result[0]?.stanje ?? [];
   }
 }

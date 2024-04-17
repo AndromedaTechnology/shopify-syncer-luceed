@@ -36,7 +36,7 @@ class LuceedProductInventoryService {
       throw error;
     }
     if (isDebug) {
-      console.log(inventoryItems);
+      // console.log(inventoryItems);
     }
 
     /**

@@ -59,7 +59,7 @@ class LuceedCustomerService {
       console.log("error", error);
       throw error;
     }
-    console.log("--luceed-customers-", naziv, response);
+    // console.log("--luceed-customers-", naziv, response);
     return response?.result[0]?.partneri ?? [];
   }
 
@@ -89,7 +89,7 @@ class LuceedCustomerService {
       console.log("error", error);
       throw error;
     }
-    console.log("--luceed-customers-email", email, response);
+    // console.log("--luceed-customers-email", email, response);
     return response?.result[0]?.partneri ?? [];
   }
 
@@ -172,7 +172,7 @@ class LuceedCustomerService {
       throw error;
     }
     if (isDebug) {
-      console.log("--luceed-customers-", data, response);
+      // console.log("--luceed-customers-", data, response);
     }
     return response?.result[0] ?? undefined;
   }

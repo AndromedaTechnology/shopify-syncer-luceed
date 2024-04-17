@@ -43,7 +43,7 @@ class ShopifyLocationsService {
     } catch (error) {
       console.log(error);
     }
-    console.log("--location-" + id, response?.location);
+    // console.log("--location-" + id, response?.location);
     return response?.location;
   }
   /**
@@ -66,7 +66,7 @@ class ShopifyLocationsService {
     } catch (error) {
       console.log(error);
     }
-    console.log("--locations", response?.locations);
+    // console.log("--locations", response?.locations);
     return response?.locations ?? [];
   }
 }

@@ -76,7 +76,7 @@ class ShopifyProductService {
       );
       product = productUpdated;
       if (isDebug) {
-        console.log("--productUpdated", productUpdated);
+        // console.log("--productUpdated", productUpdated);
       }
     } else if (!product) {
       /**
@@ -95,7 +95,7 @@ class ShopifyProductService {
       );
       product = productCreated;
       if (isDebug) {
-        console.log("--productCreated", productCreated);
+        // console.log("--productCreated", productCreated);
       }
     }
     return product;
@@ -163,7 +163,7 @@ class ShopifyProductService {
       });
       response = axiosResponse?.data;
       if (isDebug) {
-        console.log("--create-product-" + data, response);
+        // console.log("--create-product-" + data, response);
       }
     } catch (error) {
       console.log(error);
@@ -240,7 +240,7 @@ class ShopifyProductService {
       });
       response = axiosResponse?.data;
       if (isDebug) {
-        console.log("--update-product-" + data, response);
+        // console.log("--update-product-" + data, response);
       }
     } catch (error) {
       console.log(error);
@@ -313,12 +313,12 @@ class ShopifyProductService {
       throw error;
     }
     if (isDebug) {
-      console.log(
-        "--products-",
-        productIds
-        // response,
-        // response?.products,
-      );
+      // console.log(
+      //   "--products-",
+      //   productIds
+      //   // response,
+      //   // response?.products,
+      // );
     }
 
     let products = response?.products ?? [];

@@ -28,11 +28,11 @@ class ShopifyInventoryService {
     );
     const productVariantInventoryItemId = productVariant?.inventory_item_id;
     if (isDebug) {
-      console.log(
-        "--product-variant",
-        productVariant,
-        productVariantInventoryItemId
-      );
+      // console.log(
+      //   "--product-variant",
+      //   productVariant,
+      //   productVariantInventoryItemId
+      // );
     }
     if (!productVariantInventoryItemId) {
       throw "productVariantInventoryItemId not found, so can't continue";
@@ -81,26 +81,24 @@ class ShopifyInventoryService {
     } catch (error) {
       console.log(error);
       if (isDebug) {
-        console.log(
-          "--set-inventory-level-error",
-          error,
-          locationId,
-          inventoryItemId,
-          setAmount,
-
-          response?.inventory_level
-        );
+        // console.log(
+        //   "--set-inventory-level-error",
+        //   error,
+        //   locationId,
+        //   inventoryItemId,
+        //   setAmount,
+        //   response?.inventory_level
+        // );
       }
       throw error;
     }
     if (isDebug) {
-      console.log(
-        "--set-inventory-level-" + locationId,
-        inventoryItemId,
-        setAmount,
-
-        response?.inventory_level
-      );
+      // console.log(
+      //   "--set-inventory-level-" + locationId,
+      //   inventoryItemId,
+      //   setAmount,
+      //   response?.inventory_level
+      // );
     }
     return response?.inventory_level;
   }
@@ -126,7 +124,7 @@ class ShopifyInventoryService {
     } catch (error) {
       console.log(error);
     }
-    console.log("--location-" + locationId, response?.data);
+    // console.log("--location-" + locationId, response?.data);
     return response?.data;
   }
   /**
@@ -151,7 +149,7 @@ class ShopifyInventoryService {
     } catch (error) {
       console.log(error);
     }
-    console.log("--location-" + locationId, response?.data);
+    // console.log("--location-" + locationId, response?.data);
     return response?.data;
   }
 }

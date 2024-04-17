@@ -80,12 +80,12 @@ class LuceedOrdersService {
           "Content-Type": "application/json",
         },
       });
-      console.log("--luceed-orders-", axiosResponse);
+      // console.log("--luceed-orders-", axiosResponse);
       response = axiosResponse?.data;
     } catch (error) {
       console.log(error);
     }
-    console.log("--luceed-orders-", statusi, response);
+    // console.log("--luceed-orders-", statusi, response);
     return response?.result[0]?.nalozi_prodaje ?? [];
   }
 
@@ -195,7 +195,7 @@ class LuceedOrdersService {
       console.log("error", error);
       throw error;
     }
-    console.log("--luceed-create-order-", response);
+    // console.log("--luceed-create-order-", response);
     return response?.result[0] ?? undefined;
   }
 }

@@ -110,7 +110,7 @@ class ShopifyProductVariantService {
       console.log(error);
       throw error;
     }
-    console.log("--product-variants-" + productId, response);
+    // console.log("--product-variants-" + productId, response);
     let variants = response?.variants ?? [];
     const nextLink =
       shopifyHelper.shopifyResponseHeaderGetNextLink(responseHeaders);
@@ -166,7 +166,7 @@ class ShopifyProductVariantService {
       });
       response = axiosResponse?.data;
       if (isDebug) {
-        console.log("--create-productVariant-" + data, response);
+        // console.log("--create-productVariant-" + data, response);
       }
     } catch (error) {
       console.log(error);

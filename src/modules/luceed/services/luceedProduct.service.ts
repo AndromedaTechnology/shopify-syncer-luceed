@@ -72,7 +72,7 @@ class LuceedProductService {
       console.log("error", error);
       throw error;
     }
-    console.log("--luceed-products-" + startPosition, amountToReturn, response);
+    // console.log("--luceed-products-" + startPosition, amountToReturn, response);
     return response?.result[0]?.artikli ?? [];
   }
 }
