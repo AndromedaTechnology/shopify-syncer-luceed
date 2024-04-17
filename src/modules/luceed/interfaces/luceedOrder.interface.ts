@@ -204,7 +204,7 @@ export interface ILuceedCreateOrderPayment {
   /**
    * REQUIRED
    */
-  iznos: string;
+  iznos: number;
 }
 export interface ILuceedCreateOrderGroup {
   //

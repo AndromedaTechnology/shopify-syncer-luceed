@@ -112,7 +112,7 @@ class LuceedOrdersService {
      * "naziv": "Pouzeće",
      * "fiskalna_oznaka": "T"
      */
-    placanjeIznos: string,
+    placanjeIznos: number,
     orderData: ILuceedCreateOrder = {}
   ): Promise<string | undefined> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/snimi/`;
@@ -129,7 +129,7 @@ class LuceedOrdersService {
 
     orderData = {
       ...(orderData ?? {}),
-      datum: orderDate ?? new Date().toDateString(),
+      datum: orderDate ?? this.getDateForLuceed(new Date()),
       nalog_prodaje_b2b: narudzba ?? "Shopify Order Test",
       narudzba: narudzba ?? "Shopify Order Test",
       /**
@@ -197,6 +197,19 @@ class LuceedOrdersService {
     }
     // console.log("--luceed-create-order-", response);
     return response?.result[0] ?? undefined;
+  }
+
+  getDateForLuceed(date: Date): string | undefined {
+    if (!date) return undefined;
+    const month = date.getUTCMonth() + 1; // months from 1-12
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+
+    /**
+     * For some reason, no dot after the year.
+     */
+    const newDate = `${day}.${month}.${year}`;
+    return newDate;
   }
 }
 

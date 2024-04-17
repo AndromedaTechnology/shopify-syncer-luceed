@@ -1,5 +1,7 @@
 # TODO
 
+- TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
+
 - TODO: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
 
 - TODO: Sync Shopify Order.Customer to Luceed (not saved yet) (check customer, by email)

@@ -2,6 +2,10 @@
 
 ## TODO:
 
+0. Kako dohvatiti NalogProdaje.[stavke,placanja]?
+Nema ih u responseu.
+A u dokumentaciji nema endpointa za detalje NalogaProdaje (stavke,placanja).
+
 1. Kreirao sam 1 customera - Webshop Customer
 Ispod tog customera (sa `parent partner uid`) postavljam sve nove korisnike,
 tako da imamo grupirano sve s weba pod jednom stavkom.

@@ -50,12 +50,16 @@ class ShopifyService {
     /**
      * PLACANJE
      */
-    let placanjeIznos: string | undefined =
+    let placanjeIznos: number | undefined =
       await this.getLuceedPlacanjeIznosFromShopifyOrder(shopifyOrder);
     if (!placanjeIznos) return;
 
     const luceedOrderId = await luceedOrderService.createOrder(
-      shopifyOrder.created_at?.toString() ?? new Date().toString(),
+      shopifyOrder.created_at
+        ? luceedOrderService.getDateForLuceed(
+            new Date(shopifyOrder.created_at)
+          )!
+        : luceedOrderService.getDateForLuceed(new Date())!,
       shopifyOrder.name,
       luceedPartner.partner_uid!,
       stavke,
@@ -118,8 +122,8 @@ class ShopifyService {
    */
   private async getLuceedPlacanjeIznosFromShopifyOrder(
     shopifyOrder: IShopifyOrder
-  ): Promise<string | undefined> {
-    return "123.45";
+  ): Promise<number | undefined> {
+    return 123.45;
     // return undefined;
   }
 
