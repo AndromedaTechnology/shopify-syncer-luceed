@@ -1,43 +1,67 @@
 # Luceed API pitanja
 
-## TODO:
+## TODO: NalogProdaje
 
-0. Statuse NalogaProdaje trebamo, popis svega.
+1. Endpoint za dohvacanje svih mogucih statusa koji se mogu staviti na NalogProdaje.
 
-0. Luceed NalogProdaje ukupniIznos se izracunava samostalno (od strane Luceeda), bazirano na `NalogProdaje.stavke`?
+Trebaju nam UID-jevi, ili sifra ako moze ici na NalogProdaje.
+Statusi su nam potrebni da bismo mogli postaviti stanja:
+
+- Kreirana narudzba,
+- Otkazana narudzba,
+- Payment greska, ...
+
+Endpointovi za dohvacanje statusa vracaju gresku (rest/statusi).
+
+2. Luceed NalogProdaje.ukupniIznos se izracunava samostalno (od strane Luceeda), bazirano na `NalogProdaje.stavke`?
+
 Gleda se kolicina i mnozi sa cijenom iz sifrarnika?
 Ne moramo to samostalno rucno postavljati?
 
-0. TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
+3. Mozemo li dohvatiti iz Luceeda NalogProdaje.[stavke,placanja]?
 
-0. Kako rjesiti problematiku sa Mjestima - odnosno pravilno spremanje podataka za shipping, U Luceed, iz Shopifya?
+Vidimo samo mogucnost dodavanja na NalogProdaje (stavke, placanja).
+Mogu li se dohvatiti spremljene vrijednosti?
+U dokumentaciji ne vidimo endpoint za detalje NalogaProdaje (stavke,placanja).
+
+4. Kako rjesiti problematiku sa Mjestima - odnosno pravilno spremanje podataka za dostavu, U Luceed, iz Shopifya?
 
 Ovdje je popis svih atributa koje imamo dostupne na Shopifyu,
 kao dio narudzbe,
 i koji govori o shipping data na Shopify Orderu.
 https://shopify.dev/docs/api/customer/2024-01/objects/CustomerAddress
 
-0. Na NaloguProdaje nije spremljeno `na_skladiste_uid` property.
+Imamo dostupno, iz Shopifya:
+
+- postanski broj (ZIP code),
+- city (The name of the city, district, village, or town.)
+- address1 (The first line of the address. Typically the street address or PO Box number.),
+- address2 (The second line of the address. This is typically the apartment, suite, or unit number.)
+
+Mozemo li prema `city` parametru iz Shopifya,
+pronaci Mjesto u Luceedu?
+Hoce li ovo biti dovoljno tocno? Buduci da mi trebamo ID od mjesta iz Luceeda i ako faila search za upisanu vrijednost na Shopifyu - necemo dobiti Luceed ID za mjesto.
+
+Obrnuto, popuniti Shopify lokacije sa vrijednostima iz Luceeda,
+treba istraziti ako se moze.
+Bilo bi jednostavnije da imamo nekakav fuzzy search za mjesta (iz Elasticsearcha) za dobar hit po Shopify `city` parametru.
+
+5. Na NaloguProdaje ne zeli spremiti `na_skladiste_uid` property (iako smo ga postavili).
+
 `sa_skladista_uid` je spremljeno.
-To je vjerojatno povezano sa `skladiste_uid` koje smo morali postaviti.
-(sve opisano u proslim mailovima)
+To je vjerojatno povezano sa `skladiste_uid` koje smo morali postaviti
+(opisano u proslim mailovima) (pa zbog `skladiste_uid` ne zeli prihvatiti `na_skladiste_uid`).
+Ali ne mozemo maknuti `skladiste_uid` jer onda spremanje NalogaProdaje ne prolazi.
 
 Provjeriti efekte ovoga i kako rjesiti i pravilno spremiti sve parametre
 za skladiste/a.
 
-0. Kako dohvatiti NalogProdaje.[stavke,placanja]?
-Nema ih u responseu.
-A u dokumentaciji nema endpointa za detalje NalogaProdaje (stavke,placanja).
+6. Kreirali smo jednog (1) customera - Webshop Customer
 
-1. Kreirao sam 1 customera - Webshop Customer
-Ispod tog customera (sa `parent partner uid`) postavljam sve nove korisnike,
-tako da imamo grupirano sve s weba pod jednom stavkom.
+Ispod tog customera (sa `parent partner uid`) postavljamo sve nove Webshop kupce.
+Tako imamo grupirano sve s weba pod jednom stavkom.
 
-I onda povlacim partnere preko emaila, i vraca prazno.
-Znaci ne mozemo tako?
-
-Moramo sve bez parent_uid-a kreirat?
-To je samo za istog partnera, a razlicite adrese?
+Ovo je u redu?
 
 ## TODO: Kreiranje Naloga Prodaje
 
