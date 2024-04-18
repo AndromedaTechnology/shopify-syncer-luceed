@@ -1,13 +1,13 @@
 # TODO
 
 - TODO: Disable [showing,selling] for some products,
+- TODO: Shopify products: create and update: set .prices
+-- Set ProductVariant[mpc,vpc,nc]
+-- set mpc, nc - for shopify products
 - TODO: Update Luceed Order - cancelled,closed_at
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 - TODO: Luceed Created Order: Has tax added to `za_naplatu`. But It is already included! Remove added tax.
 - Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
-- TODO: Shopify products: create and update: set .prices
--- Set ProductVariant[mpc,vpc,nc]
--- set mpc, nc - for shopify products
 
 - Test Different Orders - from Shopify to Luceed
 - Canceled order
