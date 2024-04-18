@@ -214,7 +214,7 @@ class ShopifyService {
      * Location data
      */
     const locationZip = customerData?.zip;
-    const locationAddress = `${customerData?.address1}, ${customerData?.address2},${customerData?.city}, ${customerData?.province}, ${customerData?.country}`;
+    const locationAddress = `${customerData?.address1}, ${customerData?.address2},${customerData?.city}, ${customerData?.province}, ${locationZip}, ${customerData?.country}`;
     /**
      * Property `customer.adresa` has VARCHAR(200) type.
      * So, send only 200 max chars.
