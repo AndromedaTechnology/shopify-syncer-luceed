@@ -104,7 +104,7 @@ class LuceedService {
       );
       if (productSyncStatus.is_created) {
         productsStatus = {
-          products_created_cnt: productsStatus.products_created_cnt ?? 0 + 1,
+          products_created_cnt: (productsStatus.products_created_cnt ?? 0) + 1,
         };
       }
     }

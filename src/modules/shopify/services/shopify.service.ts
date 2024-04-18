@@ -39,7 +39,7 @@ class ShopifyService {
         if (luceedOrderId) {
           response = {
             ...response,
-            orders_created_cnt: response?.orders_created_cnt ?? 0 + 1,
+            orders_created_cnt: (response?.orders_created_cnt ?? 0) + 1,
           };
         }
       }

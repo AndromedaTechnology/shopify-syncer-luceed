@@ -1,5 +1,16 @@
 # TODO
 
+- Test Different Orders - from Shopify to Luceed
+- Canceled order
+- Failed payment
+- Canceled payment
+- Sucessful payment
+- Diff amounts for products - check prices
+- Diff amounts for products - check amounts
+
+- Test Diff customers
+-- Without and with address etc.
+
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 
 - DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
