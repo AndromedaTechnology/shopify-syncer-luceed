@@ -1,5 +1,14 @@
 # TODO
 
+- TODO: Disable [showing,selling] for some products,
+- TODO: Update Luceed Order - cancelled,closed_at
+- TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
+- TODO: Luceed Created Order: Has tax added to `za_naplatu`. But It is already included! Remove added tax.
+- Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
+- TODO: Shopify products: create and update: set .prices
+-- Set ProductVariant[mpc,vpc,nc]
+-- set mpc, nc - for shopify products
+
 - Test Different Orders - from Shopify to Luceed
 - Canceled order
 - Failed payment
@@ -11,19 +20,9 @@
 - Test Diff customers
 -- Without and with address etc.
 
-- TODO: Disable [showing,selling] for some products,
-
-- TODO: Shopify: Require email (DONE), phone ALSO (TODO:)
-
-- TODO: Update Luceed Order - cancelled,closed_at
+- DONE: Shopify: Require email (DONE), phone ALSO (DONE:)
 
 - DONE: Test: Add delivery data to Luceed orders
-
-- TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
-
-- TODO: Luceed Created Order: Has tax added to `za_naplatu`. But It is already included! Remove added tax.
-
-Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
 
 - DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
 
@@ -32,10 +31,6 @@ Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
 - DONE: TEST: Luceed [Create] Customer
 
 - DONE: TEST: Luceed [Create] Order
-
-- TODO: Shopify.prices
--- Set ProductVariant[mpc,vpc,nc]
--- set mpc, nc - for shopify products
 
 - TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
 
@@ -47,7 +42,7 @@ Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
 --- prices (mpc,vpc,nc)
 --- title
 
-- WIP: DONE: TODO: Shopify Get orders
+- DONE: Test: Shopify Get orders
 -- filter those needed to save to Luceed
 -- Save in MongoDB - `synced_orders.id` - add new row for each saved order to Luceed (from Shopify)
 
@@ -75,8 +70,6 @@ Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
 - Not needed?: Sync DECIMAL amount to inventory (current only integer)
 -- Meat is not selling
 -- We have 4 pieces and that's it, it's not needed to know exact size. That goes by variants etc.? Not needed.
-
-- DONE: Webshop has MPC or VPC prices?, MPC! DONE!
 
 - TODO: Check: Price: 2 or 3 decimal points?,
 
