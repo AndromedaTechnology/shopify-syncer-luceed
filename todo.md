@@ -21,6 +21,8 @@
 
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 
+- TODO: Luceed Created Order: Has tax added to `za_naplatu`. But It is already included! Remove added tax.
+
 - DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
 
 - DONE: Check: Sync Shopify Order.Customer to Luceed (not saved yet) (check customer, by email)
