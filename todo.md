@@ -11,6 +11,8 @@
 - Test Diff customers
 -- Without and with address etc.
 
+- TODO: Shopify: Require email (DONE), phone ALSO (TODO:)
+
 - TODO: Update Luceed Order - cancelled,closed_at
 
 - TODO: Add delivery data to Luceed orders
