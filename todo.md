@@ -11,15 +11,15 @@
 - Test Diff customers
 -- Without and with address etc.
 
+- TODO: Disable [showing,selling] for some products,
+
 - TODO: Shopify: Require email (DONE), phone ALSO (TODO:)
 
 - TODO: Update Luceed Order - cancelled,closed_at
 
-- TODO: Add delivery data to Luceed orders
+- DONE: Test: Add delivery data to Luceed orders
 
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
-
-- TODO: Disable [showing,selling] for some products,
 
 - DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
 
