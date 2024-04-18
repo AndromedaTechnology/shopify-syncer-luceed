@@ -17,6 +17,8 @@
 
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 
+- TODO: Disable [showing,selling] for some products,
+
 - DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)
 
 - DONE: Check: Sync Shopify Order.Customer to Luceed (not saved yet) (check customer, by email)
@@ -44,8 +46,6 @@
 -- Save in MongoDB - `synced_orders.id` - add new row for each saved order to Luceed (from Shopify)
 
 ## Product sync
-
-- Disable [showing,selling] for some products,
 
 - Shopify.this is a physical product = true
 -- set on all products

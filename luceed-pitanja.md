@@ -2,6 +2,14 @@
 
 ## TODO:
 
+0. Statuse NalogaProdaje trebamo, popis svega.
+
+0. Luceed NalogProdaje ukupniIznos se izracunava samostalno (od strane Luceeda), bazirano na `NalogProdaje.stavke`?
+Gleda se kolicina i mnozi sa cijenom iz sifrarnika?
+Ne moramo to samostalno rucno postavljati?
+
+0. TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
+
 0. Kako rjesiti problematiku sa Mjestima - odnosno pravilno spremanje podataka za shipping, U Luceed, iz Shopifya?
 
 Ovdje je popis svih atributa koje imamo dostupne na Shopifyu,
