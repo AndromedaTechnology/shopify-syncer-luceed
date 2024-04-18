@@ -36,6 +36,7 @@ while having it in Sync with your physical store and inventory (via Luceed).
 ## Shopify Requirements
 
 - Required: E-mail on checkout (email needs to be part of every ShopifyOrder)
+- Required: Phone on checkout (phone needs to be part of every ShopifyOrder)
 
 ## Technology of the system
 
