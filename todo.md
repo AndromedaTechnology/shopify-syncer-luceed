@@ -11,6 +11,10 @@
 - Test Diff customers
 -- Without and with address etc.
 
+- TODO: Update Luceed Order - cancelled,closed_at
+
+- TODO: Add delivery data to Luceed orders
+
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 
 - DONE: Check: Sync Shopify Orders to Luceed (not saved yet) (check narudzba, compare with shopifyId)

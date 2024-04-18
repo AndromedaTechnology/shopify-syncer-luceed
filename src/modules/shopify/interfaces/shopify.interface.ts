@@ -132,6 +132,38 @@ export interface IShopifyOrderLineItem {
   fulfillment_service: string;
   fulfillment_status: string;
 }
+export interface IShopifyCustomerAddress {
+  // address1: The street address of the billing address.
+  address1?: string;
+  // address2: An optional additional field for the street address of the billing address.
+  address2?: string;
+  // city: The city, town, or village of the billing address.
+  city?: string;
+  // company: The company of the person associated with the billing address.
+  company?: string;
+  // country: The name of the country of the billing address.
+  country?: string;
+  // country_code: The two-letter code (ISO 3166-1 format) for the country of the billing address.
+  country_code?: string;
+  // first_name: The first name of the person associated with the payment method.
+  first_name?: string;
+  // last_name: The last name of the person associated with the payment method.
+  last_name?: string;
+  // latitude: The latitude of the billing address.
+  latitude?: string;
+  // longitude: The longitude of the billing address.
+  longitude?: string;
+  // name: The full name of the person associated with the payment method.
+  name?: string;
+  // phone: The phone number at the billing address.
+  phone?: string;
+  // province: The name of the region (for example, province, state, or prefecture) of the billing address.
+  province?: string;
+  // province_code: The two-letter abbreviation of the region of the billing address.
+  province_code?: string;
+  // zip: The postal code (for example, zip, postcode, or Eircode) of the billing address.
+  zip?: string;
+}
 
 export interface IShopifyOrder {
   /**
@@ -154,8 +186,21 @@ export interface IShopifyOrder {
 
   payment_terms?: any;
   refunds: Array<any>;
-  shipping_address: any;
+
+  /**
+   * ADRESSES
+   */
+
+  /**
+   * Shipping address
+   */
+  shipping_address?: IShopifyCustomerAddress;
   shipping_lines: Array<any>;
+  /**
+   * Billing address
+   * What is this?
+   */
+  billing_address?: IShopifyCustomerAddress;
 
   note?: string;
   created_at?: string;
@@ -167,7 +212,15 @@ export interface IShopifyOrder {
   fulfillment_status?: any;
 
   /**
-   * [paid]
+   * Financial status
+   *
+   * pending: The payments are pending. Payment might fail in this state. Check again to confirm whether the payments have been paid successfully.
+   * authorized: The payments have been authorized.
+   * partially_paid: The order has been partially paid.
+   * paid: The payments have been paid.
+   * partially_refunded: The payments have been partially refunded.
+   * refunded: The payments have been refunded.
+   * voided: The payments have been voided.
    */
   financial_status?: string;
   currency?: string;
@@ -190,14 +243,13 @@ export interface IShopifyOrder {
   /**
    * TODO: Is email or contact_email to BE USED for checking if Luceed customer is already created?
    * Is email always returned?
+   *
+   * The customer's email address.
    */
   email?: string;
   contact_email?: string;
   customer_locale?: string;
-  /**
-   * What is this?
-   */
-  billing_address?: any;
+
   /**
    * What is this?
    */

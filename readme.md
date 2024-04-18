@@ -8,9 +8,32 @@
   <a href="https://firestarter-api.andromeda.technology">https://firestarter-api.andromeda.technology</a>
 </p>
 
+## Motivation
+
+Built for easier syncing of Luceed and Shopify.
+
+Written in TypeScript, with Interfaces and separated files, folders for each domain (Luceed, Shopify)
+and it's sub-domains (Orders, Customers, ShippingData etc.).
+
+This organization greatly helps with understanding of the flow of the sync process between Luceed and Shopify.
+
+Easily extend this codebase to suit your needs.
+
+## What is covered
+
+Most of the basic stuff needed to get your webshop up and running in Shopify,
+while having it in Sync with your physical store and inventory (via Luceed).
+
+- View, Create: Orders,
+- View, Create: Customers,
+- Sync Shopify Orders to Luceed,
+- Sync Luceed Products to Shopify.
+
 ## Luceed
 
 - Na Webshopu navodimo samo MPC cijene (ne VPC)
+
+## Technology of the system
 
 Easy to extend, Progressive and Scalable API boilerplate to power your startup.
 

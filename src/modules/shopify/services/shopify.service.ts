@@ -8,6 +8,7 @@ import luceedCustomerService from "../../luceed/services/luceedCustomer.service"
 import { ILuceedCustomer } from "../../luceed/interfaces/luceedCustomer.interface";
 import { ILuceedProduct } from "../../luceed/interfaces/luceedProduct.interface";
 import luceedProductService from "../../luceed/services/luceedProduct.service";
+import shopifyOrdersService from "./shopifyOrders.service";
 
 export interface IShopifyOrderSyncStatus {
   orders_created_cnt?: number;
@@ -28,7 +29,7 @@ class ShopifyService {
     };
     for (const shopifyOrder of shopifyOrders) {
       const luceedOrder = this.getLuceedOrderByShopifyOrderId(
-        shopifyOrder.name,
+        shopifyOrdersService.getShopifyOrderId(shopifyOrder),
         luceedOrders
       );
       if (!luceedOrder) {
@@ -42,6 +43,15 @@ class ShopifyService {
             orders_created_cnt: (response?.orders_created_cnt ?? 0) + 1,
           };
         }
+      } else {
+        /**
+         * TODO: Update order
+         * [cancel_reason,cancelled_at]
+         * [buyer_accepts_marketing]
+         * [billing_address]
+         * [closed_at]
+         * [customer]
+         */
       }
     }
     return response;
@@ -76,7 +86,7 @@ class ShopifyService {
             new Date(shopifyOrder.created_at)
           )!
         : luceedOrderService.getDateForLuceed(new Date())!,
-      shopifyOrder.name,
+      shopifyOrdersService.getShopifyOrderId(shopifyOrder),
       luceedPartner.partner_uid!,
       stavke,
       placanjeIznos
@@ -195,12 +205,19 @@ class ShopifyService {
 
     if (!email) return undefined;
     if (!shopifyOrder.customer) return undefined;
+    /**
+     * TODO: Get delivery data
+     */
+    shopifyOrdersService.getShopifyOrderLuceedAddressData(shopifyOrder);
     const luceedCustomerId = await luceedCustomerService.createCustomer(
       shopifyOrder.customer!.first_name,
       shopifyOrder.customer!.last_name,
       shopifyOrder.customer!.phone,
       shopifyOrder.customer!.phone,
       email
+      /**
+       * TODO: Add Delivery data
+       */
     );
     // console.log({
     //   luceedCustomerId: luceedCustomerId,

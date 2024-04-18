@@ -2,6 +2,21 @@
 
 ## TODO:
 
+0. Kako rjesiti problematiku sa Mjestima - odnosno pravilno spremanje podataka za shipping, U Luceed, iz Shopifya?
+
+Ovdje je popis svih atributa koje imamo dostupne na Shopifyu,
+kao dio narudzbe,
+i koji govori o shipping data na Shopify Orderu.
+https://shopify.dev/docs/api/customer/2024-01/objects/CustomerAddress
+
+0. Na NaloguProdaje nije spremljeno `na_skladiste_uid` property.
+`sa_skladista_uid` je spremljeno.
+To je vjerojatno povezano sa `skladiste_uid` koje smo morali postaviti.
+(sve opisano u proslim mailovima)
+
+Provjeriti efekte ovoga i kako rjesiti i pravilno spremiti sve parametre
+za skladiste/a.
+
 0. Kako dohvatiti NalogProdaje.[stavke,placanja]?
 Nema ih u responseu.
 A u dokumentaciji nema endpointa za detalje NalogaProdaje (stavke,placanja).

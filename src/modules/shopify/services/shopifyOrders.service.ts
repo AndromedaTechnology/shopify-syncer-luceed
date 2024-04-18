@@ -12,6 +12,13 @@ import {
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
 
+export interface IShopifyOrderLuceedAddressData {
+  postanskiBroj?: string;
+  mjestoUid?: string;
+  adresa?: string;
+  maticniBroj?: string;
+}
+
 /**
  * Orders API
  * https://shopify.dev/docs/api/admin-rest/2024-01/resources/order
@@ -20,16 +27,37 @@ const accessToken = config.shopify_access_token;
  * https://help.shopify.com/en/manual/checkout-settings/test-orders
  */
 class ShopifyOrdersService {
-  async findAll(isDebug = true) {
-    await this.fetchOrders();
-    return {
-      msg: "Hello Shopify Orders",
-    };
+  /**
+   * TODO: Test with different Orders for Croatian Orders.
+   * And adjust returning specific data - postal code etc.
+   * Needed for luceed.
+   *
+   * TODO: Use for Creating Luceed orders.
+   *
+   * Used to get Luceed-adjusted data,
+   * representing Shipping/Billing address.
+   * Used for delivery purposes.
+   */
+  getShopifyOrderLuceedAddressData(
+    shopifyOrder: IShopifyOrder
+  ): IShopifyOrderLuceedAddressData {
+    //
+    return {};
   }
-
+  /**
+   * Used to set Luceed.narudzba field.
+   */
+  getShopifyOrderId(shopifyOrder: IShopifyOrder): string {
+    return (
+      shopifyOrder.name ?? shopifyOrder.number ?? shopifyOrder.order_number
+    );
+  }
   printOrders(orders: Array<IShopifyOrder>) {
     for (const order of orders) {
       console.log({
+        name: order.name,
+        number: order.number,
+        order_number: order.order_number,
         created_at: order.created_at,
         confirmed: order.confirmed,
         fulfillment_status: order.fulfillment_status,
@@ -41,9 +69,6 @@ class ShopifyOrdersService {
         billing_address: order.billing_address,
         customer: order.customer,
         id: order.id,
-        name: order.name,
-        number: order.number,
-        order_number: order.order_number,
         note: order.note,
         line_items: order.line_items,
       });
