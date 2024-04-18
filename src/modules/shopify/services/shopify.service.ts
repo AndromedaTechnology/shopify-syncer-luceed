@@ -28,8 +28,14 @@ class ShopifyService {
       customers_created_cnt: 0,
     };
     for (const shopifyOrder of shopifyOrders) {
+      const orderId = shopifyOrdersService.getShopifyOrderId(shopifyOrder);
+      const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
+      if (!email) {
+        continue;
+        // throw `shopify order has no email: ${orderId}`;
+      }
       const luceedOrder = this.getLuceedOrderByShopifyOrderId(
-        shopifyOrdersService.getShopifyOrderId(shopifyOrder),
+        orderId,
         luceedOrders
       );
       if (!luceedOrder) {

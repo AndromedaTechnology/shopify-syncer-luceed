@@ -33,6 +33,10 @@ while having it in Sync with your physical store and inventory (via Luceed).
 
 - Na Webshopu navodimo samo MPC cijene (ne VPC)
 
+## Shopify Requirements
+
+- Required: E-mail on checkout (email needs to be part of every ShopifyOrder)
+
 ## Technology of the system
 
 Easy to extend, Progressive and Scalable API boilerplate to power your startup.
