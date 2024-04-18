@@ -12,11 +12,40 @@ import {
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
 
-export interface IShopifyOrderLuceedAddressData {
-  postanskiBroj?: string;
-  mjestoUid?: string;
-  adresa?: string;
-  maticniBroj?: string;
+/**
+ * Merged data from Shopify.[shippingAddress,billingAddress]
+ * If no data in shipping, take from billing.
+ * To have any data, for start.
+ */
+export interface IShopifyOrderCustomerData {
+  /**
+   * Location
+   */
+  address1?: string;
+  address2?: string;
+  city?: string;
+  province?: string;
+  country?: string;
+  zip?: string;
+
+  /**
+   * Person
+   */
+
+  /**
+   * Phone
+   */
+  phone?: string;
+  first_name?: string;
+  last_name?: string;
+
+  /**
+   * Remove
+   */
+  // postanskiBroj?: string;
+  // mjestoUid?: string;
+  // adresa?: string;
+  // maticniBroj?: string;
 }
 
 /**
@@ -27,6 +56,14 @@ export interface IShopifyOrderLuceedAddressData {
  * https://help.shopify.com/en/manual/checkout-settings/test-orders
  */
 class ShopifyOrdersService {
+  getShopifyOrderEmail(shopifyOrder: IShopifyOrder): string | undefined {
+    const email =
+      shopifyOrder.email ??
+      shopifyOrder.contact_email ??
+      shopifyOrder.customer?.email ??
+      undefined;
+    return email;
+  }
   /**
    * TODO: Test with different Orders for Croatian Orders.
    * And adjust returning specific data - postal code etc.
@@ -38,11 +75,51 @@ class ShopifyOrdersService {
    * representing Shipping/Billing address.
    * Used for delivery purposes.
    */
-  getShopifyOrderLuceedAddressData(
+  getShopifyOrderCustomerData(
     shopifyOrder: IShopifyOrder
-  ): IShopifyOrderLuceedAddressData {
-    //
-    return {};
+  ): IShopifyOrderCustomerData {
+    let response = {
+      address1:
+        shopifyOrder?.shipping_address?.address1 ??
+        shopifyOrder?.billing_address?.address1 ??
+        undefined,
+      address2:
+        shopifyOrder?.shipping_address?.address2 ??
+        shopifyOrder?.billing_address?.address2 ??
+        undefined,
+      city:
+        shopifyOrder?.shipping_address?.city ??
+        shopifyOrder?.billing_address?.city ??
+        undefined,
+      province:
+        shopifyOrder?.shipping_address?.province ??
+        shopifyOrder?.billing_address?.province ??
+        undefined,
+      country:
+        shopifyOrder?.shipping_address?.country ??
+        shopifyOrder?.billing_address?.country ??
+        undefined,
+      zip:
+        shopifyOrder?.shipping_address?.zip ??
+        shopifyOrder?.billing_address?.zip ??
+        undefined,
+      phone:
+        shopifyOrder.customer?.phone ??
+        shopifyOrder?.shipping_address?.phone ??
+        shopifyOrder?.billing_address?.phone ??
+        undefined,
+      first_name:
+        shopifyOrder.customer?.first_name ??
+        shopifyOrder?.shipping_address?.first_name ??
+        shopifyOrder?.billing_address?.first_name ??
+        undefined,
+      last_name:
+        shopifyOrder.customer?.last_name ??
+        shopifyOrder?.shipping_address?.last_name ??
+        shopifyOrder?.billing_address?.last_name ??
+        undefined,
+    };
+    return response;
   }
   /**
    * Used to set Luceed.narudzba field.

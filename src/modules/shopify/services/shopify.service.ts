@@ -166,7 +166,7 @@ class ShopifyService {
   private async getLuceedCustomerByEmail(
     shopifyOrder: IShopifyOrder
   ): Promise<ILuceedCustomer | undefined> {
-    const email = this.getShopifyOrderEmail(shopifyOrder);
+    const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
     /**
      * No email for customer - skip ORDER
      */
@@ -186,14 +186,6 @@ class ShopifyService {
 
     return luceedPartner;
   }
-  getShopifyOrderEmail(shopifyOrder: IShopifyOrder): string | undefined {
-    const email =
-      shopifyOrder.email ??
-      shopifyOrder.contact_email ??
-      shopifyOrder.customer?.email ??
-      undefined;
-    return email;
-  }
 
   /**
    * TODO: Check
@@ -201,23 +193,44 @@ class ShopifyService {
   private async createLuceedCustomerFromShopifyOrder(
     shopifyOrder: IShopifyOrder
   ): Promise<ILuceedCustomer | undefined> {
-    const email = this.getShopifyOrderEmail(shopifyOrder);
-
+    const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
     if (!email) return undefined;
-    if (!shopifyOrder.customer) return undefined;
+
+    const customerData =
+      shopifyOrdersService.getShopifyOrderCustomerData(shopifyOrder);
     /**
-     * TODO: Get delivery data
+     * General
      */
-    shopifyOrdersService.getShopifyOrderLuceedAddressData(shopifyOrder);
+    const first_name = customerData?.first_name;
+    const last_name = customerData?.last_name;
+    const phone = customerData?.phone;
+    /**
+     * Location data
+     */
+    const locationZip = customerData?.zip;
+    const locationAddress = `${customerData?.address1}, ${customerData?.address2},${customerData?.city}, ${customerData?.province}, ${customerData?.country}`;
+    /**
+     * Property `customer.adresa` has VARCHAR(200) type.
+     * So, send only 200 max chars.
+     */
+    const locationAddressTrimmed = locationAddress.substring(0, 200);
+    /**
+     * Create Customer
+     */
     const luceedCustomerId = await luceedCustomerService.createCustomer(
-      shopifyOrder.customer!.first_name,
-      shopifyOrder.customer!.last_name,
-      shopifyOrder.customer!.phone,
-      shopifyOrder.customer!.phone,
-      email
+      first_name,
+      last_name,
+      phone,
+      phone,
+      email,
       /**
-       * TODO: Add Delivery data
+       * Delivery data
+       * TODO: Check
        */
+      locationZip,
+      undefined, // TODO: mjesto UID
+      locationAddressTrimmed,
+      undefined // TODO: maticni broj
     );
     // console.log({
     //   luceedCustomerId: luceedCustomerId,
