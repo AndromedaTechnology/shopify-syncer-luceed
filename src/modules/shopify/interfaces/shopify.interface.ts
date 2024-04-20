@@ -46,7 +46,7 @@ export interface IShopifyProduct {
    * This is for response.
    * We don't send this.
    */
-  id?: string;
+  id?: number;
   handle: string;
   title: string;
   vendor: string;

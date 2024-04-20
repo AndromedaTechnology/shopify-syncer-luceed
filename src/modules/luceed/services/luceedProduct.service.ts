@@ -13,15 +13,22 @@ const luceedPassword = config.luceed_password;
  * Luceed
  */
 class LuceedProductService {
-  async findAll() {
-    await this.fetchProducts();
-
-    return {
-      msg: "Hello Luceed Product",
-    };
+  /**
+   * TODO: We floor (not to send decimal to Shopify)
+   * TODO: Support decimal for meat etc.
+   */
+  getProductAvailableCnt(product: ILuceedProduct): number {
+    const productAmount = product.raspolozivo_kol ?? 0;
+    return Math.floor(productAmount);
   }
-
-  removeLeadingZeroes(productSku: string): string {
+  /**
+   * TODO: Price: 2 or 3 decimal points
+   */
+  getProductMPC(product: ILuceedProduct): string {
+    const price = product.mpc?.toString() ?? "0.00";
+    return price;
+  }
+  removeSKUPrefix(productSku: string): string {
     const productHandleInt = parseInt(productSku);
     productSku = productHandleInt.toString();
     return productSku;

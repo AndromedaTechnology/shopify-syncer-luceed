@@ -4,7 +4,7 @@ import mongoose, { Mongoose } from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
 import { app } from "../../index";
-import messageService from "./message.service";
+import productService from "./product.service";
 import { databaseSetup } from "../../database";
 
 // Server
@@ -39,51 +39,51 @@ afterAll(async () => {
 });
 
 let itemId: mongoose.Types.ObjectId | undefined;
-const content = "Inspired";
-const contentUpdated = "Tenacious";
+const variant_sku = "123";
+const variant_sku_updated = "345";
 
 describe("message.service", () => {
   it("create", async () => {
-    const response = await messageService.create({
-      content: content,
+    const response = await productService.create({
+      variant_sku: variant_sku,
     });
 
     expect(response).toBeDefined();
     expect(response._id).toBeDefined();
-    expect(response.content).toEqual(content);
+    expect(response.variant_sku).toEqual(variant_sku);
 
     itemId = response._id;
   });
 
   it("findAll", async () => {
-    const response = await messageService.findAll();
+    const response = await productService.findAll();
 
     expect(response).toBeDefined();
-    expect(response[0].content).toEqual(content);
+    expect(response[0].variant_sku).toEqual(variant_sku);
   });
 
   it("find", async () => {
-    const response = await messageService.find(itemId!);
+    const response = await productService.find(itemId!);
 
     expect(response).toBeDefined();
     expect(response._id).toEqual(itemId);
   });
 
   it("update", async () => {
-    const response = await messageService.update(itemId!, {
-      content: contentUpdated,
+    const response = await productService.update(itemId!, undefined, {
+      variant_sku: variant_sku_updated,
     });
 
     expect(response).toBeDefined();
     expect(response._id).toEqual(itemId);
-    expect(response.content).toEqual(contentUpdated);
+    expect(response.variant_sku).toEqual(variant_sku_updated);
   });
 
   it("delete", async () => {
-    const response = await messageService.delete(itemId!);
+    const response = await productService.delete(itemId!);
 
     expect(response).toBeDefined();
     expect(response._id).toEqual(itemId);
-    expect(response.content).toEqual(contentUpdated);
+    expect(response.variant_sku).toEqual(variant_sku_updated);
   });
 });

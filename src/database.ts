@@ -23,8 +23,8 @@ async function databaseSetup(uri?: string): Promise<Mongoose> {
 }
 
 mongoose.connection.on("error", console.error);
-mongoose.connection.on('connected', () => {
-  console.log('Connected to MongoDB.');
+mongoose.connection.on("connected", () => {
+  console.log("Connected to MongoDB.");
 });
 
 export { mongoConnection, databaseSetup };

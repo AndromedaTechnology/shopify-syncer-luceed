@@ -71,7 +71,7 @@ class ShopifyProductVariantService {
    * - TODO: Check if it works.
    */
   async fetchProductVariants(
-    productId: string,
+    productId: number,
     paginationLimit = 250,
     urlParam?: string,
     isDebug = true
@@ -131,7 +131,7 @@ class ShopifyProductVariantService {
    *
    */
   async createProductVariant(
-    productId: string,
+    productId: number,
     productVariantSKU: string,
     productVariantPrice: string,
     data?: IShopifyProductVariant,

@@ -137,11 +137,10 @@ class ShopifyService {
     sku: string,
     luceedProducts: Array<ILuceedProduct>
   ): ILuceedProduct | undefined {
-    const skuWithoutPrefixedZeroes =
-      luceedProductService.removeLeadingZeroes(sku);
+    const skuWithoutPrefixedZeroes = luceedProductService.removeSKUPrefix(sku);
     return luceedProducts.find((luceedProduct) => {
       if (!luceedProduct.artikl) return false;
-      const artiklSKU = luceedProductService.removeLeadingZeroes(
+      const artiklSKU = luceedProductService.removeSKUPrefix(
         luceedProduct.artikl
       );
       return artiklSKU === skuWithoutPrefixedZeroes;

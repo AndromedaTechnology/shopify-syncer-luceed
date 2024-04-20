@@ -206,7 +206,7 @@ class ShopifyProductService {
    * @prop variantId we have only 1 variant per product (default one), always.
    */
   async updateProduct(
-    productId: string,
+    productId: number,
     productHandle: string,
     variantId: number,
     variantSKU: string,

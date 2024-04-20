@@ -50,10 +50,10 @@ const itemContentUpdated = "Tenacious";
 
 const responseType = "application/json";
 
-describe("message.routes", () => {
+describe("product.routes", () => {
   it("create", async () => {
     const response = await request
-      .post(config.api_prefix + "/messages")
+      .post(config.api_prefix + "/products")
       .set("Authorization", `Bearer ${token}`)
       .send({
         content: itemContent,
@@ -69,7 +69,7 @@ describe("message.routes", () => {
   });
 
   it("findAll", async () => {
-    const response = await request.get(config.api_prefix + "/messages");
+    const response = await request.get(config.api_prefix + "/products");
 
     expect(response.status).toEqual(200);
     expect(response.type).toEqual(responseType);
@@ -79,7 +79,7 @@ describe("message.routes", () => {
 
   it("find", async () => {
     const response = await request.get(
-      config.api_prefix + `/messages/${itemId}`
+      config.api_prefix + `/products/${itemId}`
     );
 
     expect(response.status).toEqual(200);
@@ -90,7 +90,7 @@ describe("message.routes", () => {
 
   it("update", async () => {
     const response = await request
-      .patch(config.api_prefix + `/messages/${itemId}`)
+      .patch(config.api_prefix + `/products/${itemId}`)
       .set("Authorization", `Bearer ${token}`)
       .send({
         content: itemContentUpdated,
@@ -105,7 +105,7 @@ describe("message.routes", () => {
 
   it("delete", async () => {
     const response = await request
-      .delete(config.api_prefix + `/messages/${itemId}`)
+      .delete(config.api_prefix + `/products/${itemId}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toEqual(200);

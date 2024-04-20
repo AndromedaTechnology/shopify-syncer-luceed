@@ -1,20 +1,18 @@
 import mongoose from "mongoose";
 import { RouterContext } from "koa-router";
 
-import { MessageDto } from "./message.model";
-import messageService from "./message.service";
+import { ProductDto } from "./product.model";
+import productService from "./product.service";
 
-class MessageController {
+class ProductController {
   async findAll(ctx: RouterContext) {
-    ctx.body = await messageService.findAll();
+    ctx.body = await productService.findAll();
     return ctx;
   }
 
   async find(ctx: RouterContext) {
     try {
-      const item = await messageService.find(
-        mongoose.Types.ObjectId(ctx.params.id)
-      );
+      const item = await productService.find(undefined, ctx.params.variant_sku);
       ctx.body = item;
     } catch (e) {
       ctx.throw(404);
@@ -24,7 +22,7 @@ class MessageController {
 
   async create(ctx: RouterContext) {
     try {
-      const item = await messageService.create(ctx.request.body as MessageDto);
+      const item = await productService.create(ctx.request.body as ProductDto);
       ctx.body = item;
     } catch (e) {
       ctx.throw(422);
@@ -34,9 +32,10 @@ class MessageController {
 
   async update(ctx: RouterContext) {
     try {
-      const item = await messageService.update(
-        mongoose.Types.ObjectId(ctx.params.id),
-        ctx.request.body as MessageDto
+      const item = await productService.update(
+        undefined,
+        ctx.params.variant_sku,
+        ctx.request.body as ProductDto
       );
       ctx.body = item;
     } catch (e) {
@@ -48,8 +47,9 @@ class MessageController {
 
   async delete(ctx: RouterContext) {
     try {
-      const item = await messageService.delete(
-        mongoose.Types.ObjectId(ctx.params.id)
+      const item = await productService.delete(
+        undefined,
+        ctx.params.variant_sku
       );
       ctx.body = item;
     } catch (e) {
@@ -60,4 +60,4 @@ class MessageController {
   }
 }
 
-export default new MessageController();
+export default new ProductController();

@@ -1,13 +1,12 @@
-import { ILuceedProduct } from "../interfaces/luceedProduct.interface";
-import luceedProductService from "./luceedProduct.service";
-import luceedInventoryService from "./luceedInventory.service";
-import { ILuceedInventoryItem } from "../interfaces/luceedInventory.interface";
-import shopifyInventoryService from "../../shopify/services/shopifyInventory.service";
+import config from "../../../config";
 import shopifyProductService, {
   IShopifySyncStatusProduct,
 } from "../../shopify/services/shopifyProduct.service";
+import productService from "../../product/product.service";
+import luceedProductService from "./luceedProduct.service";
+import { ILuceedProduct } from "../interfaces/luceedProduct.interface";
 import { IShopifyProduct } from "../../shopify/interfaces/shopify.interface";
-import config from "../../../config";
+import shopifyInventoryService from "../../shopify/services/shopifyInventory.service";
 import shopifyLocationsService from "../../shopify/services/shopifyLocations.service";
 
 export interface IShopifySyncStatusProducts {
@@ -38,7 +37,6 @@ class LuceedService {
     const locationDefault = await shopifyLocationsService.getLocation(
       config.shopify_shop_location_id
     );
-    // console.log("--default-location", locationDefault);
     if (!locationDefault || !locationDefault.id) {
       throw "default location not available";
     }
@@ -53,55 +51,45 @@ class LuceedService {
         250,
         true
       );
-    if (isDebug) {
-      // console.log("--shopifyProducts", shopifyProducts.length);
-    }
 
     /**
      * Loop luceed shopifyProducts
      */
     for (const luceedProduct of luceedProducts) {
+      /**
+       * Get data
+       */
+      let productSKU = luceedProduct.artikl;
       const productTitle = luceedProduct.naziv;
       const productVendor = luceedProduct.glavni_dobavljac_naziv;
-      let productHandle = luceedProduct.artikl;
-      /**
-       * Remove leading zeroes
-       */
-      if (productHandle) {
-        productHandle = luceedProductService.removeLeadingZeroes(productHandle);
-      }
-      const productAmount = luceedProduct.raspolozivo_kol ?? 0;
-      // console.log("productHandle", productHandle);
-      // break;
-      /**
-       * TODO: Price: 2 or 3 decimal points
-       */
-      const productPrice = luceedProduct.mpc?.toString() ?? "0.00";
+      const productAmount =
+        luceedProductService.getProductAvailableCnt(luceedProduct);
+      const productPrice = luceedProductService.getProductMPC(luceedProduct);
+      productSKU = productSKU
+        ? luceedProductService.removeSKUPrefix(productSKU)
+        : undefined;
 
-      /**
-       * TODO: undefined - returned by luceed?
-       */
-      if (productAmount === undefined) continue;
+      if (!productSKU) continue;
       if (!productTitle) continue;
-      if (!productHandle) continue;
       if (!productVendor) continue;
+      if (productAmount === undefined) continue;
 
       /**
        * Sync
        */
       const productSyncStatus = await this.syncLuceedShopifyProduct(
         shopifyProducts,
-        productHandle!,
+        productSKU!,
         productTitle!,
         productVendor!,
         productPrice,
-        /**
-         * TODO: We floor (not to send decimal to Shopify)
-         * TODO: Support decimal for meat etc.
-         */
-        Math.floor(productAmount),
+        productAmount,
         locationDefault?.id!
       );
+
+      /**
+       * Add to stats
+       */
       if (productSyncStatus.is_created) {
         productsStatus = {
           products_created_cnt: (productsStatus.products_created_cnt ?? 0) + 1,
@@ -114,7 +102,7 @@ class LuceedService {
 
   private async syncLuceedShopifyProduct(
     products: Array<IShopifyProduct>,
-    productHandle: string,
+    productSKU: string,
     productTitle: string,
     productVendor: string,
     productPrice: string,
@@ -126,34 +114,36 @@ class LuceedService {
       product: undefined,
       is_created: false,
     };
-    /**
-     * TODO: Remove prefixes (000?)
-     */
+
+    productSKU = luceedProductService.removeSKUPrefix(productSKU);
     let product = shopifyProductService.getProductByHandle(
       products,
-      productHandle
+      productSKU
     );
-    if (isDebug) {
-      // console.log("--product", productHandle, product);
-    }
 
     /**
      * Touch product
      */
+    const databaseProduct = await productService.touch(undefined, productSKU, {
+      handle: productSKU,
+      title: productSKU,
+      vendor: productVendor,
+      variant_sku: productSKU,
+      variant_price: productPrice,
+    });
     response = await shopifyProductService.touchProduct(
       product,
-      productHandle,
+      productSKU,
       productTitle,
       productVendor,
       productPrice,
       isDebug
     );
+    const shopifyProduct: IShopifyProduct | undefined = response.product;
+    await productService.update(undefined, productSKU, {
+      shopify_product_id: shopifyProduct?.id,
+    });
 
-    /**
-     * Something went wrong.
-     * Product to available before, and not created now.
-     * Break.
-     */
     if (!product) {
       throw "product not found before, and not created - so can't continue";
     }
@@ -168,13 +158,6 @@ class LuceedService {
       isDebug
     );
 
-    if (isDebug) {
-      // console.log(
-      //   "--set-inventory-level-" + locationDefaultId,
-      //   productAmount,
-      //   inventoryLevel
-      // );
-    }
     return response;
   }
 }
