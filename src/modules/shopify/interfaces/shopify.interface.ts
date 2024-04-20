@@ -41,6 +41,11 @@ export interface IShopifyProductVariant {
   option1?: string;
 }
 
+export enum IShopifyProductStatus {
+  ACTIVE = "active",
+  ARCHIVED = "archived",
+  DRAFT = "draft",
+}
 export interface IShopifyProduct {
   /**
    * This is for response.
@@ -51,6 +56,7 @@ export interface IShopifyProduct {
   title: string;
   vendor: string;
   body_html?: string;
+  status?: IShopifyProductStatus;
 
   /**
    * @note

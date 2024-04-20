@@ -9,6 +9,15 @@ class ProductService {
   ): Promise<ProductDto> {
     let item = await this.find(id, variant_sku);
     if (!item && data) {
+      /**
+       * Default flags,
+       * most permissive.
+       */
+      // data = {
+      //   ...data,
+      //   is_visible_in_webshop: true,
+      //   is_buyable_only_in_physical_shop: false,
+      // };
       item = await this.create(data);
     } else if (data) {
       item = await this.update(id, variant_sku, data);
@@ -54,7 +63,7 @@ class ProductService {
     data?: ProductDto
   ): Promise<ProductDto> {
     const filter = this.getFilter(id, variant_sku);
-    const item = await productModel.updateOne(filter, data, {
+    const item = await productModel.findOneAndUpdate(filter, data, {
       new: true,
     });
     return item;

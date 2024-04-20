@@ -29,6 +29,7 @@ const envSchema = Joi.object()
 
     // Shopify API
     SHOPIFY_SHOP_NAME: Joi.string().optional().default(""),
+    SHOPIFY_WEBSHOP_LOCATION_ID: Joi.string().optional().default(""),
     SHOPIFY_SHOP_LOCATION_ID: Joi.string().optional().default(""),
     SHOPIFY_ACCESS_TOKEN: Joi.string().optional().default(""),
 
@@ -71,6 +72,7 @@ export interface IConfig {
 
   // Shopify API
   shopify_shop_name: string;
+  shopify_webshop_location_id: string;
   shopify_shop_location_id: string;
   shopify_access_token: string;
 
@@ -100,6 +102,7 @@ const config: IConfig = {
 
   // Shopify API
   shopify_shop_name: envVars.SHOPIFY_SHOP_NAME,
+  shopify_webshop_location_id: envVars.SHOPIFY_WEBSHOP_LOCATION_ID,
   shopify_shop_location_id: envVars.SHOPIFY_SHOP_LOCATION_ID,
   shopify_access_token: envVars.SHOPIFY_ACCESS_TOKEN,
 

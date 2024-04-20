@@ -7,6 +7,7 @@ import {
   IShopifyProduct,
   IShopifyProductsResponse,
   IShopifyProductCreateResponse,
+  IShopifyProductStatus,
 } from "../interfaces/shopify.interface";
 import shopifyHelper from "../helpers/shopify.helper";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
@@ -41,6 +42,7 @@ class ShopifyProductService {
     productTitle: string,
     productVendor: string,
     productPrice: string,
+    is_visible_in_webshop = true,
     isDebug = true
   ): Promise<IShopifySyncStatusProduct> {
     let response: IShopifySyncStatusProduct = {
@@ -82,6 +84,9 @@ class ShopifyProductService {
           title: productTitle,
           handle: productHandle,
           vendor: productVendor,
+          status: is_visible_in_webshop
+            ? IShopifyProductStatus.ACTIVE
+            : IShopifyProductStatus.DRAFT,
         },
         false
       );
@@ -101,6 +106,9 @@ class ShopifyProductService {
           title: productTitle,
           handle: productHandle,
           vendor: productVendor,
+          status: is_visible_in_webshop
+            ? IShopifyProductStatus.ACTIVE
+            : IShopifyProductStatus.DRAFT,
         },
         false
       );

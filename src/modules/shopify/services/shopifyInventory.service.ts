@@ -21,9 +21,11 @@ class ShopifyInventoryService {
    */
   async setProductInventory(
     product: IShopifyProduct,
-    locationDefaultId: number,
+    locationWebshopId: number,
+    locationShopId: number,
     productAmount: number,
     productCost: string,
+    is_buyable_only_in_physical_shop = false,
     isDebug = true
   ): Promise<IShopifyInventoryLevel | undefined> {
     const productVariant = shopifyProductVariantService.getProductVariant(
@@ -46,13 +48,47 @@ class ShopifyInventoryService {
       productCost,
       isDebug
     );
-    const inventoryLevel = await this.setLevelsPerItemPerLocation(
-      locationDefaultId,
-      productVariantInventoryItemId,
-      productAmount,
-      true,
-      true
-    );
+
+    /**
+     * Set to diff location - based on Database flags
+     *
+     * Set to passed location to passed amount.
+     * And the other location - to 0.
+     *
+     * In the future we can delete other location.
+     */
+    let inventoryLevel;
+    if (is_buyable_only_in_physical_shop) {
+      inventoryLevel = await this.setLevelsPerItemPerLocation(
+        locationWebshopId,
+        productVariantInventoryItemId,
+        0,
+        true,
+        true
+      );
+      inventoryLevel = await this.setLevelsPerItemPerLocation(
+        locationShopId,
+        productVariantInventoryItemId,
+        productAmount,
+        true,
+        true
+      );
+    } else {
+      inventoryLevel = await this.setLevelsPerItemPerLocation(
+        locationWebshopId,
+        productVariantInventoryItemId,
+        productAmount,
+        true,
+        true
+      );
+      inventoryLevel = await this.setLevelsPerItemPerLocation(
+        locationShopId,
+        productVariantInventoryItemId,
+        0,
+        true,
+        true
+      );
+    }
     if (!inventoryLevel) {
       throw "inventory level not set";
     }

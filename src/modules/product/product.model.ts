@@ -15,8 +15,8 @@ export class ProductDto {
    */
   shopify_variant_id?: Number;
   luceed_product_id?: Number;
-  is_visible_on_webshop?: Boolean;
-  is_selling_on_webshop?: Boolean;
+  is_visible_in_webshop?: boolean;
+  is_buyable_only_in_physical_shop?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   syncedAt?: Date;
@@ -73,15 +73,15 @@ const productSchema = new Schema({
   /**
    * Flags
    */
-  is_visible_on_webshop: {
+  is_visible_in_webshop: {
     type: Boolean,
     required: false,
     default: true,
   },
-  is_selling_on_webshop: {
+  is_buyable_only_in_physical_shop: {
     type: Boolean,
     required: false,
-    default: true,
+    default: false,
   },
   /**
    * Shopify ids

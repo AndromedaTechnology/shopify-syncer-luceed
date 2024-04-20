@@ -34,11 +34,17 @@ class LuceedService {
     /**
      * Shopify Location Default
      */
-    const locationDefault = await shopifyLocationsService.getLocation(
+    const locationWebshop = await shopifyLocationsService.getLocation(
+      config.shopify_webshop_location_id
+    );
+    const locationShop = await shopifyLocationsService.getLocation(
       config.shopify_shop_location_id
     );
-    if (!locationDefault || !locationDefault.id) {
-      throw "default location not available";
+    if (!locationWebshop || !locationWebshop.id) {
+      throw "webshop location not available";
+    }
+    if (!locationShop || !locationShop.id) {
+      throw "webshop location not available";
     }
 
     /**
@@ -87,7 +93,8 @@ class LuceedService {
         productPrice,
         productCost,
         productAmount,
-        locationDefault?.id!
+        locationWebshop?.id!,
+        locationShop?.id!
       );
 
       if (isDebug) {
@@ -118,7 +125,8 @@ class LuceedService {
     productPrice: string,
     productCost: string,
     productAmount: number,
-    locationDefaultId: number,
+    locationWebshopId: number,
+    locationShopId: number,
     isDebug = true
   ): Promise<IShopifySyncStatusProduct> {
     let response: IShopifySyncStatusProduct = {
@@ -135,7 +143,7 @@ class LuceedService {
     /**
      * Touch product
      */
-    const databaseProduct = await productService.touch(undefined, productSKU, {
+    let databaseProduct = await productService.touch(undefined, productSKU, {
       handle: productSKU,
       title: productTitle ?? productSKU,
       vendor: productVendor,
@@ -149,10 +157,11 @@ class LuceedService {
       productTitle,
       productVendor,
       productPrice,
+      databaseProduct.is_visible_in_webshop ?? true,
       isDebug
     );
     const shopifyProduct: IShopifyProduct | undefined = response.product;
-    await productService.update(undefined, productSKU, {
+    databaseProduct = await productService.update(undefined, productSKU, {
       shopify_product_id: shopifyProduct?.id,
     });
 
@@ -165,9 +174,11 @@ class LuceedService {
      */
     const inventoryLevel = await shopifyInventoryService.setProductInventory(
       product!,
-      locationDefaultId,
+      locationWebshopId,
+      locationShopId,
       productAmount,
       productCost,
+      databaseProduct.is_buyable_only_in_physical_shop ?? false,
       isDebug
     );
 
