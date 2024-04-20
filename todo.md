@@ -7,8 +7,6 @@
 
 - TODO: Update Luceed Order - cancelled,closed_at
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
-- TODO: Luceed Created Order: Has tax added to `za_naplatu`. But It is already included! Remove added tax.
-- Luceed.Order.Customer has tip_cijene=M, tip_racuna=R1.
 
 - Test Different Orders - from Shopify to Luceed
 - Canceled order
