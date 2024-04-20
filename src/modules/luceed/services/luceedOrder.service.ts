@@ -21,6 +21,14 @@ const luceedPassword = config.luceed_password;
  * Check if this is complete and true list.
  *
  * Used to query NaloziProdaje, by statusi.
+ *
+ * -- 01 - ovo mora biti na pocetku
+ * -- 02 - rezervacija, kad dodje roba da se ne proda roba u ducanu nego ceka na tog customer (aunaprijed se rezervira)
+ * -- 03 - ceka uplatu
+ * -- 04 - odobren nalog (i uplata)  i moze se isprocuiciti roba
+ * -- 05 - snimljena isporuka, spremno na slaganjem
+ * -- 06 -otpremljeno
+ * -- 99 - storno
  */
 export const LuceedStatusi = [
   "Novi",
@@ -63,7 +71,7 @@ class LuceedOrdersService {
   async fetchOrders(
     // orderUid?: string,
     // statusi: string = LuceedStatusi.toString()
-    statusi: string = "01,02"
+    statusi: string = "01,02,03,04,05,06,99"
   ): Promise<Array<ILuceedOrder>> {
     var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/statusi/[${statusi}]`;
     // var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/uid/[${orderUid}]`;
@@ -132,10 +140,12 @@ class LuceedOrdersService {
       datum: orderDate ?? this.getDateForLuceed(new Date()),
       nalog_prodaje_b2b: narudzba ?? "Shopify Order Test",
       narudzba: narudzba ?? "Shopify Order Test",
+      cijene_s_porezom: "D",
       /**
        * Partner / customer
        */
-      partner_uid: luceedPartnerUid,
+      korisnik__partner_uid: luceedPartnerUid,
+      // partner_uid: luceedPartnerUid,
       /**
        * Skladiste
        * Add skladiste props
@@ -150,9 +160,11 @@ class LuceedOrdersService {
       skl_dokument: config.luceed_nalog_prodaje_skl_dokument,
 
       /**
-       * TODO: Remove for testing
+       * Set to Webshop skladiste always.
+       * (20)
+       * (4-3228)
        */
-      skladiste_uid: config.luceed_nalog_prodaje_sa__skladiste_uid,
+      skladiste_uid: config.luceed_nalog_prodaje_skladiste_uid,
 
       /**
        * Status

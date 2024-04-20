@@ -1,6 +1,10 @@
 # Luceed API pitanja
 
-## TODO: NalogProdaje
+## TODO:
+
+1. Na partnerima nema grupa_partnera_uid. Pod koji property postaviti ovo? - PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
+
+## DONE: NalogProdaje
 
 1. Endpoint za dohvacanje svih mogucih statusa koji se mogu staviti na NalogProdaje.
 

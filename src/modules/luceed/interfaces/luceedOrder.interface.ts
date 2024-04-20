@@ -51,7 +51,11 @@ export interface ILuceedCreateOrder {
    */
   partner?: string;
   /**
-   * REQUIRED
+   * @deprecated
+   * NOT NEEDED
+   *
+   * We set korisnik__partner_uid.
+   * And that prop sets this one.
    *
    * Šifra partnera iz Luceed-a
    * Upisuje se partner na kojeg glasi nalog
@@ -59,13 +63,17 @@ export interface ILuceedCreateOrder {
   partner_uid?: string;
 
   /**
-   * TODO: Cemu ovo sluzi?
-   * Koja je razlika u odnosu na `partner` field?
+   * REQUIRED
+   *
+   * Ovo se postavlja.
+   * A ne, partner_uid.
+   *
+   * Jer korisnik__partner_uid
    *
    * Šifra korisnika (partnera) iz Luceed-a
    * Upisuje se partner kojem se dostavlja narudžba.
    *  */
-  korisnik__partner?: string;
+  korisnik__partner_uid?: string;
 
   /**
    * REQUIRED
@@ -90,8 +98,11 @@ export interface ILuceedCreateOrder {
   kupac_placa_isporuku?: string;
 
   /**
-   * TODO: Cemu ovo?
-   * TODO: Rename. Wrong name?
+   * REQUIRED
+   * Set to [D]
+   * Default [N]
+   *
+   * We use MPC prices, so set to D.
    * [D/N]
    */
   cijene_s_porezom?: string;
@@ -131,7 +142,12 @@ export interface ILuceedCreateOrder {
   status_uid?: string;
 
   /**
-   * TODO: Remove after testing.?
+   * REQUIRED
+   *
+   * Set to Webshop skladiste always.
+   * (20)
+   * (4-3228)
+   *
    * Without this, Luceed API returns "pj_id" needs to be set (not null).
    */
   skladiste_uid?: string;

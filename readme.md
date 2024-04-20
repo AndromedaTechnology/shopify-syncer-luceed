@@ -29,6 +29,10 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - Sync Shopify Orders to Luceed,
 - Sync Luceed Products to Shopify.
 
+## Modular
+
+- .env variables: Used to Control behaviour of the Sync process (params to access Luceed and Shopify)
+
 ## Luceed
 
 - Na Webshopu navodimo samo MPC cijene (ne VPC)
