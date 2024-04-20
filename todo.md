@@ -4,6 +4,7 @@
 -- Find shopify.props for [hidding,disablingSelling] on product
 -- Draft for product in Admin? To hide?
 -- 0 available for disabled selling?
+-- Manage 2 locations - Physical store and Webshop. Make physical store have amount if not available for webshop.
 
 - TODO: Update Luceed Order - cancelled,closed_at
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
