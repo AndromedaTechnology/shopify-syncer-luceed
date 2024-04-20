@@ -7,7 +7,6 @@
 -- Manage 2 locations - Physical store and Webshop. Make physical store have amount if not available for webshop.
 
 - TODO: Update Luceed Order - cancelled,closed_at
-- TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 
 - Test Different Orders - from Shopify to Luceed
 - Canceled order
