@@ -1,6 +1,10 @@
 # TODO
 
 - TODO: Disable [showing,selling] for some products,
+-- Find shopify.props for [hidding,disablingSelling] on product
+-- Draft for product in Admin? To hide?
+-- 0 available for disabled selling?
+
 - TODO: Shopify products: create and update: set .prices
 -- Set ProductVariant[mpc,vpc,nc]
 -- set mpc, nc - for shopify products
