@@ -55,7 +55,8 @@ class LuceedService {
     /**
      * Loop luceed shopifyProducts
      */
-    for (const luceedProduct of luceedProducts) {
+    for (let index = 0; index < luceedProducts.length; index++) {
+      const luceedProduct = luceedProducts[index];
       /**
        * Get data
        */
@@ -86,6 +87,13 @@ class LuceedService {
         productAmount,
         locationDefault?.id!
       );
+
+      if (isDebug) {
+        const percentage = Math.floor((index / luceedProducts.length) * 100);
+        console.log(
+          `Products synced: ${percentage}%: [${index}, ${luceedProducts.length}]: ${productSKU}: ${productTitle}`
+        );
+      }
 
       /**
        * Add to stats
@@ -126,7 +134,7 @@ class LuceedService {
      */
     const databaseProduct = await productService.touch(undefined, productSKU, {
       handle: productSKU,
-      title: productSKU,
+      title: productTitle ?? productSKU,
       vendor: productVendor,
       variant_sku: productSKU,
       variant_price: productPrice,
