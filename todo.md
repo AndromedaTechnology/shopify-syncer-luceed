@@ -1,22 +1,5 @@
 # TODO
 
-## TODO: Mjesto
-
-- Otvori novog Partnera
--- Gledaj po E-mail AND Mjesto isporuke - to je najbolje - ako ne postoji onda kreiraj novog Partnera
-
-- Ako mjesto nema postanski broj u Luceedu
--- Onda treba kreirati Mjesto u Luceedu
--- `mjesto` i `mjesto_uid` MORAJU BITI POSTALVJENI NA PARTNERU
--- `mjesto` i `drzava` treba kreirati
-- query `mjesto` i ako ne postoji onda post `mjesto` (mjesto sa postanskim brojem, naziv koji covjek unese i postanski broj)
-
-## TODO: Partneri: Grupa
-
-- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
-
-##
-
 - DONE: TODO: Test: luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
 -- Handle: Remove 000 prefixes from Luceed.handle
 -- then break
@@ -25,6 +8,18 @@
 -- Currently matching handle (to find if product exists in shopify)
 --- Match this with SKU, as we have that saved properly.
 -- Handle and SKU MUST BE THE SAME!
+
+- TODO: Partneri: Grupa
+-- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
+
+- TODO: Otvori novog Partnera
+-- Gledaj po E-mail AND Mjesto isporuke - to je najbolje - ako ne postoji onda kreiraj novog Partnera
+
+- TODO: Ako mjesto nema postanski broj u Luceedu
+-- Onda treba kreirati Mjesto u Luceedu
+-- `mjesto` i `mjesto_uid` MORAJU BITI POSTALVJENI NA PARTNERU
+-- `mjesto` i `drzava` treba kreirati
+- query `mjesto` i ako ne postoji onda post `mjesto` (mjesto sa postanskim brojem, naziv koji covjek unese i postanski broj)
 
 - DONE: Test Disable [showing,selling] for some products,
 -- Find shopify.props for [hidding,disablingSelling] on product
