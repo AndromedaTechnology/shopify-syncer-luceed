@@ -7,6 +7,7 @@ export class ProductDto {
   vendor?: String;
   variant_sku?: String;
   variant_price?: String;
+  variant_inventory_item_cost?: String;
   shopify_product_id?: Number;
   /**
    * TODO: Save following fields also.
@@ -60,6 +61,11 @@ const productSchema = new Schema({
     default: null,
   },
   variant_price: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  variant_inventory_item_cost: {
     type: String,
     required: false,
     default: null,

@@ -66,6 +66,7 @@ class LuceedService {
       const productAmount =
         luceedProductService.getProductAvailableCnt(luceedProduct);
       const productPrice = luceedProductService.getProductMPC(luceedProduct);
+      const productCost = luceedProductService.getProductCost(luceedProduct);
       productSKU = productSKU
         ? luceedProductService.removeSKUPrefix(productSKU)
         : undefined;
@@ -84,6 +85,7 @@ class LuceedService {
         productTitle!,
         productVendor!,
         productPrice,
+        productCost,
         productAmount,
         locationDefault?.id!
       );
@@ -114,6 +116,7 @@ class LuceedService {
     productTitle: string,
     productVendor: string,
     productPrice: string,
+    productCost: string,
     productAmount: number,
     locationDefaultId: number,
     isDebug = true
@@ -138,6 +141,7 @@ class LuceedService {
       vendor: productVendor,
       variant_sku: productSKU,
       variant_price: productPrice,
+      variant_inventory_item_cost: productCost,
     });
     response = await shopifyProductService.touchProduct(
       product,
@@ -163,6 +167,7 @@ class LuceedService {
       product!,
       locationDefaultId,
       productAmount,
+      productCost,
       isDebug
     );
 

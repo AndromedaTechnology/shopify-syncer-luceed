@@ -5,9 +5,6 @@
 -- Draft for product in Admin? To hide?
 -- 0 available for disabled selling?
 
-- TODO: Shopify products: create and update: set .prices
--- Set ProductVariant[mpc,vpc,nc]
--- set mpc, nc - for shopify products
 - TODO: Update Luceed Order - cancelled,closed_at
 - TODO: Fetch Luceed NalogProdaje.[stavke,placanja]
 - TODO: Luceed Created Order: Has tax added to `za_naplatu`. But It is already included! Remove added tax.

@@ -89,6 +89,16 @@ export interface IShopifyLocationResponse {
   location: IShopifyLocation;
 }
 
+export interface IShopifyInventoryItem {
+  id?: number;
+  sku?: string;
+  cost?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+export interface IShopifyUpdateInventoryItem {
+  inventory_item: IShopifyInventoryItem;
+}
 export interface IShopifyInventoryLevel {
   inventory_item_id?: number;
   location_id?: number;

@@ -28,6 +28,10 @@ class LuceedProductService {
     const price = product.mpc?.toString() ?? "0.00";
     return price;
   }
+  getProductCost(product: ILuceedProduct): string {
+    const price = product.nc?.toString() ?? "0.00";
+    return price;
+  }
   removeSKUPrefix(productSku: string): string {
     const productHandleInt = parseInt(productSku);
     productSku = productHandleInt.toString();

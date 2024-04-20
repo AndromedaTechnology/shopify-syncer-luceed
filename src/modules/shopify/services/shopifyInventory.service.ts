@@ -2,9 +2,11 @@ import axios from "axios";
 
 import config from "../../../config";
 import {
+  IShopifyInventoryItem,
   IShopifyInventoryLevel,
   IShopifyProduct,
   IShopifySetInventoryLevelResponse,
+  IShopifyUpdateInventoryItem,
 } from "../interfaces/shopify.interface";
 import { limiter } from "../../root/root.service";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
@@ -21,6 +23,7 @@ class ShopifyInventoryService {
     product: IShopifyProduct,
     locationDefaultId: number,
     productAmount: number,
+    productCost: string,
     isDebug = true
   ): Promise<IShopifyInventoryLevel | undefined> {
     const productVariant = shopifyProductVariantService.getProductVariant(
@@ -38,6 +41,11 @@ class ShopifyInventoryService {
       throw "productVariantInventoryItemId not found, so can't continue";
     }
 
+    const inventoryItem = await this.setInventoryItemCost(
+      productVariantInventoryItemId,
+      productCost,
+      isDebug
+    );
     const inventoryLevel = await this.setLevelsPerItemPerLocation(
       locationDefaultId,
       productVariantInventoryItemId,
@@ -49,6 +57,48 @@ class ShopifyInventoryService {
       throw "inventory level not set";
     }
     return inventoryLevel;
+  }
+
+  /**
+   * Set Inventory Item cost (nabavna cijena)
+   */
+  async setInventoryItemCost(
+    inventoryItemId: number,
+    setCost: string,
+    isDebug = true
+  ): Promise<IShopifyInventoryItem | undefined> {
+    var url = `https://${shopName}.myshopify.com/admin/api/2024-01/inventory_items/${inventoryItemId}.json`;
+    let response: { inventory_item?: IShopifyInventoryItem } | undefined =
+      undefined;
+    const data: IShopifyUpdateInventoryItem = {
+      inventory_item: {
+        id: inventoryItemId,
+        cost: setCost,
+      },
+    };
+    try {
+      const remainingRequests = await limiter.removeTokens(1);
+      const axiosResponse = await axios({
+        method: "put",
+        url: url,
+        data: data,
+        headers: {
+          "Content-Type": "application/json",
+          "X-Shopify-Access-Token": accessToken,
+        },
+      });
+      response = axiosResponse?.data;
+    } catch (error) {
+      console.log(error);
+      if (isDebug) {
+        //
+      }
+      throw error;
+    }
+    if (isDebug) {
+      //
+    }
+    return response?.inventory_item;
   }
 
   /**
