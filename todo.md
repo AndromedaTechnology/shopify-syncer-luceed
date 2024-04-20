@@ -17,13 +17,20 @@
 
 ##
 
-- TODO: Disable [showing,selling] for some products,
+- DONE: TODO: Test: luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
+-- Handle: Remove 000 prefixes from Luceed.handle
+-- then break
+
+- DONE: TODO: Test: Match Shopify.sku with Luceed.aritkl
+-- Currently matching handle (to find if product exists in shopify)
+--- Match this with SKU, as we have that saved properly.
+-- Handle and SKU MUST BE THE SAME!
+
+- DONE: Test Disable [showing,selling] for some products,
 -- Find shopify.props for [hidding,disablingSelling] on product
 -- Draft for product in Admin? To hide?
 -- 0 available for disabled selling?
 -- Manage 2 locations - Physical store and Webshop. Make physical store have amount if not available for webshop.
-
-- TODO: Update Luceed Order - cancelled,closed_at
 
 - Test Different Orders - from Shopify to Luceed
 - Canceled order
@@ -68,10 +75,6 @@
 - DONE: Test: Shopify.Paginate
 -- InventoryItems
 
-- DONE: TODO: Test: luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
--- Handle: Remove 000 prefixes from Luceed.handle
--- then break
-
 ## Shopify: Production
 
 - save for webshop location inventory
@@ -85,13 +88,6 @@
 -- Meat is not selling
 -- We have 4 pieces and that's it, it's not needed to know exact size. That goes by variants etc.? Not needed.
 
-- TODO: Check: Price: 2 or 3 decimal points?,
-
-- DONE: TODO: Test: Match Shopify.sku with Luceed.aritkl
--- Currently matching handle (to find if product exists in shopify)
---- Match this with SKU, as we have that saved properly.
--- Handle and SKU MUST BE THE SAME!
-
 - DONE: Show [raspolozivo,stanje] for amount on webshop? Rasplozivo (as stanje is hard value, raspolozivo takes reservations into account)
 
 ## Cronjobs
@@ -101,11 +97,15 @@
 
 ## Later
 
+- TODO: Check: Price: 2 or 3 decimal points?,
+
 - TODO: Shopify [Updated,Deleted] Order
 -- To update in Luceed, if user updated in Shopify
 
 - TODO: Luceed [Update,Delete] Order
 -- To send email update to Shopify customer
+
+- TODO: Update Luceed Order - cancelled,closed_at
 
 - Later: Luceed [Update,Delete] Customer
 
