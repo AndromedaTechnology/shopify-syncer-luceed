@@ -31,9 +31,7 @@
 
 - DONE: TEST: Luceed [Create] Order
 
-- TODO: Luceed: Get NaloziProdaje: Which `statuses` are to be passed in request
-
-- DONE: TODO: Test: Shopify: Touch/Update product and variant
+- DONE: Test: Shopify: Touch/Update product and variant
 -- DONE: Shopify Product update: Create default variant if non-existent
 -- DONE: Update product, from Luceed to Shopify, if exists
 -- DONE: Set variant.id when updating product and variant
@@ -50,7 +48,7 @@
 - Shopify.this is a physical product = true
 -- set on all products
 
-- DONE: TODO: Test: Shopify.Paginate
+- DONE: Test: Shopify.Paginate
 -- InventoryItems
 
 - DONE: TODO: Test: luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
