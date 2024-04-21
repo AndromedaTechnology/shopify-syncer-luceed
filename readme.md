@@ -51,6 +51,14 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - Required: E-mail on checkout (email needs to be part of every ShopifyOrder)
 - Required: Phone on checkout (phone needs to be part of every ShopifyOrder)
 
+## Production requirements
+
+- Heroku (instructions below)
+- Fixie on Heroku - for static outbound requests IP adress (instructions below)
+- Redis on Heroku (or any other place - just get REDIS_URL) (used for Queue jobs - sync process, as Heroku bails with execution after timeout)
+
+Total production cost per month for micro, shared instance is ~[5,8] USD (Heroku hosting + Redis included).
+
 ## Technology of the system
 
 <h1 align="center">Firestarter API - Progressive Startup API Boilerplate</h1>
