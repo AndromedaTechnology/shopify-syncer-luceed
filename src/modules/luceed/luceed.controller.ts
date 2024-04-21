@@ -1,8 +1,22 @@
 import { RouterContext } from "koa-router";
 
+import config from "../../config";
 import luceedService from "./services/luceed.service";
-import luceedProductInventory from "./services/luceedProductInventory.service";
 import luceedOrderService from "./services/luceedOrder.service";
+import luceedProductInventory from "./services/luceedProductInventory.service";
+
+import Queue from "bull";
+const productSyncQueue = new Queue("productSync", config.redis_url);
+
+let maxJobsPerWorker = 50;
+productSyncQueue.process(maxJobsPerWorker, async (job: any) => {
+  console.log("sync process inprores");
+  const luceedProducts =
+    await luceedProductInventory.fetchProductsWithInventory();
+  const response = await luceedService.syncLuceedShopifyProducts(
+    luceedProducts
+  );
+});
 
 class LuceedController {
   async findAllProducts(ctx: RouterContext) {
@@ -18,12 +32,8 @@ class LuceedController {
    * SYNC
    */
   async syncLuceedProductsToShopify(ctx: RouterContext) {
-    const luceedProducts =
-      await luceedProductInventory.fetchProductsWithInventory();
-    const response = await luceedService.syncLuceedShopifyProducts(
-      luceedProducts
-    );
-    ctx.body = response;
+    let job = await productSyncQueue.add({});
+    ctx.body = { id: job.id };
     return ctx;
   }
 }
