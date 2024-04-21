@@ -14,6 +14,9 @@ import shopifyProductVariantService from "./shopifyProductVariant.service";
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
 
+/**
+ * https://shopify.dev/docs/api/admin-rest/2024-01/resources/inventorylevel
+ */
 class ShopifyInventoryService {
   /**
    * Set product inventory amount in shopify

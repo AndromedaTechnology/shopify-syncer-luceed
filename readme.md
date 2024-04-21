@@ -1,11 +1,11 @@
-<h1 align="center">Firestarter API - Progressive Startup API Boilerplate</h1>
+<h1 align="center">Ceker-Shopify-Luceed - SYNC Worker</h1>
 <p align="center">
-  <a href="https://firestarter-api.andromeda.technology"><img src="./storage/static/hero.jpg"  alt="Firestarter API" /></a>
+  <a href="https://andromeda.technology"><img src="./storage/static/hero.jpg"  alt="Firestarter API" /></a>
   <br />
   <br />
-  <a href="https://firestarter-api.andromeda.technology">Progressive Startup API Boilerplate</a>
+  <a href="https://andromeda.technology">Keep your Shopify and Luceed in SYNC</a>
   <br />
-  <a href="https://firestarter-api.andromeda.technology">https://firestarter-api.andromeda.technology</a>
+  <a href="https://andromeda.technology">https://andromeda.technology</a>
 </p>
 
 ## Motivation
@@ -33,6 +33,9 @@ while having it in Sync with your physical store and inventory (via Luceed).
 
 - Hide/Show products on Webshop
 - Make products available only offline (in physical shop)
+- Shopify pagination
+- Finding, using Shopify PRODUCTS by SKU (defined on product variant)
+-- This way, product HANDLE is used for search engine and display purposes only
 
 ## Modular
 
@@ -49,6 +52,16 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - Required: Phone on checkout (phone needs to be part of every ShopifyOrder)
 
 ## Technology of the system
+
+<h1 align="center">Firestarter API - Progressive Startup API Boilerplate</h1>
+<p align="center">
+  <a href="https://firestarter-api.andromeda.technology"><img src="./storage/static/hero.jpg"  alt="Firestarter API" /></a>
+  <br />
+  <br />
+  <a href="https://firestarter-api.andromeda.technology">Progressive Startup API Boilerplate</a>
+  <br />
+  <a href="https://firestarter-api.andromeda.technology">https://firestarter-api.andromeda.technology</a>
+</p>
 
 Easy to extend, Progressive and Scalable API boilerplate to power your startup.
 

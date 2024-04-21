@@ -135,10 +135,7 @@ class LuceedService {
     };
 
     productSKU = luceedProductService.removeSKUPrefix(productSKU);
-    let product = shopifyProductService.getProductByHandle(
-      products,
-      productSKU
-    );
+    let product = shopifyProductService.getProductBySKU(products, productSKU);
 
     /**
      * Touch product

@@ -11,6 +11,7 @@ import {
 } from "../interfaces/shopify.interface";
 import shopifyHelper from "../helpers/shopify.helper";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
+import luceedProductService from "../../luceed/services/luceedProduct.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -21,17 +22,6 @@ export interface IShopifySyncStatusProduct {
 }
 
 class ShopifyProductService {
-  async findAll(isDebug = true) {
-    // await this.fetchProducts("8463331983593");
-    // await this.fetchProductVariants("8463331983593");
-    // const productByHandle = await this.fetchProductByHandle("handle-001");
-    // console.warn("product-handle-result", productByHandle);
-
-    return {
-      msg: "Hello Shopify",
-    };
-  }
-
   /**
    * Create or Update product
    * Make sure it exists.
@@ -130,16 +120,34 @@ class ShopifyProductService {
   }
 
   /**
-   * TODO: Remove prefixes (000?)
+   * Remove prefixes (000*)
+   *
+   * Here it is required, and provided by Shopify,
+   * that each product has variants returned.
+   *
+   * In these variants, on the product,
+   * we have SKU, which we search for.
+   *
+   * Handle on product is not okay,
+   * as this is URL parameter on webshop,
+   * used for display purposes and indexing.
+   *
+   * SKU is for real comparison in internal apps and tracking.
    */
-  getProductByHandle(
+  getProductBySKU(
     products: Array<IShopifyProduct>,
-    handle: string
+    productSKU: string
   ): IShopifyProduct | undefined {
-    if (!handle) {
-      throw "handle needed";
+    if (!productSKU) {
+      throw "productSKU needed";
     }
-    return products?.find((product) => product.handle === handle);
+    productSKU = luceedProductService.removeSKUPrefix(productSKU);
+    return products?.find((product) =>
+      product.variants?.find(
+        (variant) =>
+          luceedProductService.removeSKUPrefix(variant.sku) === productSKU
+      )
+    );
   }
 
   /**

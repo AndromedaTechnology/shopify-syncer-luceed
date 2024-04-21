@@ -1,10 +1,5 @@
 # TODO
 
-- DONE: TODO: Test: Match Shopify.sku with Luceed.aritkl
--- Currently matching handle (to find if product exists in shopify)
---- Match this with SKU, as we have that saved properly.
--- Handle and SKU MUST BE THE SAME!
-
 - TODO: Partneri: Grupa
 -- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
 
