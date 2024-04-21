@@ -16,6 +16,7 @@ productSyncQueue.process(maxJobsPerWorker, async (job: any) => {
   const response = await luceedService.syncLuceedShopifyProducts(
     luceedProducts
   );
+  return Promise.resolve(response);
 });
 
 class LuceedController {
