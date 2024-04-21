@@ -1,16 +1,22 @@
-console.log("Hello, Heroku Scheduler!");
+console.log("NewHello, Heroku Scheduler!");
 
-import { productSyncQueue } from "../modules/luceed/luceed.controller";
+import luceedService from "../modules/luceed/services/luceed.service";
+import luceedProductInventoryService from "../modules/luceed/services/luceedProductInventory.service";
 
 // if (process.env.NODE_ENV !== "test") {
 // }
 
 async function syncLuceedProductsToShopify() {
-  console.log("Schelduer: Sync: inside call begin");
-  let job = await productSyncQueue.add({});
-  console.log("Schelduer: Sync: inside call end", job.id);
+  console.log("NewSchelduer: Sync: inside call begin");
+  console.log("Newsync process inprores");
+  const luceedProducts =
+    await luceedProductInventoryService.fetchProductsWithInventory();
+  const response = await luceedService.syncLuceedShopifyProducts(
+    luceedProducts
+  );
+  console.log("NewSchelduer: Sync: inside call end", response);
 }
 
-console.log("Schelduer: Sync: before call");
+console.log("NewSchelduer: Sync: before call");
 syncLuceedProductsToShopify();
-console.log("Schelduer: Sync: after call");
+console.log("NewSchelduer: Sync: after call");
