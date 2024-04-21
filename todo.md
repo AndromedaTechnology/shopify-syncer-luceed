@@ -1,7 +1,7 @@
 # TODO
 
-- Deploy to Heroku
-- HerokuCronJob
+- TODO: Heroku - API call - run in background - not to timeout
+- TODO: HerokuCronJob
 -- Order sync (Shopify -> Luceed) - every 5 minutes
 -- Inventory sync (Luceed --> Shopify) - every 30 minutes
 
