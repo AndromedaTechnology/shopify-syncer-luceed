@@ -33,9 +33,30 @@ class LuceedProductService {
     return price;
   }
   removeSKUPrefix(productSku: string): string {
-    const productHandleInt = parseInt(productSku);
-    productSku = productHandleInt.toString();
+    try {
+      const productHandleInt = parseInt(productSku);
+      productSku = productHandleInt.toString();
+    } catch (error) {
+      throw "cannot convert luceed product SKU to int (and remove prefixed zeroes)";
+    }
     return productSku;
+  }
+  /**
+   * Find luceed product (in array) by SKU
+   * Convert SKU properly and compare
+   */
+  getLuceedProductBySKU(
+    SKUFromShopifyOrderLineItem: string,
+    luceedProducts: Array<ILuceedProduct>
+  ): ILuceedProduct | undefined {
+    const skuWithoutPrefixedZeroes = this.removeSKUPrefix(
+      SKUFromShopifyOrderLineItem
+    );
+    return luceedProducts.find((luceedProduct: ILuceedProduct) => {
+      if (!luceedProduct.artikl) return false;
+      const artiklSKU = this.removeSKUPrefix(luceedProduct.artikl);
+      return artiklSKU === skuWithoutPrefixedZeroes;
+    });
   }
   printProducts(products: Array<ILuceedProduct>) {
     for (const artikl of products) {

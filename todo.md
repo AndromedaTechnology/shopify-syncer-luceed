@@ -1,9 +1,5 @@
 # TODO
 
-- DONE: TODO: Test: luceed.aritkl - parseInt - try{}catch{} - to handle if string (with leading zeroes) can't be covnerted to int.
--- Handle: Remove 000 prefixes from Luceed.handle
--- then break
-
 - DONE: TODO: Test: Match Shopify.sku with Luceed.aritkl
 -- Currently matching handle (to find if product exists in shopify)
 --- Match this with SKU, as we have that saved properly.

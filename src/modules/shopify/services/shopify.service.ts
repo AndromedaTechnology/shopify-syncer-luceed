@@ -111,7 +111,7 @@ class ShopifyService {
     if (!shopifyOrder.line_items) return [];
     let stavke: Array<ILuceedCreateOrderProduct> = [];
     for (const lineItems of shopifyOrder.line_items) {
-      const luceedProduct = this.getLuceedProductBySKU(
+      const luceedProduct = luceedProductService.getLuceedProductBySKU(
         lineItems.sku,
         luceedProducts
       );
@@ -126,25 +126,6 @@ class ShopifyService {
       stavke.push(stavka);
     }
     return stavke;
-  }
-
-  /**
-   * TODO: Check
-   *
-   * Convert SKU properly and compare
-   */
-  private getLuceedProductBySKU(
-    sku: string,
-    luceedProducts: Array<ILuceedProduct>
-  ): ILuceedProduct | undefined {
-    const skuWithoutPrefixedZeroes = luceedProductService.removeSKUPrefix(sku);
-    return luceedProducts.find((luceedProduct) => {
-      if (!luceedProduct.artikl) return false;
-      const artiklSKU = luceedProductService.removeSKUPrefix(
-        luceedProduct.artikl
-      );
-      return artiklSKU === skuWithoutPrefixedZeroes;
-    });
   }
 
   /**

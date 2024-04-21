@@ -44,7 +44,7 @@ class LuceedService {
       throw "webshop location not available";
     }
     if (!locationShop || !locationShop.id) {
-      throw "webshop location not available";
+      throw "physical shop location not available";
     }
 
     /**
