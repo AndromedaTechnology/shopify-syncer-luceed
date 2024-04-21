@@ -174,7 +174,19 @@ so you can immediately call admin routes, without copy-pasting it or setting the
 
 ## 8. Deployment
 
+### 8.1. MongoDB Atlas
+
 If you use MongoDB Atlas: Uncomment and fill `DB_URI` in `.env`.
+
+### 8.2. Deploying to HEROKU
+
+[Heroku tutorial 1](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+[Heroku tutorial 2](https://devcenter.heroku.com/articles/deploying-nodejs)
+
+### 8.3. Use Fixie for HEROKU static IP
+
+[Fixie, Heroku](https://elements.heroku.com/addons/fixie)
+[Fixie, Node](https://devcenter.heroku.com/articles/fixie#using-with-node)
 
 ## 9. Social
 
