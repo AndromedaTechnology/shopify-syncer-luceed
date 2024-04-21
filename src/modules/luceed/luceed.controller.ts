@@ -6,7 +6,7 @@ import luceedOrderService from "./services/luceedOrder.service";
 import luceedProductInventory from "./services/luceedProductInventory.service";
 
 import Queue from "bull";
-const productSyncQueue = new Queue("productSync", config.redis_url);
+export const productSyncQueue = new Queue("productSync", config.redis_url);
 
 let maxJobsPerWorker = 50;
 productSyncQueue.process(maxJobsPerWorker, async (job: any) => {
