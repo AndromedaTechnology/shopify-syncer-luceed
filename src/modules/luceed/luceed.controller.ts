@@ -33,7 +33,13 @@ class LuceedController {
    * SYNC
    */
   async syncLuceedProductsToShopify(ctx: RouterContext) {
-    let job = await productSyncQueue.add({});
+    let job = await productSyncQueue.add(
+      {},
+      // Repeat job once every day at 3:15 (am)
+      // { repeat: { cron: "15 3 * * *" } }
+      // Repeat job every 10 minutes
+      { repeat: { cron: "*/10 * * * *" } }
+    );
     ctx.body = { id: job.id };
     return ctx;
   }
