@@ -1,5 +1,10 @@
 # TODO
 
+- Deploy to Heroku
+- HerokuCronJob
+-- Order sync (Shopify -> Luceed) - every 5 minutes
+-- Inventory sync (Luceed --> Shopify) - every 30 minutes
+
 - TODO: Partneri: Grupa
 -- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
 
@@ -75,11 +80,6 @@
 -- We have 4 pieces and that's it, it's not needed to know exact size. That goes by variants etc.? Not needed.
 
 - DONE: Show [raspolozivo,stanje] for amount on webshop? Rasplozivo (as stanje is hard value, raspolozivo takes reservations into account)
-
-## Cronjobs
-
-1. Order sync (Shopify -> Luceed) - every 5 minutes
-2. Inventory sync (Luceed --> Shopify) - every 30 minutes
 
 ## Later
 
