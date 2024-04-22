@@ -5,6 +5,7 @@ import {
   ILuceedProduct,
   ILuceedProductsResponse,
 } from "../interfaces/luceedProduct.interface";
+import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
@@ -87,6 +88,7 @@ class LuceedProductService {
     let response: ILuceedProductsResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         // data: reqData,

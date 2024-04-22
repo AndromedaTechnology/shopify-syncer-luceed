@@ -10,6 +10,7 @@ import {
   IShopifyProductVariantsResponse,
 } from "../interfaces/shopify.interface";
 import shopifyHelper from "../helpers/shopify.helper";
+import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -95,6 +96,7 @@ class ShopifyProductVariantService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         // data: reqData,
@@ -153,6 +155,7 @@ class ShopifyProductVariantService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "post",
         url: url,
         data: {

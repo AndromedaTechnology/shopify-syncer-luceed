@@ -10,6 +10,7 @@ import {
   ILuceedCreateOrderPayment,
   ILuceedCreateOrdersRequest,
 } from "../interfaces/luceedOrder.interface";
+import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
@@ -78,6 +79,7 @@ class LuceedOrdersService {
     let response: ILuceedOrdersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         auth: {
@@ -191,6 +193,7 @@ class LuceedOrdersService {
     };
     try {
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "post",
         url: url,
         data: data,

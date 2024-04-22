@@ -46,6 +46,9 @@ const envSchema = Joi.object()
       .default(""),
     LUCEED_PARTNER_PARENT_UID: Joi.string().optional().default(""),
 
+    // HEROKU
+    FIXIE_URL: Joi.string().optional().default(""),
+
     // REDIS
     REDIS_URL: Joi.string().optional().default(""),
   })
@@ -90,6 +93,9 @@ export interface IConfig {
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid: string;
   luceed_partner_parent_uid: string;
 
+  // Heroku
+  fixie_url: string;
+
   // Redis
   redis_url: string;
 }
@@ -126,6 +132,9 @@ const config: IConfig = {
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid:
     envVars.LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID,
   luceed_partner_parent_uid: envVars.LUCEED_PARTNER_PARENT_UID,
+
+  // REDIS
+  fixie_url: envVars.FIXIE_URL,
 
   // REDIS
   redis_url: envVars.REDIS_URL,

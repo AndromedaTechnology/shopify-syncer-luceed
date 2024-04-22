@@ -9,6 +9,7 @@ import {
   ILuceedCreateCustomerRequest,
   ILuceedCustomersByEmailResponse,
 } from "../interfaces/luceedCustomer.interface";
+import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
@@ -43,6 +44,7 @@ class LuceedCustomerService {
     let response: ILuceedCustomersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         // data: reqData,
@@ -73,6 +75,7 @@ class LuceedCustomerService {
     let response: ILuceedCustomersByEmailResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         // data: reqData,
@@ -156,6 +159,7 @@ class LuceedCustomerService {
     // console.log("-data-create-customer", data);
     try {
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "post",
         url: url,
         data: data,

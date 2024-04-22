@@ -8,6 +8,7 @@ import {
   IShopifyOrder,
   IShopifyOrdersResponse,
 } from "../interfaces/shopify.interface";
+import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -185,6 +186,7 @@ class ShopifyOrdersService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
+        proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         headers: {
