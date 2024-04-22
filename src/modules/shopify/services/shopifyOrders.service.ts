@@ -124,10 +124,14 @@ class ShopifyOrdersService {
   }
   /**
    * Used to set Luceed.narudzba field.
+   *
+   * TODO: Check
    */
-  getShopifyOrderId(shopifyOrder: IShopifyOrder): string {
+  getShopifyOrderName(shopifyOrder: IShopifyOrder): string {
     return (
-      shopifyOrder.name ?? shopifyOrder.number ?? shopifyOrder.order_number
+      shopifyOrder.name ??
+      shopifyOrder.order_number?.toString() ??
+      shopifyOrder.number?.toString()
     );
   }
   printOrders(orders: Array<IShopifyOrder>) {

@@ -9,6 +9,7 @@ import { ILuceedCustomer } from "../../luceed/interfaces/luceedCustomer.interfac
 import { ILuceedProduct } from "../../luceed/interfaces/luceedProduct.interface";
 import luceedProductService from "../../luceed/services/luceedProduct.service";
 import shopifyOrdersService from "./shopifyOrders.service";
+import orderService from "../../order/order.service";
 
 export interface IShopifyOrderSyncStatus {
   orders_created_cnt?: number;
@@ -28,14 +29,29 @@ class ShopifyService {
       customers_created_cnt: 0,
     };
     for (const shopifyOrder of shopifyOrders) {
-      const orderId = shopifyOrdersService.getShopifyOrderId(shopifyOrder);
+      const orderName = shopifyOrdersService.getShopifyOrderName(shopifyOrder);
+      /**
+       * Save in local DB
+       */
+      const databaseOrder = await orderService.touch(undefined, orderName, {
+        order_id: shopifyOrder.id,
+        name: shopifyOrder.name,
+        number: shopifyOrder.number,
+        order_number: shopifyOrder.order_number,
+        created_at: shopifyOrder.created_at
+          ? new Date(shopifyOrder.created_at)
+          : undefined,
+        confirmed: shopifyOrder.confirmed,
+        fulfillment_status: shopifyOrder.fulfillment_status,
+      });
+
       const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
       if (!email) {
         continue;
-        // throw `shopify order has no email: ${orderId}`;
+        // throw `shopify order has no email: ${orderName}`;
       }
       const luceedOrder = this.getLuceedOrderByShopifyOrderId(
-        orderId,
+        orderName,
         luceedOrders
       );
       if (!luceedOrder) {
@@ -92,7 +108,7 @@ class ShopifyService {
             new Date(shopifyOrder.created_at)
           )!
         : luceedOrderService.getDateForLuceed(new Date())!,
-      shopifyOrdersService.getShopifyOrderId(shopifyOrder),
+      shopifyOrdersService.getShopifyOrderName(shopifyOrder),
       luceedPartner.partner_uid!,
       stavke,
       placanjeIznos

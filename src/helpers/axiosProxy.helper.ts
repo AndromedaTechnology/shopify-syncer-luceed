@@ -4,6 +4,8 @@ import { AxiosProxyConfig } from "axios";
 
 export class AxiosProxyHelper {
   static getProxy(): AxiosProxyConfig | undefined {
+    if (config.app_env === "local") return undefined;
+
     if (!config.fixie_url) return undefined;
 
     const fixieUrl = url.parse(config.fixie_url);
