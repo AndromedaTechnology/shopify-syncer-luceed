@@ -186,7 +186,7 @@ class ShopifyOrdersService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
-        proxy: AxiosProxyHelper.getProxy(),
+        // proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         headers: {

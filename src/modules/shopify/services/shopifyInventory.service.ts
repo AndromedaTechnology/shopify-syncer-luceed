@@ -119,7 +119,7 @@ class ShopifyInventoryService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
-        proxy: AxiosProxyHelper.getProxy(),
+        // proxy: AxiosProxyHelper.getProxy(),
         method: "put",
         url: url,
         data: data,
@@ -161,7 +161,7 @@ class ShopifyInventoryService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       const axiosResponse = await axios({
-        proxy: AxiosProxyHelper.getProxy(),
+        // proxy: AxiosProxyHelper.getProxy(),
         method: "post",
         url: url,
         headers: {
@@ -204,7 +204,7 @@ class ShopifyInventoryService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       response = await axios({
-        proxy: AxiosProxyHelper.getProxy(),
+        // proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         // data: reqData,
@@ -230,7 +230,7 @@ class ShopifyInventoryService {
     try {
       const remainingRequests = await limiter.removeTokens(1);
       response = await axios({
-        proxy: AxiosProxyHelper.getProxy(),
+        // proxy: AxiosProxyHelper.getProxy(),
         method: "get",
         url: url,
         // data: reqData,
