@@ -29,30 +29,12 @@ class LuceedController {
     ctx.body = await luceedOrderService.fetchOrders();
     return ctx;
   }
-  // async clearJobs() {
-  //   await productSyncQueue.clean(0, "delayed");
-  //   await productSyncQueue.clean(0, "wait");
-  //   await productSyncQueue.clean(0, "active");
-  //   await productSyncQueue.clean(0, "completed");
-  //   await productSyncQueue.clean(0, "failed");
-
-  //   let multi = productSyncQueue.multi();
-  //   multi.del(productSyncQueue.toKey("repeat"));
-  //   await multi.exec();
-  // }
   /**
    * SYNC
    */
   async syncLuceedProductsToShopify(ctx: RouterContext) {
-    // await this.clearJobs();
     await productSyncQueue.obliterate({ force: true });
-    let job = await productSyncQueue.add(
-      {},
-      // Repeat job once every day at 3:15 (am)
-      // { repeat: { cron: "15 3 * * *" } }
-      // Repeat job every 10 minutes
-      { repeat: { cron: "*/10 * * * *" } }
-    );
+    let job = await productSyncQueue.add({});
     ctx.body = { id: job.id };
     return ctx;
   }
