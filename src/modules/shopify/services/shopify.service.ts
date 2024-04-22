@@ -10,6 +10,7 @@ import { ILuceedProduct } from "../../luceed/interfaces/luceedProduct.interface"
 import luceedProductService from "../../luceed/services/luceedProduct.service";
 import shopifyOrdersService from "./shopifyOrders.service";
 import orderService from "../../order/order.service";
+import statusService from "../../status/status.service";
 
 export interface IShopifyOrderSyncStatus {
   orders_created_cnt?: number;
@@ -83,6 +84,8 @@ class ShopifyService {
     shopifyOrder: IShopifyOrder,
     luceedProducts: Array<ILuceedProduct>
   ): Promise<string | undefined> {
+    const orderName = shopifyOrdersService.getShopifyOrderName(shopifyOrder);
+
     /**
      * PARTNER
      */
@@ -113,6 +116,11 @@ class ShopifyService {
       stavke,
       placanjeIznos
     );
+
+    await statusService.create({
+      order_name: orderName,
+    });
+
     return luceedOrderId;
   }
 

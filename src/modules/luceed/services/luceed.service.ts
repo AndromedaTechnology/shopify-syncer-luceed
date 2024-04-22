@@ -8,6 +8,7 @@ import { ILuceedProduct } from "../interfaces/luceedProduct.interface";
 import { IShopifyProduct } from "../../shopify/interfaces/shopify.interface";
 import shopifyInventoryService from "../../shopify/services/shopifyInventory.service";
 import shopifyLocationsService from "../../shopify/services/shopifyLocations.service";
+import statusService from "../../status/status.service";
 
 export interface IShopifySyncStatusProducts {
   products_created_cnt?: number;
@@ -178,6 +179,10 @@ class LuceedService {
       databaseProduct.is_buyable_only_in_physical_shop ?? false,
       isDebug
     );
+
+    await statusService.create({
+      product_variant_sku: productSKU,
+    });
 
     return response;
   }

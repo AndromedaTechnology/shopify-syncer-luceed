@@ -6,6 +6,7 @@ import routerProduct from "./product/product.module";
 import routerOrder from "./order/order.module";
 import routerShopify from "./shopify/shopify.module";
 import routerLuceed from "./luceed/luceed.module";
+import routerStatus from "./status/status.module";
 
 const router = combineRouters(
   routerRoot,
@@ -13,7 +14,8 @@ const router = combineRouters(
   routerProduct,
   routerShopify,
   routerLuceed,
-  routerOrder
+  routerOrder,
+  routerStatus
 );
 
 export default router;
