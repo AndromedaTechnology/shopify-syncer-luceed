@@ -1,12 +1,5 @@
 # TODO
 
-- Disable Fixie in Local env
--- only use in production, for Luceed
-
-- TODO: Heroku - API call - run in background - not to timeout
-- TODO: HerokuCronJob
--- Order sync (Shopify -> Luceed) - every 5 minutes
--- Inventory sync (Luceed --> Shopify) - every 30 minutes
 
 - TODO: Partneri: Grupa
 -- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
@@ -19,6 +12,11 @@
 -- `mjesto` i `mjesto_uid` MORAJU BITI POSTALVJENI NA PARTNERU
 -- `mjesto` i `drzava` treba kreirati
 - query `mjesto` i ako ne postoji onda post `mjesto` (mjesto sa postanskim brojem, naziv koji covjek unese i postanski broj)
+
+- TODO: Heroku - API call - run in background - not to timeout
+
+- DONE: Test: Disable Fixie in Local env
+-- only use in production, for Luceed
 
 - DONE: Test Disable [showing,selling] for some products,
 -- Find shopify.props for [hidding,disablingSelling] on product
