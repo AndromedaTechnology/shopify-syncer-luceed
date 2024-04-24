@@ -39,8 +39,8 @@ class LuceedCustomerService {
    * Fetch by naziv (ALL)
    */
   async fetchCustomers(naziv?: string): Promise<Array<ILuceedCustomer>> {
-    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/naziv/${naziv}`;
-    // var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
+    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/naziv/${naziv}`;
+    // var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
     let response: ILuceedCustomersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
@@ -70,8 +70,8 @@ class LuceedCustomerService {
    * Fetch by email
    */
   async fetchCustomersByEmail(email: string): Promise<Array<ILuceedCustomer>> {
-    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/email/${email}`;
-    // var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
+    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/email/${email}`;
+    // var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
     let response: ILuceedCustomersByEmailResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
@@ -113,7 +113,7 @@ class LuceedCustomerService {
     customerData: ILuceedCustomer = {},
     isDebug = true
   ): Promise<string | undefined> {
-    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/snimi/`;
+    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/snimi/`;
     let response: ILuceedCreateCustomerResponse | undefined = undefined;
 
     customerData = {

@@ -77,14 +77,14 @@ class LuceedProductService {
   }
 
   /**
-   * http://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[0,1000]
+   * https://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[0,1000]
    * @param {string} productIds comma separated stirng list
    */
   async fetchProducts(
     startPosition = 0,
     amountToReturn = 1000
   ): Promise<Array<ILuceedProduct>> {
-    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[${startPosition},${amountToReturn}]`;
+    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[${startPosition},${amountToReturn}]`;
     let response: ILuceedProductsResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({

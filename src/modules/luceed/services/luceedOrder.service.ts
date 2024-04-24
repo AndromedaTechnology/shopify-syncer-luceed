@@ -74,8 +74,8 @@ class LuceedOrdersService {
     // statusi: string = LuceedStatusi.toString()
     statusi: string = "01,02,03,04,05,06,99"
   ): Promise<Array<ILuceedOrder>> {
-    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/statusi/[${statusi}]`;
-    // var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/uid/[${orderUid}]`;
+    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/statusi/[${statusi}]`;
+    // var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/uid/[${orderUid}]`;
     let response: ILuceedOrdersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
@@ -125,7 +125,7 @@ class LuceedOrdersService {
     placanjeIznos: number,
     orderData: ILuceedCreateOrder = {}
   ): Promise<string | undefined> {
-    var url = `http://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/snimi/`;
+    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/snimi/`;
     let response: ILuceedCreateOrdersResponse | undefined = undefined;
 
     /**

@@ -4,6 +4,7 @@ import { AxiosProxyConfig } from "axios";
 
 export class AxiosProxyHelper {
   static getProxy(): AxiosProxyConfig | undefined {
+    return undefined;
     if (config.app_env === "local") return undefined;
 
     if (!config.fixie_url) return undefined;
@@ -12,11 +13,11 @@ export class AxiosProxyHelper {
     if (!fixieUrl || !fixieUrl.auth || !fixieUrl.hostname || !fixieUrl.port)
       return undefined;
 
-    const fixieAuth = fixieUrl.auth.split(":");
+    const fixieAuth = fixieUrl!.auth!.split(":");
     return {
       protocol: "http",
-      host: fixieUrl.hostname,
-      port: parseInt(fixieUrl.port),
+      host: fixieUrl.hostname!,
+      port: parseInt(fixieUrl!.port!),
       auth: { username: fixieAuth[0], password: fixieAuth[1] },
     };
   }
