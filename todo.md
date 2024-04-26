@@ -5,6 +5,10 @@
 - TODO: Get Country UID
 -- Used to create Mjesto (We have naziv mjesta, zip code, country name)
 
+DONE: Test: Nalogprodaje postaviti:
+ - partner_uid
+ - korisnik_partner_uid
+
 - DONE: Test: Otvori novog Partnera
 -- Gledaj po E-mail AND Mjesto isporuke - to je najbolje - ako ne postoji onda kreiraj novog Partnera
 

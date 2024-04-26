@@ -147,7 +147,7 @@ class LuceedOrdersService {
        * Partner / customer
        */
       korisnik__partner_uid: luceedPartnerUid,
-      // partner_uid: luceedPartnerUid,
+      partner_uid: luceedPartnerUid,
       /**
        * Skladiste
        * Add skladiste props
