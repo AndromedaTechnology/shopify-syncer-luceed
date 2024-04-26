@@ -1,5 +1,7 @@
 # TODO
 
+- TODO: Save Exceptions to Database
+
 - TODO: Add shipping item to Each order in Shopify (default shipping)
 
 - TODO: Get Country UID
