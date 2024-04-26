@@ -1,5 +1,7 @@
 # TODO
 
+- TODO: Add shipping item to Each order in Shopify (default shipping)
+
 - TODO: Get Country UID
 -- Used to create Mjesto (We have naziv mjesta, zip code, country name)
 
