@@ -8,6 +8,7 @@ import {
   IShopifyProductsResponse,
   IShopifyProductCreateResponse,
   IShopifyProductStatus,
+  ShopifyProductVariantInventoryPolicy,
 } from "../interfaces/shopify.interface";
 import shopifyHelper from "../helpers/shopify.helper";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
@@ -192,6 +193,7 @@ class ShopifyProductService {
         {
           sku: productSKU,
           inventory_management: "shopify",
+          inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
           price: productPrice,
         },
       ],
@@ -275,6 +277,7 @@ class ShopifyProductService {
           sku: variantSKU,
           price: variantPrice,
           inventory_management: "shopify",
+          inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
         },
       ],
     };

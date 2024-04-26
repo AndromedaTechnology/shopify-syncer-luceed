@@ -36,9 +36,21 @@ export interface IShopifyProductVariant {
   inventory_management?: string;
 
   /**
+   * Continue or deny selling when out of stock.
+   *
+   * Set to DENY.
+   */
+  inventory_policy?: ShopifyProductVariantInventoryPolicy;
+
+  /**
    * Name of the variant?
    */
   option1?: string;
+}
+
+export enum ShopifyProductVariantInventoryPolicy {
+  DENY = "deny",
+  CONTINUE = "continue",
 }
 
 export enum IShopifyProductStatus {

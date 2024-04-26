@@ -8,6 +8,7 @@ import {
   IShopifyProduct,
   IShopifyProductVariant,
   IShopifyProductVariantsResponse,
+  ShopifyProductVariantInventoryPolicy,
 } from "../interfaces/shopify.interface";
 import shopifyHelper from "../helpers/shopify.helper";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
@@ -151,6 +152,7 @@ class ShopifyProductVariantService {
       sku: productVariantSKU,
       price: productVariantPrice,
       inventory_management: "shopify",
+      inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
     };
 
     var url = `https://${shopName}.myshopify.com/admin/api/2024-01/products/${productId}/variants.json`;
