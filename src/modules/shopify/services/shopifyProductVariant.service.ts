@@ -11,6 +11,7 @@ import {
 } from "../interfaces/shopify.interface";
 import shopifyHelper from "../helpers/shopify.helper";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
+import statusService from "../../status/status.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -51,7 +52,8 @@ class ShopifyProductVariantService {
     if (!variant || !variant.id) {
       const variants = await this.fetchProductVariants(product.id);
       if (!variants || !variants.length) {
-        throw "product fetch variants - returned nothing";
+        const error_message = "product fetch variants - returned nothing";
+        await statusService.storeErrorMessageAndThrowException(error_message);
       }
       // We return only first one. As more we shouldn't have
       variant = variants[0];
@@ -140,7 +142,8 @@ class ShopifyProductVariantService {
     isDebug = true
   ): Promise<IShopifyProductVariant | undefined> {
     if (!productId || !productVariantSKU || !productVariantPrice) {
-      throw "productId required";
+      const error_message = "productId required";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
     data = {

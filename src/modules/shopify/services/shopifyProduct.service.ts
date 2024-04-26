@@ -13,6 +13,7 @@ import shopifyHelper from "../helpers/shopify.helper";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
 import luceedProductService from "../../luceed/services/luceedProduct.service";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
+import statusService from "../../status/status.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -59,7 +60,8 @@ class ShopifyProductService {
       );
 
       if (!variant || !variant!.id) {
-        throw "product exists, but variant doesnt";
+        const error_message = "product exists, but variant doesnt";
+        await statusService.storeErrorMessageAndThrowException(error_message);
         /**
          * Then create default Variant and attach to product
          * TODO: Test if variant is created/getted/fetched(touched) and everything passes
@@ -135,20 +137,32 @@ class ShopifyProductService {
    *
    * SKU is for real comparison in internal apps and tracking.
    */
-  getProductBySKU(
+  async getProductBySKU(
     products: Array<IShopifyProduct>,
     productSKU: string
-  ): IShopifyProduct | undefined {
+  ): Promise<IShopifyProduct | undefined> {
     if (!productSKU) {
-      throw "productSKU needed";
+      const error_message = "productSKU needed";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
-    productSKU = luceedProductService.removeSKUPrefix(productSKU);
-    return products?.find((product) =>
-      product.variants?.find(
-        (variant) =>
-          luceedProductService.removeSKUPrefix(variant.sku) === productSKU
-      )
-    );
+    productSKU = await luceedProductService.removeSKUPrefix(productSKU);
+
+    let item: IShopifyProduct | undefined = undefined;
+    for (const product of products ?? []) {
+      for (const variant of product.variants ?? []) {
+        let isFound =
+          (await luceedProductService.removeSKUPrefix(variant.sku)) ===
+          productSKU;
+        if (isFound) {
+          item = product;
+          break;
+        }
+      }
+      if (item) {
+        break;
+      }
+    }
+    return item;
   }
 
   /**
@@ -164,7 +178,8 @@ class ShopifyProductService {
     isDebug = true
   ): Promise<IShopifyProduct | undefined> {
     if (!productHandle || !productSKU || !productPrice) {
-      throw "handle sku price required";
+      const error_message = "handle sku price required";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
     /**
@@ -233,13 +248,16 @@ class ShopifyProductService {
     isDebug = true
   ): Promise<IShopifyProduct | undefined> {
     if (!productId || !productHandle) {
-      throw "productId productHandle required";
+      const error_message = "productId productHandle required";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
     if (!variantId || !variantSKU || !variantPrice) {
-      throw "handle sku price required";
+      const error_message = "handle sku price required";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
     if (!data) {
-      throw "data required";
+      const error_message = "data required";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
     // if (!data.variants || !data.variants.length) {
     //   throw "variant.length > 0 required";

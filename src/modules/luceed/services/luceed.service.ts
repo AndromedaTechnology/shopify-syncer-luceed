@@ -25,7 +25,8 @@ class LuceedService {
     isDebug = true
   ): Promise<IShopifySyncStatusProducts> {
     if (!luceedProducts || !luceedProducts.length) {
-      throw "no luceed products to sync";
+      const error_message = "no luceed products to sync";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
     let productsStatus: IShopifySyncStatusProducts = {
@@ -42,10 +43,12 @@ class LuceedService {
       config.shopify_shop_location_id
     );
     if (!locationWebshop || !locationWebshop.id) {
-      throw "webshop location not available";
+      const error_message = "webshop location not available";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
     if (!locationShop || !locationShop.id) {
-      throw "physical shop location not available";
+      const error_message = "physical shop location not available";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
     /**
@@ -75,7 +78,7 @@ class LuceedService {
       const productPrice = luceedProductService.getProductMPC(luceedProduct);
       const productCost = luceedProductService.getProductCost(luceedProduct);
       productSKU = productSKU
-        ? luceedProductService.removeSKUPrefix(productSKU)
+        ? await luceedProductService.removeSKUPrefix(productSKU)
         : undefined;
 
       if (!productSKU) continue;
@@ -130,13 +133,20 @@ class LuceedService {
     locationShopId: number,
     isDebug = true
   ): Promise<IShopifySyncStatusProduct> {
+    await statusService.create({
+      product_variant_sku: productSKU,
+    });
+
     let response: IShopifySyncStatusProduct = {
       product: undefined,
       is_created: false,
     };
 
-    productSKU = luceedProductService.removeSKUPrefix(productSKU);
-    let product = shopifyProductService.getProductBySKU(products, productSKU);
+    productSKU = await luceedProductService.removeSKUPrefix(productSKU);
+    let product = await shopifyProductService.getProductBySKU(
+      products,
+      productSKU
+    );
 
     /**
      * Touch product
@@ -164,7 +174,9 @@ class LuceedService {
     });
 
     if (!product) {
-      throw "product not found before, and not created - so can't continue";
+      const error_message =
+        "product not found before, and not created - so can't continue";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
     /**
@@ -179,10 +191,6 @@ class LuceedService {
       databaseProduct.is_buyable_only_in_physical_shop ?? false,
       isDebug
     );
-
-    await statusService.create({
-      product_variant_sku: productSKU,
-    });
 
     return response;
   }

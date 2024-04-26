@@ -4,8 +4,15 @@ export class StatusDto {
   _id?: mongoose.Types.ObjectId;
 
   parent_id?: mongoose.Types.ObjectId;
+
+  luceed_product_id?: string;
+  shopify_product_id?: string;
+
   product_variant_sku?: string;
+
   order_name?: string;
+
+  error_message?: string;
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -22,12 +29,27 @@ const orderSchema = new Schema({
     required: false,
     default: null,
   },
+  luceed_product_id: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  shopify_product_id: {
+    type: String,
+    required: false,
+    default: null,
+  },
   product_variant_sku: {
     type: String,
     required: false,
     default: null,
   },
   order_name: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  error_message: {
     type: String,
     required: false,
     default: null,

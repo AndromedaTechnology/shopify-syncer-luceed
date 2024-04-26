@@ -89,6 +89,10 @@ class ShopifyService {
   ): Promise<string | undefined> {
     const orderName = shopifyOrdersService.getShopifyOrderName(shopifyOrder);
 
+    await statusService.create({
+      order_name: orderName,
+    });
+
     /**
      * PARTNER
      */
@@ -122,10 +126,6 @@ class ShopifyService {
       placanjeIznos
     );
 
-    await statusService.create({
-      order_name: orderName,
-    });
-
     return luceedOrderId;
   }
 
@@ -140,7 +140,7 @@ class ShopifyService {
     if (!shopifyOrder.line_items) return [];
     let stavke: Array<ILuceedCreateOrderProduct> = [];
     for (const lineItems of shopifyOrder.line_items) {
-      const luceedProduct = luceedProductService.getLuceedProductBySKU(
+      const luceedProduct = await luceedProductService.getLuceedProductBySKU(
         lineItems.sku,
         luceedProducts
       );

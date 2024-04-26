@@ -11,6 +11,7 @@ import {
 import { limiter } from "../../root/root.service";
 import shopifyProductVariantService from "./shopifyProductVariant.service";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
+import statusService from "../../status/status.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -44,11 +45,13 @@ class ShopifyInventoryService {
       // );
     }
     if (!productVariantInventoryItemId) {
-      throw "productVariantInventoryItemId not found, so can't continue";
+      const error_message =
+        "productVariantInventoryItemId not found, so can't continue";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
     const inventoryItem = await this.setInventoryItemCost(
-      productVariantInventoryItemId,
+      productVariantInventoryItemId!,
       productCost,
       isDebug
     );
@@ -65,14 +68,14 @@ class ShopifyInventoryService {
     if (is_buyable_only_in_physical_shop) {
       inventoryLevel = await this.setLevelsPerItemPerLocation(
         locationWebshopId,
-        productVariantInventoryItemId,
+        productVariantInventoryItemId!,
         0,
         true,
         true
       );
       inventoryLevel = await this.setLevelsPerItemPerLocation(
         locationShopId,
-        productVariantInventoryItemId,
+        productVariantInventoryItemId!,
         productAmount,
         true,
         true
@@ -80,21 +83,22 @@ class ShopifyInventoryService {
     } else {
       inventoryLevel = await this.setLevelsPerItemPerLocation(
         locationWebshopId,
-        productVariantInventoryItemId,
+        productVariantInventoryItemId!,
         productAmount,
         true,
         true
       );
       inventoryLevel = await this.setLevelsPerItemPerLocation(
         locationShopId,
-        productVariantInventoryItemId,
+        productVariantInventoryItemId!,
         0,
         true,
         true
       );
     }
     if (!inventoryLevel) {
-      throw "inventory level not set";
+      const error_message = "inventory level not set";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
     return inventoryLevel;
   }

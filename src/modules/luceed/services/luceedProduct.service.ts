@@ -6,6 +6,7 @@ import {
   ILuceedProductsResponse,
 } from "../interfaces/luceedProduct.interface";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
+import statusService from "../../status/status.service";
 
 const luceedUsername = config.luceed_username;
 const luceedPassword = config.luceed_password;
@@ -33,12 +34,14 @@ class LuceedProductService {
     const price = product.nc?.toString() ?? "0.00";
     return price;
   }
-  removeSKUPrefix(productSku: string): string {
+  async removeSKUPrefix(productSku: string): Promise<string> {
     try {
       const productHandleInt = parseInt(productSku);
       productSku = productHandleInt.toString();
     } catch (error) {
-      throw "cannot convert luceed product SKU to int (and remove prefixed zeroes)";
+      const error_message =
+        "cannot convert luceed product SKU to int (and remove prefixed zeroes)";
+      await statusService.storeErrorMessageAndThrowException(error_message);
     }
     return productSku;
   }
@@ -46,18 +49,24 @@ class LuceedProductService {
    * Find luceed product (in array) by SKU
    * Convert SKU properly and compare
    */
-  getLuceedProductBySKU(
+  async getLuceedProductBySKU(
     SKUFromShopifyOrderLineItem: string,
     luceedProducts: Array<ILuceedProduct>
-  ): ILuceedProduct | undefined {
-    const skuWithoutPrefixedZeroes = this.removeSKUPrefix(
+  ): Promise<ILuceedProduct | undefined> {
+    const skuWithoutPrefixedZeroes = await this.removeSKUPrefix(
       SKUFromShopifyOrderLineItem
     );
-    return luceedProducts.find((luceedProduct: ILuceedProduct) => {
-      if (!luceedProduct.artikl) return false;
-      const artiklSKU = this.removeSKUPrefix(luceedProduct.artikl);
-      return artiklSKU === skuWithoutPrefixedZeroes;
-    });
+    let found: ILuceedProduct | undefined = undefined;
+    for (const luceedProduct of luceedProducts) {
+      if (!luceedProduct.artikl) continue;
+      const artiklSKU = await this.removeSKUPrefix(luceedProduct.artikl);
+      const isFound = artiklSKU === skuWithoutPrefixedZeroes;
+      if (isFound) {
+        found = luceedProduct;
+        break;
+      }
+    }
+    return found;
   }
   printProducts(products: Array<ILuceedProduct>) {
     for (const artikl of products) {
