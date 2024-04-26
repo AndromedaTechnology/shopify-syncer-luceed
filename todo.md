@@ -1,19 +1,21 @@
 # TODO
 
+- TODO: Get Country UID
+-- Used to create Mjesto (We have naziv mjesta, zip code, country name)
 
-- TODO: Partneri: Grupa
--- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
-
-- TODO: Otvori novog Partnera
+- DONE: Test: Otvori novog Partnera
 -- Gledaj po E-mail AND Mjesto isporuke - to je najbolje - ako ne postoji onda kreiraj novog Partnera
 
-- TODO: Ako mjesto nema postanski broj u Luceedu
+- DONE: Test: Ako mjesto nema postanski broj u Luceedu
 -- Onda treba kreirati Mjesto u Luceedu
 -- `mjesto` i `mjesto_uid` MORAJU BITI POSTALVJENI NA PARTNERU
 -- `mjesto` i `drzava` treba kreirati
 - query `mjesto` i ako ne postoji onda post `mjesto` (mjesto sa postanskim brojem, naziv koji covjek unese i postanski broj)
 
-- TODO: Heroku - API call - run in background - not to timeout
+- DONE: Test: Heroku - API call - run in background - not to timeout
+
+- DONE: Test: Partneri: Grupa
+-- PoslovniPartneri.create: grupa_partnera_uid = 6-3228.
 
 - DONE: Test: Disable Fixie in Local env
 -- only use in production, for Luceed

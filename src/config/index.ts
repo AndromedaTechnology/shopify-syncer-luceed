@@ -44,6 +44,8 @@ const envSchema = Joi.object()
     LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID: Joi.string()
       .optional()
       .default(""),
+    LUCEED_PARTNER_DRZAVA_UID_DEFAULT: Joi.string().optional().default(""),
+    LUCEED_PARTNER_GRUPA_PARTNERA_UID: Joi.string().optional().default(""),
     LUCEED_PARTNER_PARENT_UID: Joi.string().optional().default(""),
 
     // HEROKU
@@ -91,6 +93,8 @@ export interface IConfig {
   luceed_nalog_prodaje_na__skladiste_uid: string;
   luceed_nalog_prodaje_skl_dokument: string;
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid: string;
+  luceed_partner_drzava_uid_default: string;
+  luceed_partner_grupa_partnera_uid: string;
   luceed_partner_parent_uid: string;
 
   // Heroku
@@ -121,7 +125,9 @@ const config: IConfig = {
   // Luceed API
   luceed_username: envVars.LUCEED_USERNAME,
   luceed_password: envVars.LUCEED_PASSWORD,
+
   luceed_nalog_status: envVars.LUCEED_NALOG_STATUS,
+
   luceed_nalog_prodaje_skladiste_uid:
     envVars.LUCEED_NALOG_PRODAJE_SKLADISTE_UID,
   luceed_nalog_prodaje_sa__skladiste_uid:
@@ -131,6 +137,9 @@ const config: IConfig = {
   luceed_nalog_prodaje_skl_dokument: envVars.LUCEED_NALOG_PRODAJE_SKL_DOKUMENT,
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid:
     envVars.LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID,
+
+  luceed_partner_drzava_uid_default: envVars.LUCEED_PARTNER_DRZAVA_UID_DEFAULT,
+  luceed_partner_grupa_partnera_uid: envVars.LUCEED_PARTNER_GRUPA_PARTNERA_UID,
   luceed_partner_parent_uid: envVars.LUCEED_PARTNER_PARENT_UID,
 
   // REDIS

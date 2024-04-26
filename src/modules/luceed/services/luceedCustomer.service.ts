@@ -28,11 +28,42 @@ class LuceedCustomerService {
         tip_cijene: item.tip_cijene,
         e_mail: item.e_mail,
         telefon: item.telefon,
-        maticni_broj: item.maticni_broj,
         mjesto: item.mjesto,
         postanski_broj: item.postanski_broj,
       });
     }
+  }
+
+  /**
+   * @param {string} cityName From Shopify.city
+   */
+  filterCustomersByEmailShipping(
+    customers: Array<ILuceedCustomer>,
+    email?: string,
+    zipCode?: string,
+    cityName?: string
+  ): Array<ILuceedCustomer> {
+    return customers?.filter((customer) => {
+      let isValid = true;
+      if (email) {
+        isValid =
+          isValid && email.toLowerCase() === customer.e_mail?.toLowerCase();
+      }
+      if (zipCode) {
+        isValid =
+          isValid &&
+          zipCode.toLowerCase() === customer.postanski_broj?.toLowerCase();
+      }
+      /**
+       * Mjesto (naziv)
+       */
+      if (cityName) {
+        isValid =
+          isValid &&
+          cityName.toLowerCase() === customer.naziv_mjesta?.toLowerCase();
+      }
+      return true;
+    });
   }
 
   /**
@@ -109,7 +140,6 @@ class LuceedCustomerService {
     postanskiBroj?: string,
     mjestoUid?: string,
     adresa?: string,
-    maticniBroj?: string,
     customerData: ILuceedCustomer = {},
     isDebug = true
   ): Promise<string | undefined> {
@@ -118,7 +148,7 @@ class LuceedCustomerService {
 
     customerData = {
       ...(customerData ?? {}),
-      parent__partner_uid: config.luceed_partner_parent_uid,
+      grupa_partnera_uid: config.luceed_partner_grupa_partnera_uid,
       ime: ime,
       prezime: prezime,
       naziv: ime + " " + prezime,
@@ -144,13 +174,12 @@ class LuceedCustomerService {
        * optional/required.
        * Way to get it's value.
        *
-       * Adresa, maticni_broj su required?
+       * Adresa je required?
        * Sto je maticni broj?
        */
       postanski_broj: postanskiBroj,
       mjesto_uid: mjestoUid,
       adresa: adresa,
-      maticni_broj: maticniBroj,
     };
 
     const data: ILuceedCreateCustomerRequest = {

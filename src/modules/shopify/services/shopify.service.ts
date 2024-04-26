@@ -11,6 +11,9 @@ import luceedProductService from "../../luceed/services/luceedProduct.service";
 import shopifyOrdersService from "./shopifyOrders.service";
 import orderService from "../../order/order.service";
 import statusService from "../../status/status.service";
+import luceedMjestoService from "../../luceed/services/luceedMjesto.service";
+import { ILuceedMjesto } from "../../luceed/interfaces/luceedMjesto.interface";
+import config from "../../../config";
 
 export interface IShopifyOrderSyncStatus {
   orders_created_cnt?: number;
@@ -89,7 +92,9 @@ class ShopifyService {
     /**
      * PARTNER
      */
-    const luceedPartner = await this.getLuceedCustomerByEmail(shopifyOrder);
+    const luceedPartner = await this.touchLuceedCustomerFromShopifyOrder(
+      shopifyOrder
+    );
     if (!luceedPartner || !luceedPartner.partner_uid) return;
 
     /**
@@ -166,25 +171,41 @@ class ShopifyService {
   /**
    * TODO: Check
    *
-   * Create Customer by email
+   * Create Customer by email and shipping address
    * What if multiple partners returned? Get first one?
    *
    * TODO: Use shopifyOrder.customer.email
    * OR
    * shopifyOrder.email?
    */
-  private async getLuceedCustomerByEmail(
+  private async touchLuceedCustomerFromShopifyOrder(
     shopifyOrder: IShopifyOrder
   ): Promise<ILuceedCustomer | undefined> {
     const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
+    const shipping = shopifyOrdersService.getShopifyOrderShipping(shopifyOrder);
     /**
      * No email for customer - skip ORDER
      */
     if (!email) return undefined;
 
+    /**
+     * Fetch luceed customer
+     * 1) by email
+     * 2) then - filter by location
+     *
+     * If found, we have it already in Luceed...
+     * If not, create new one in Luceed.
+     */
+
     let luceedPartner = undefined;
-    const luceedPartners = await luceedCustomerService.fetchCustomersByEmail(
+    let luceedPartners = await luceedCustomerService.fetchCustomersByEmail(
       email
+    );
+    luceedPartners = luceedCustomerService.filterCustomersByEmailShipping(
+      luceedPartners,
+      email,
+      shipping.zip,
+      luceedMjestoService.getShopifyOrderMjestoNaziv(shopifyOrder)
     );
     if (!luceedPartners || luceedPartners.length === 0) {
       luceedPartner = await this.createLuceedCustomerFromShopifyOrder(
@@ -204,28 +225,37 @@ class ShopifyService {
     shopifyOrder: IShopifyOrder
   ): Promise<ILuceedCustomer | undefined> {
     const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
+    const shipping = shopifyOrdersService.getShopifyOrderShipping(shopifyOrder);
     if (!email) return undefined;
 
-    const customerData =
-      shopifyOrdersService.getShopifyOrderCustomerData(shopifyOrder);
     /**
      * General
      */
-    const first_name = customerData?.first_name;
-    const last_name = customerData?.last_name;
-    const phone = customerData?.phone;
+    const first_name = shipping?.first_name;
+    const last_name = shipping?.last_name;
+    const phone = shipping?.phone;
     /**
      * Location data
      */
-    const locationZip = customerData?.zip;
-    const locationAddress = `${customerData?.address1}, ${customerData?.address2},${customerData?.city}, ${customerData?.province}, ${locationZip}, ${customerData?.country}`;
+    const locationZip = shipping?.zip;
+    const locationAddress = `${shipping?.address1}, ${shipping?.address2},${shipping?.city}, ${shipping?.province}, ${locationZip}, ${shipping?.country}`;
     /**
      * Property `customer.adresa` has VARCHAR(200) type.
      * So, send only 200 max chars.
      */
     const locationAddressTrimmed = locationAddress.substring(0, 200);
+
     /**
-     * Create Customer
+     * Touch Mjesto
+     */
+    const luceedMjesto = await this.touchMjesto(
+      shipping.zip,
+      luceedMjestoService.getShopifyOrderMjestoNaziv(shopifyOrder),
+      shipping.country
+    );
+
+    /**
+     * Create Luceed Customer
      */
     const luceedCustomerId = await luceedCustomerService.createCustomer(
       first_name,
@@ -238,21 +268,22 @@ class ShopifyService {
        * TODO: Check
        */
       locationZip,
-      undefined, // TODO: mjesto UID
-      locationAddressTrimmed,
-      undefined // TODO: maticni broj
+      luceedMjesto?.mjesto_uid, // TODO: mjesto UID
+      locationAddressTrimmed
     );
-    // console.log({
-    //   luceedCustomerId: luceedCustomerId,
-    //   first_name: shopifyOrder.customer.first_name,
-    //   last_name: shopifyOrder.customer.last_name,
-    //   phone: shopifyOrder.customer.phone,
-    //   email: email,
-    // });
-    // return undefined;
+
+    /**
+     * Fetch newly created Luceed customer, full object
+     */
     if (!luceedCustomerId) return undefined;
-    const luceedCustomers = await luceedCustomerService.fetchCustomersByEmail(
+    let luceedCustomers = await luceedCustomerService.fetchCustomersByEmail(
       email!
+    );
+    luceedCustomers = luceedCustomerService.filterCustomersByEmailShipping(
+      luceedCustomers,
+      email,
+      shipping.zip,
+      luceedMjestoService.getShopifyOrderMjestoNaziv(shopifyOrder)
     );
     return luceedCustomers && luceedCustomers.length
       ? luceedCustomers[0]
@@ -275,6 +306,52 @@ class ShopifyService {
       (luceedOrder) => luceedOrder.narudzba === shopifyOrderId
     );
     return item;
+  }
+
+  /**
+   * TODO:
+   */
+  async touchMjesto(
+    zip?: string,
+    cityName?: string,
+    countryName?: string
+  ): Promise<ILuceedMjesto | undefined> {
+    if (!zip || !cityName) {
+      return undefined;
+    }
+    /**
+     * Fetch
+     */
+    let luceedMjesta = await luceedMjestoService.fetchMjesta(zip, cityName);
+    if (luceedMjesta && luceedMjesta.length) {
+      /**
+       * Return first one
+       */
+      return luceedMjesta[0];
+    } else {
+      /**
+       * TODO: Touch (Get or Create) country if needed (by countryName)
+       *
+       * Currently setting to Croatia.
+       */
+      const countryUid = config.luceed_partner_drzava_uid_default;
+      if (!countryUid) {
+        throw "cant get or create new country in luceed";
+      }
+      /**
+       * Create
+       */
+      let luceedMjestoUid = await luceedMjestoService.createMjesto(
+        zip,
+        cityName,
+        countryUid
+      );
+      if (luceedMjestoUid) {
+        throw "cant create new mjesto in luceed";
+      }
+      luceedMjesta = await luceedMjestoService.fetchMjesta(zip, cityName);
+      return luceedMjesta && luceedMjesta.length ? luceedMjesta[0] : undefined;
+    }
   }
 }
 

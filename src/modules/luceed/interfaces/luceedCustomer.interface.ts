@@ -9,10 +9,15 @@ export interface ILuceedCustomer {
    */
   partner_uid?: string;
   /**
-   * REQUIRED
+   * @deprecated
+   * Now using grupa_partnera_uid.
    * ALWAYS SET TO WEBSHOP_CUSTOMERS UID
    */
-  parent__partner_uid?: string;
+  // parent__partner_uid?: string;
+  /**
+   * REQUIRED
+   */
+  grupa_partnera_uid?: string;
   /**
    * REQUIRED
    *
@@ -77,13 +82,16 @@ export interface ILuceedCustomer {
   adresa?: string;
   postanski_broj?: string;
   /**
-   * TODO: Sto je ovo? Potrebno?
-   */
-  maticni_broj?: string;
-  /**
-   * TODO: Sto je ovo? Potrebno?
+   * Required to find and compare if Customer is already saved (by email and shipping address)
    */
   mjesto_uid?: string;
+  /**
+   * Naziv mjesta
+   */
+  naziv_mjesta?: string;
+  /**
+   * Sifra mjesta
+   */
   mjesto?: string;
 
   /**

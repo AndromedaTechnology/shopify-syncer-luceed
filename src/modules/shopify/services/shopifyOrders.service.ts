@@ -18,7 +18,7 @@ const accessToken = config.shopify_access_token;
  * If no data in shipping, take from billing.
  * To have any data, for start.
  */
-export interface IShopifyOrderCustomerData {
+export interface IShopifyOrderShipping {
   /**
    * Location
    */
@@ -75,10 +75,10 @@ class ShopifyOrdersService {
    * Used to get Luceed-adjusted data,
    * representing Shipping/Billing address.
    * Used for delivery purposes.
+   *
+   * TODO: We need to save billing and shipping data separately?
    */
-  getShopifyOrderCustomerData(
-    shopifyOrder: IShopifyOrder
-  ): IShopifyOrderCustomerData {
+  getShopifyOrderShipping(shopifyOrder: IShopifyOrder): IShopifyOrderShipping {
     let response = {
       address1:
         shopifyOrder?.shipping_address?.address1 ??
@@ -105,19 +105,19 @@ class ShopifyOrdersService {
         shopifyOrder?.billing_address?.zip ??
         undefined,
       phone:
-        shopifyOrder.customer?.phone ??
         shopifyOrder?.shipping_address?.phone ??
         shopifyOrder?.billing_address?.phone ??
+        shopifyOrder.customer?.phone ??
         undefined,
       first_name:
-        shopifyOrder.customer?.first_name ??
         shopifyOrder?.shipping_address?.first_name ??
         shopifyOrder?.billing_address?.first_name ??
+        shopifyOrder.customer?.first_name ??
         undefined,
       last_name:
-        shopifyOrder.customer?.last_name ??
         shopifyOrder?.shipping_address?.last_name ??
         shopifyOrder?.billing_address?.last_name ??
+        shopifyOrder.customer?.last_name ??
         undefined,
     };
     return response;
