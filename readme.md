@@ -42,6 +42,11 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - .env variables: Used to Control behaviour of the Sync process (params to access Luceed and Shopify)
 - Two (2) locations: Shop and Webshop: To show inventory per location
 
+## Payments
+
+- Virmansko plaćanje,
+- Plaćanje pouzećem.
+
 ## Luceed
 
 - Na Webshopu navodimo samo MPC cijene (ne VPC)

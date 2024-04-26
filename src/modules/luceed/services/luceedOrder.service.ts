@@ -133,8 +133,9 @@ class LuceedOrdersService {
      */
     const placanje: ILuceedCreateOrderPayment = {
       iznos: placanjeIznos,
-      vrsta_placanja_uid:
-        config.luceed_nalog_prodaje_vrsta_placanja_pouzece_uid,
+      vrsta_placanja_uid: config.luceed_nalog_prodaje_vrsta_placanja_virman_uid,
+      // vrsta_placanja_uid:
+      //   config.luceed_nalog_prodaje_vrsta_placanja_pouzece_uid,
     };
 
     orderData = {
@@ -187,6 +188,12 @@ class LuceedOrdersService {
        * Payment
        */
       placanja: [placanje],
+
+      /**
+       * Messages
+       */
+      poruka_gore: config.luceed_nalog_prodaje_poruka_gore,
+      poruka_dolje: config.luceed_nalog_prodaje_poruka_dolje,
     };
     const data: ILuceedCreateOrdersRequest = {
       nalozi_prodaje: [orderData],

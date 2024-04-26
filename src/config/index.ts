@@ -37,10 +37,15 @@ const envSchema = Joi.object()
     LUCEED_USERNAME: Joi.string().optional().default(""),
     LUCEED_PASSWORD: Joi.string().optional().default(""),
     LUCEED_NALOG_STATUS: Joi.string().optional().default(""),
+    LUCEED_NALOG_PRODAJE_PORUKA_GORE: Joi.string().optional().default(""),
+    LUCEED_NALOG_PRODAJE_PORUKA_DOLJE: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_SKLADISTE_UID: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_SA__SKLADISTE_UID: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_NA__SKLADISTE_UID: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_SKL_DOKUMENT: Joi.string().optional().default(""),
+    LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_VIRMAN_UID: Joi.string()
+      .optional()
+      .default(""),
     LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID: Joi.string()
       .optional()
       .default(""),
@@ -88,10 +93,13 @@ export interface IConfig {
   luceed_username: string;
   luceed_password: string;
   luceed_nalog_status: string;
+  luceed_nalog_prodaje_poruka_gore: string;
+  luceed_nalog_prodaje_poruka_dolje: string;
   luceed_nalog_prodaje_skladiste_uid: string;
   luceed_nalog_prodaje_sa__skladiste_uid: string;
   luceed_nalog_prodaje_na__skladiste_uid: string;
   luceed_nalog_prodaje_skl_dokument: string;
+  luceed_nalog_prodaje_vrsta_placanja_virman_uid: string;
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid: string;
   luceed_partner_drzava_uid_default: string;
   luceed_partner_grupa_partnera_uid: string;
@@ -126,6 +134,9 @@ const config: IConfig = {
   luceed_username: envVars.LUCEED_USERNAME,
   luceed_password: envVars.LUCEED_PASSWORD,
 
+  luceed_nalog_prodaje_poruka_gore: envVars.LUCEED_NALOG_PRODAJE_PORUKA_GORE,
+  luceed_nalog_prodaje_poruka_dolje: envVars.LUCEED_NALOG_PRODAJE_PORUKA_DOLJE,
+
   luceed_nalog_status: envVars.LUCEED_NALOG_STATUS,
 
   luceed_nalog_prodaje_skladiste_uid:
@@ -135,6 +146,9 @@ const config: IConfig = {
   luceed_nalog_prodaje_na__skladiste_uid:
     envVars.LUCEED_NALOG_PRODAJE_NA__SKLADISTE_UID,
   luceed_nalog_prodaje_skl_dokument: envVars.LUCEED_NALOG_PRODAJE_SKL_DOKUMENT,
+
+  luceed_nalog_prodaje_vrsta_placanja_virman_uid:
+    envVars.LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_VIRMAN_UID,
   luceed_nalog_prodaje_vrsta_placanja_pouzece_uid:
     envVars.LUCEED_NALOG_PRODAJE_VRSTA_PLACANJA_POUZECE_UID,
 

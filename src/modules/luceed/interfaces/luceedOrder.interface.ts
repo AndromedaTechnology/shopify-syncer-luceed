@@ -92,6 +92,12 @@ export interface ILuceedCreateOrder {
   napomena?: string;
 
   /**
+   * Header, footer - custom message
+   */
+  poruka_gore?: string;
+  poruka_dolje?: string;
+
+  /**
    * TODO: Cemu ovo?
    * [D/N]
    */
