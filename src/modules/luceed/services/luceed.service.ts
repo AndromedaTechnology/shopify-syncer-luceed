@@ -154,10 +154,6 @@ class LuceedService {
     /**
      * Touch product
      */
-    const databaseProductExisting = await productService.find(
-      undefined,
-      productSKU
-    );
     let databaseProduct = await productService.touch(undefined, productSKU, {
       handle: productSKU,
       title: productTitle ?? productSKU,
@@ -165,16 +161,6 @@ class LuceedService {
       variant_sku: productSKU,
       variant_price: productPrice,
       variant_inventory_item_cost: productCost,
-      /**
-       * We already have some flags = TRUE, so we leave it be.
-       */
-      is_buyable_only_in_physical_shop:
-        databaseProductExisting?.is_buyable_only_in_physical_shop ?? false,
-      /**
-       * Set DB value (local) to value from Shopify
-       */
-      is_visible_in_webshop:
-        product?.status === IShopifyProductStatus.ACTIVE ? true : false,
     });
     response = await shopifyProductService.touchProduct(
       product,
