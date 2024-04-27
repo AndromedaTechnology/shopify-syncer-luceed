@@ -173,6 +173,10 @@ class LuceedService {
       shopify_product_id: shopifyProduct?.id,
     });
 
+    /**
+     * Taking newly touched product, from Shopify.
+     */
+    product = shopifyProduct;
     if (!product) {
       const error_message =
         "product not found before, and not created - so can't continue";
