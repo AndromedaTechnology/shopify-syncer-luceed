@@ -35,7 +35,7 @@ class ShopifyProductService {
     productTitle: string,
     productVendor: string,
     productPrice: string,
-    is_visible_in_webshop = true,
+    is_visible_in_webshop: boolean,
     isDebug = true
   ): Promise<IShopifySyncStatusProduct> {
     let response: IShopifySyncStatusProduct = {
@@ -189,6 +189,7 @@ class ShopifyProductService {
     data = {
       ...data,
       handle: productHandle,
+      status: data.status,
       variants: [
         {
           sku: productSKU,
@@ -271,6 +272,7 @@ class ShopifyProductService {
     data = {
       ...data,
       handle: productHandle,
+      status: data.status,
       variants: [
         {
           id: variantId,

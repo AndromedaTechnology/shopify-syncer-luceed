@@ -47,6 +47,11 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - Virmansko plaćanje,
 - Plaćanje pouzećem.
 
+## Shopify
+
+- Throttling included - to comply with Shopify request limit (for every call towards Shopify)
+-- Configurable
+
 ## Luceed
 
 - Na Webshopu navodimo samo MPC cijene (ne VPC)

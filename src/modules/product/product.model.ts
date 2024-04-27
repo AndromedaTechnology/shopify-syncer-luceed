@@ -15,8 +15,8 @@ export class ProductDto {
    */
   shopify_variant_id?: Number;
   luceed_product_id?: Number;
-  is_visible_in_webshop?: boolean;
-  is_buyable_only_in_physical_shop?: boolean;
+  is_visible_in_webshop?: boolean | null;
+  is_buyable_only_in_physical_shop?: boolean | null;
   createdAt?: Date;
   updatedAt?: Date;
   syncedAt?: Date;
