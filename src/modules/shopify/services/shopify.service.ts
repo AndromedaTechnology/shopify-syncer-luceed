@@ -23,7 +23,8 @@ class ShopifyService {
   async syncShopifyOrdersToLuceed(
     shopifyOrders: Array<IShopifyOrder>,
     luceedOrders: Array<ILuceedOrder>,
-    luceedProducts: Array<ILuceedProduct>
+    luceedProducts: Array<ILuceedProduct>,
+    isDebug = true
   ): Promise<IShopifyOrderSyncStatus> {
     if (!shopifyOrders) {
       return {};
@@ -32,8 +33,10 @@ class ShopifyService {
       orders_created_cnt: 0,
       customers_created_cnt: 0,
     };
-    for (const shopifyOrder of shopifyOrders) {
+    for (let index = 0; index < shopifyOrders.length; index++) {
+      const shopifyOrder = shopifyOrders[index];
       const orderName = shopifyOrdersService.getShopifyOrderName(shopifyOrder);
+
       /**
        * Save in local DB
        */
@@ -82,6 +85,13 @@ class ShopifyService {
          * [closed_at]
          * [customer]
          */
+      }
+
+      if (isDebug) {
+        const percentage = Math.floor((index / shopifyOrders.length) * 100);
+        console.log(
+          `Orders synced: ${percentage}%: [${index}, ${shopifyOrders.length}]: ${orderName}`
+        );
       }
     }
     return response;
