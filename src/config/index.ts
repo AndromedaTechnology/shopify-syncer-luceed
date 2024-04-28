@@ -37,6 +37,12 @@ const envSchema = Joi.object()
     LUCEED_USERNAME: Joi.string().optional().default(""),
     LUCEED_PASSWORD: Joi.string().optional().default(""),
     LUCEED_NALOG_STATUS: Joi.string().optional().default(""),
+
+    LUCEED_NALOG_PRODAJE_DOSTAVA_UID_DEFAULT: Joi.string()
+      .optional()
+      .default(""),
+    LUCEED_NALOG_PRODAJE_DOSTAVA_UID_FREE: Joi.string().optional().default(""),
+
     LUCEED_NALOG_PRODAJE_PORUKA_GORE: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_PORUKA_DOLJE: Joi.string().optional().default(""),
     LUCEED_NALOG_PRODAJE_SKLADISTE_UID: Joi.string().optional().default(""),
@@ -93,6 +99,10 @@ export interface IConfig {
   luceed_username: string;
   luceed_password: string;
   luceed_nalog_status: string;
+
+  luceed_nalog_prodaje_dostava_uid_default: string;
+  luceed_nalog_prodaje_dostava_uid_free: string;
+
   luceed_nalog_prodaje_poruka_gore: string;
   luceed_nalog_prodaje_poruka_dolje: string;
   luceed_nalog_prodaje_skladiste_uid: string;
@@ -133,6 +143,11 @@ const config: IConfig = {
   // Luceed API
   luceed_username: envVars.LUCEED_USERNAME,
   luceed_password: envVars.LUCEED_PASSWORD,
+
+  luceed_nalog_prodaje_dostava_uid_default:
+    envVars.LUCEED_NALOG_PRODAJE_DOSTAVA_UID_DEFAULT,
+  luceed_nalog_prodaje_dostava_uid_free:
+    envVars.LUCEED_NALOG_PRODAJE_DOSTAVA_UID_FREE,
 
   luceed_nalog_prodaje_poruka_gore: envVars.LUCEED_NALOG_PRODAJE_PORUKA_GORE,
   luceed_nalog_prodaje_poruka_dolje: envVars.LUCEED_NALOG_PRODAJE_PORUKA_DOLJE,

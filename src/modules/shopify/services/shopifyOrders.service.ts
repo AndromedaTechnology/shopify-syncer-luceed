@@ -9,6 +9,7 @@ import {
   IShopifyOrdersResponse,
 } from "../interfaces/shopify.interface";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
+import { ILuceedCreateOrderProduct } from "../../luceed/interfaces/luceedOrder.interface";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -122,6 +123,45 @@ class ShopifyOrdersService {
     };
     return response;
   }
+
+  /**
+   * TODO: What is diff between shop_money and presentment_money?
+   */
+  private getShopifyOrderShippingPrice(
+    shopifyOrder: IShopifyOrder
+  ): string | undefined {
+    if (!shopifyOrder) return undefined;
+    const price =
+      shopifyOrder.total_shipping_price_set?.shop_money?.amount ??
+      shopifyOrder.total_shipping_price_set?.presentment_money?.amount;
+
+    /**
+     * We return undefined if 0.00.
+     *
+     * Just to make it easier to handle in calling methods.
+     */
+    if (price === "0.00") return undefined;
+    return price;
+  }
+
+  /**
+   * TODO: Set free item as stavka, if shippingPrice undefined
+   */
+  getShopifyOrderLuceedStavkaForDelivery(
+    shopifyOrder: IShopifyOrder
+  ): ILuceedCreateOrderProduct | undefined {
+    if (!shopifyOrder) return undefined;
+    const shippingPrice = this.getShopifyOrderShippingPrice(shopifyOrder);
+
+    if (!shippingPrice) return undefined;
+
+    let stavka: ILuceedCreateOrderProduct = {
+      artikl_uid: config.luceed_nalog_prodaje_dostava_uid_default,
+      kolicina: 1,
+    };
+    return stavka;
+  }
+
   /**
    * Used to set Luceed.narudzba field.
    *

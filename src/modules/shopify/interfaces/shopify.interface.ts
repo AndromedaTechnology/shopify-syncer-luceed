@@ -231,7 +231,7 @@ export interface IShopifyOrder {
    * Shipping address
    */
   shipping_address?: IShopifyCustomerAddress;
-  shipping_lines: Array<any>;
+
   /**
    * Billing address
    * What is this?
@@ -304,6 +304,34 @@ export interface IShopifyOrder {
   cancelled_at?: any;
   cart_token?: any;
   checkout_id?: any;
+
+  /**
+   * Shipping cost
+   *
+   * TODO: Check for taxes and discounts,
+   * how it affects.
+   *
+   * The total shipping price of the order, excluding discounts and returns,
+   * in shop and presentment currencies.
+   * If taxes_included is set to true, then total_shipping_price_set includes taxes.
+   *
+   * TODO: What is diff between shop_money and presentment_money?
+   */
+  total_shipping_price_set: {
+    shop_money?: {
+      amount?: string;
+      currency_code?: string;
+    };
+    presentment_money?: {
+      amount?: string;
+      currency_code?: string;
+    };
+  };
+  /**
+   * TODO: Check if use shipping_lines or total_shipping_price_set.
+   * For calculation of total shipping price.
+   */
+  shipping_lines: Array<any>;
 }
 export interface IShopifyOrdersResponse {
   orders: Array<IShopifyOrder>;

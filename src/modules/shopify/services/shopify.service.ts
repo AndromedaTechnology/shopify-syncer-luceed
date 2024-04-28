@@ -154,6 +154,16 @@ class ShopifyService {
       };
       stavke.push(stavka);
     }
+
+    /**
+     * Add delivery STAVKA to luceed NalogProdaje
+     */
+    const shippingStavka =
+      shopifyOrdersService.getShopifyOrderLuceedStavkaForDelivery(shopifyOrder);
+    if (shippingStavka) {
+      stavke.push(shippingStavka);
+    }
+
     return stavke;
   }
 
