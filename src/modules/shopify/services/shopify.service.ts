@@ -51,8 +51,12 @@ class ShopifyService {
 
       const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
       if (!email) {
+        const error_message = `shopify order has no email: ${orderName}`;
+        await statusService.storeErrorMessageAndThrowException(
+          error_message,
+          false
+        );
         continue;
-        // throw `shopify order has no email: ${orderName}`;
       }
       const luceedOrder = this.getLuceedOrderByShopifyOrderId(
         orderName,
@@ -99,7 +103,14 @@ class ShopifyService {
     const luceedPartner = await this.touchLuceedCustomerFromShopifyOrder(
       shopifyOrder
     );
-    if (!luceedPartner || !luceedPartner.partner_uid) return;
+    if (!luceedPartner || !luceedPartner.partner_uid) {
+      const error_message = `shopify order has no partner created: ${orderName}`;
+      await statusService.storeErrorMessageAndThrowException(
+        error_message,
+        false
+      );
+      return;
+    }
 
     /**
      * STAVKE
@@ -145,11 +156,13 @@ class ShopifyService {
         luceedProducts
       );
       if (!luceedProduct || !luceedProduct.artikl_uid) {
-        throw "luceed product not found by SKU from shopify product in line item in order";
-        continue;
+        const orderName =
+          shopifyOrdersService.getShopifyOrderName(shopifyOrder);
+        const error_message = `luceed product not found by SKU from shopify product in line item in order ${orderName}`;
+        await statusService.storeErrorMessageAndThrowException(error_message);
       }
       const stavka: ILuceedCreateOrderProduct = {
-        artikl_uid: luceedProduct.artikl_uid,
+        artikl_uid: luceedProduct!.artikl_uid!,
         kolicina: lineItems.quantity, // TODO: Or currentQuanity?
       };
       stavke.push(stavka);

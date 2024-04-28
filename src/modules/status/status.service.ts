@@ -3,12 +3,15 @@ import statusModel, { StatusDto } from "./status.model";
 
 class StatusService {
   async storeErrorMessageAndThrowException(
-    error_message: string
+    error_message: string,
+    throwException = true
   ): Promise<void> {
     await this.create({
       error_message: error_message,
     });
-    throw error_message;
+    if (throwException) {
+      throw error_message;
+    }
   }
   async touch(
     id?: mongoose.Types.ObjectId,
