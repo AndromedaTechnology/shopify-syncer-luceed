@@ -152,6 +152,7 @@ class ShopifyProductVariantService {
       sku: productVariantSKU,
       price: productVariantPrice,
       inventory_management: "shopify",
+      requires_shipping: true,
       inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
     };
 

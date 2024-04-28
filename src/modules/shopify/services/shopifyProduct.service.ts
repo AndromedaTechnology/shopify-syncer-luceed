@@ -193,6 +193,7 @@ class ShopifyProductService {
       variants: [
         {
           sku: productSKU,
+          requires_shipping: true,
           inventory_management: "shopify",
           inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
           price: productPrice,
@@ -278,6 +279,7 @@ class ShopifyProductService {
           id: variantId,
           sku: variantSKU,
           price: variantPrice,
+          requires_shipping: true,
           inventory_management: "shopify",
           inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
         },

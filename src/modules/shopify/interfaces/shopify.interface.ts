@@ -9,6 +9,14 @@ export interface IShopifyProductVariant {
   id?: number;
   product_id?: number;
   /**
+   * Requires shipping
+   * This should set `This is physical product` in Shopify to true.
+   *
+   * SET to TRUE.
+   */
+  requires_shipping?: boolean;
+
+  /**
    * Required to set everywhere!
    */
   sku: string;
