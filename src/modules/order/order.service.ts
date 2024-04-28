@@ -18,7 +18,7 @@ class OrderService {
       //   is_visible_in_webshop: true,
       //   is_buyable_only_in_physical_shop: false,
       // };
-      item = await this.create(data);
+      item = await this.create(data!);
     } else if (data) {
       item = await this.update(id, name, data);
     }

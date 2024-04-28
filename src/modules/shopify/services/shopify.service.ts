@@ -46,18 +46,23 @@ class ShopifyService {
       /**
        * Save in local DB
        */
-      const databaseOrder = await orderService.touch(undefined, orderName, {
+      const databaseData = {
         order_id: shopifyOrder.id,
-        name: shopifyOrder.name,
+        name: orderName,
         number: shopifyOrder.number,
         order_number: shopifyOrder.order_number,
         created_at: shopifyOrder.created_at
-          ? new Date(shopifyOrder.created_at)
+          ? new Date(shopifyOrder.created_at!)
           : undefined,
         confirmed: shopifyOrder.confirmed,
         fulfillment_status: shopifyOrder.fulfillment_status,
-      });
+      };
 
+      const databaseOrder = await orderService.touch(
+        undefined,
+        orderName,
+        databaseData
+      );
       const email = shopifyOrdersService.getShopifyOrderEmail(shopifyOrder);
       if (!email) {
         const error_message = `shopify order has no email: ${orderName}`;
