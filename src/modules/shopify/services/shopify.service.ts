@@ -26,6 +26,12 @@ class ShopifyService {
     luceedProducts: Array<ILuceedProduct>,
     isDebug = true
   ): Promise<IShopifyOrderSyncStatus> {
+    if (isDebug) {
+      console.log(
+        `Orders sync: Orders: [${shopifyOrders?.length}]: Luceed Orders: [${luceedOrders?.length}]: Luceed Products: [${luceedProducts?.length}]`
+      );
+    }
+
     if (!shopifyOrders) {
       return {};
     }
