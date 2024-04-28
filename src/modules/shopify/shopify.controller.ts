@@ -42,7 +42,7 @@ class ShopifyController {
    */
   async findAllOrders(ctx: RouterContext) {
     const items = await shopifyOrdersService.fetchOrders(undefined, false);
-    shopifyOrdersService.printOrders(items);
+    // shopifyOrdersService.printOrders(items);
     ctx.body = items;
     return ctx;
   }
