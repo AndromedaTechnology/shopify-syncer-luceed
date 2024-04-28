@@ -164,15 +164,13 @@ class ShopifyOrdersService {
 
   /**
    * Used to set Luceed.narudzba field.
-   *
-   * TODO: Check
    */
   getShopifyOrderName(shopifyOrder: IShopifyOrder): string {
-    return (
+    const shopifyOrderName =
       shopifyOrder.name ??
       shopifyOrder.order_number?.toString() ??
-      shopifyOrder.number?.toString()
-    );
+      shopifyOrder.number?.toString();
+    return config.luceed_nalog_prodaje_name_prefix + shopifyOrderName;
   }
   printOrders(orders: Array<IShopifyOrder>) {
     for (const order of orders) {
