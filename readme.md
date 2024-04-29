@@ -3,9 +3,11 @@
   <a href="https://andromeda.technology"><img src="./storage/static/hero.jpg"  alt="Firestarter API" /></a>
   <br />
   <br />
-  <a href="https://andromeda.technology">Keep your Shopify and Luceed in SYNC</a>
+  <h2 align="center">Keep your Shopify and Luceed in SYNC</h2>
   <br />
-  <a href="https://andromeda.technology">https://andromeda.technology</a>
+  <a href="https://andromeda.technology">Andromeda.technology - Official Website</a>
+  <br />
+  <a href="https://ceker.net">Ceker.net - Croatian Natural & Healthy Foods Shop - Official Webshop</a>
 </p>
 
 ## Motivation
@@ -38,6 +40,8 @@ while having it in Sync with your physical store and inventory (via Luceed).
 -- This way, product HANDLE is used for search engine and display purposes only
 - Create Luceed Order with default PoslovniPartner if none available from Shopify (because of selected Shopify plan)
 -- Then change, optionally and manually, later in Luceed - delivery and contact data
+- Saving ShopifyOrder to Luceed, with adding one of two Delivery items a) Free Delivery item, b) Default Delivery item.
+-- Based on delivery price on Shopify Order.
 
 ## Modular
 
@@ -46,7 +50,7 @@ while having it in Sync with your physical store and inventory (via Luceed).
 
 ## Payments
 
-- Virmansko plaćanje,
+- Virmansko plaćanje (default),
 - Plaćanje pouzećem.
 
 ## Shopify
@@ -60,8 +64,8 @@ while having it in Sync with your physical store and inventory (via Luceed).
 
 ## Shopify Requirements
 
-- Required: E-mail on checkout (email needs to be part of every ShopifyOrder)
-- Required: Phone on checkout (phone needs to be part of every ShopifyOrder)
+- Optional: E-mail on checkout (email doesn't need to be part of every ShopifyOrder, as some plans hide it - then add to default User, to change manually in Luceed)
+- Optional: Phone on checkout (phone doesn't need to be part of every ShopifyOrder, as some plans hide it - then add to default User, to change manually in Luceed)
 
 ## Production requirements
 

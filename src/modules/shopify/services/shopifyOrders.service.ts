@@ -145,7 +145,10 @@ class ShopifyOrdersService {
   }
 
   /**
-   * TODO: Set free item as stavka, if shippingPrice undefined
+   * Return Luceed NalogProdaje stavka for Delivery
+   *
+   * If no shipping price on ShopifyOrder - add FREE Delivery item.
+   * Otherwise, add default delivery item.
    */
   getShopifyOrderLuceedStavkaForDelivery(
     shopifyOrder: IShopifyOrder
@@ -153,13 +156,25 @@ class ShopifyOrdersService {
     if (!shopifyOrder) return undefined;
     const shippingPrice = this.getShopifyOrderShippingPrice(shopifyOrder);
 
-    if (!shippingPrice) return undefined;
+    if (!shippingPrice) {
+      if (config.luceed_nalog_prodaje_dostava_uid_free) {
+        let stavka: ILuceedCreateOrderProduct = {
+          artikl_uid: config.luceed_nalog_prodaje_dostava_uid_free,
+          kolicina: 1,
+        };
+        return stavka;
+      }
+      return undefined;
+    }
 
-    let stavka: ILuceedCreateOrderProduct = {
-      artikl_uid: config.luceed_nalog_prodaje_dostava_uid_default,
-      kolicina: 1,
-    };
-    return stavka;
+    if (config.luceed_nalog_prodaje_dostava_uid_default) {
+      let stavka: ILuceedCreateOrderProduct = {
+        artikl_uid: config.luceed_nalog_prodaje_dostava_uid_default,
+        kolicina: 1,
+      };
+      return stavka;
+    }
+    return undefined;
   }
 
   /**
