@@ -147,7 +147,7 @@ class LuceedOrdersService {
      * Then, manually, optionally, change user in Luceed,
      * along with proper delivery and contact data.
      */
-    if (luceedPartnerUid) {
+    if (!luceedPartnerUid) {
       luceedPartnerUid = config.luceed_partner_parent_uid;
     }
 
