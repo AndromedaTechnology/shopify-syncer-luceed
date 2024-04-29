@@ -111,7 +111,7 @@ class LuceedOrdersService {
   async createOrder(
     orderDate: string,
     narudzba: string,
-    luceedPartnerUid: string,
+    luceedPartnerUid: string | undefined,
     /**
      * Stavke
      */
@@ -137,6 +137,19 @@ class LuceedOrdersService {
       // vrsta_placanja_uid:
       //   config.luceed_nalog_prodaje_vrsta_placanja_pouzece_uid,
     };
+
+    /**
+     * luceedPartnerUid
+     * TODO: If undefined, set to default WEBSHOP kupac.
+     * We use this config var currently, rename properly.
+     *
+     * So, that we, at least, have some User defined.
+     * Then, manually, optionally, change user in Luceed,
+     * along with proper delivery and contact data.
+     */
+    if (luceedPartnerUid) {
+      luceedPartnerUid = config.luceed_partner_parent_uid;
+    }
 
     orderData = {
       ...(orderData ?? {}),

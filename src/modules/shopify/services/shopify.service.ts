@@ -70,7 +70,6 @@ class ShopifyService {
           error_message,
           false
         );
-        continue;
       }
       const luceedOrder = this.getLuceedOrderByShopifyOrderId(
         orderName,
@@ -130,7 +129,7 @@ class ShopifyService {
         error_message,
         false
       );
-      return;
+      // return;
     }
 
     /**
@@ -153,7 +152,7 @@ class ShopifyService {
           )!
         : luceedOrderService.getDateForLuceed(new Date())!,
       shopifyOrdersService.getShopifyOrderName(shopifyOrder),
-      luceedPartner.partner_uid!,
+      luceedPartner?.partner_uid,
       stavke,
       placanjeIznos
     );
@@ -248,7 +247,7 @@ class ShopifyService {
     luceedPartners = luceedCustomerService.filterCustomersByEmailShipping(
       luceedPartners,
       email,
-      shipping.zip,
+      shipping?.zip,
       luceedMjestoService.getShopifyOrderMjestoNaziv(shopifyOrder)
     );
     if (!luceedPartners || luceedPartners.length === 0) {
@@ -293,9 +292,9 @@ class ShopifyService {
      * Touch Mjesto
      */
     const luceedMjesto = await this.touchMjesto(
-      shipping.zip,
+      shipping?.zip,
       luceedMjestoService.getShopifyOrderMjestoNaziv(shopifyOrder),
-      shipping.country
+      shipping?.country
     );
 
     /**
@@ -326,7 +325,7 @@ class ShopifyService {
     luceedCustomers = luceedCustomerService.filterCustomersByEmailShipping(
       luceedCustomers,
       email,
-      shipping.zip,
+      shipping?.zip,
       luceedMjestoService.getShopifyOrderMjestoNaziv(shopifyOrder)
     );
     return luceedCustomers && luceedCustomers.length

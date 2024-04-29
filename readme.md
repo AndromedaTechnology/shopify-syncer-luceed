@@ -36,6 +36,8 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - Shopify pagination
 - Finding, using Shopify PRODUCTS by SKU (defined on product variant)
 -- This way, product HANDLE is used for search engine and display purposes only
+- Create Luceed Order with default PoslovniPartner if none available from Shopify (because of selected Shopify plan)
+-- Then change, optionally and manually, later in Luceed - delivery and contact data
 
 ## Modular
 
