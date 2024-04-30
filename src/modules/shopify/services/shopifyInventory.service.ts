@@ -88,10 +88,16 @@ class ShopifyInventoryService {
         true,
         true
       );
+      /**
+       * Set inventory for physical shop also.
+       * Shopify allows only single shipping method - delivery or pick-up - per order.
+       * So, make it available both in Physical shop and Webshop,
+       * and let users pick how shipping will be handled.
+       */
       inventoryLevel = await this.setLevelsPerItemPerLocation(
         locationShopId,
         productVariantInventoryItemId!,
-        0,
+        productAmount,
         true,
         true
       );
