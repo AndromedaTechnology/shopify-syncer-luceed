@@ -154,7 +154,8 @@ class ShopifyService {
       shopifyOrdersService.getShopifyOrderName(shopifyOrder),
       luceedPartner?.partner_uid,
       stavke,
-      placanjeIznos
+      placanjeIznos,
+      shopifyOrder.note
     );
 
     return luceedOrderId;

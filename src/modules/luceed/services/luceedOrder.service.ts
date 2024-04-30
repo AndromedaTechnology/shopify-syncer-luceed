@@ -123,6 +123,7 @@ class LuceedOrdersService {
      * "fiskalna_oznaka": "T"
      */
     placanjeIznos: number,
+    note?: string,
     orderData: ILuceedCreateOrder = {}
   ): Promise<string | undefined> {
     var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/NaloziProdaje/snimi/`;
@@ -153,6 +154,7 @@ class LuceedOrdersService {
 
     orderData = {
       ...(orderData ?? {}),
+      napomena: note,
       datum: orderDate ?? this.getDateForLuceed(new Date()),
       nalog_prodaje_b2b: narudzba ?? "Shopify Order Test",
       narudzba: narudzba ?? "Shopify Order Test",
