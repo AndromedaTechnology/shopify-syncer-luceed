@@ -116,9 +116,12 @@ class ShopifyOrdersService {
 
     /**
      * Convert to number
+     *
+     * TODO: Support floating numbers.
+     * Changed to parseInt, for Luceed.
      */
     let value: number | undefined = wholeOrderCouponPercentage
-      ? Number.parseFloat(wholeOrderCouponPercentage)
+      ? Number.parseInt(wholeOrderCouponPercentage)
       : undefined;
 
     return value;
