@@ -171,6 +171,8 @@ class ShopifyService {
   ): Promise<Array<ILuceedCreateOrderProduct>> {
     if (!shopifyOrder.line_items) return [];
     let stavke: Array<ILuceedCreateOrderProduct> = [];
+    const shopifyOrderItemDiscountPercentage =
+      shopifyOrdersService.getShopifyOrderDiscountPercentage(shopifyOrder);
     for (const lineItems of shopifyOrder.line_items) {
       const luceedProduct = await luceedProductService.getLuceedProductBySKU(
         lineItems.sku,
@@ -185,6 +187,7 @@ class ShopifyService {
       const stavka: ILuceedCreateOrderProduct = {
         artikl_uid: luceedProduct!.artikl_uid!,
         kolicina: lineItems.quantity, // TODO: Or currentQuanity?
+        rabat: shopifyOrderItemDiscountPercentage,
       };
       stavke.push(stavka);
     }

@@ -332,6 +332,60 @@ export interface IShopifyOrder {
    * For calculation of total shipping price.
    */
   shipping_lines: Array<any>;
+
+  /**
+   * Discounts
+   */
+
+  /**
+   * General coupon applied
+   */
+  discount_codes?: Array<IShopifyOrderDiscount>;
+  /**
+   * Use this to determine percentage per product to take off
+   */
+  discount_applications?: Array<IShopifyOrderDiscountApplication>;
+}
+
+export enum ShopifyOrderDiscountApplicationType {
+  DISCOUNT_CODE = "discount_code",
+}
+export enum ShopifyOrderDiscountApplicationValueType {
+  PERCENTAGE = "percentage",
+}
+export enum ShopifyOrderDiscountApplicationTargetType {
+  LINE_ITEM = "line_item",
+}
+export enum ShopifyOrderDiscountApplicationTargetSelection {
+  ALL = "all",
+}
+export enum ShopifyOrderDiscountApplicationAllocationMethod {
+  ACROSS = "across",
+}
+export interface IShopifyOrderDiscountApplication {
+  target_type?: ShopifyOrderDiscountApplicationTargetType;
+  type?: ShopifyOrderDiscountApplicationType;
+  target_selection?: ShopifyOrderDiscountApplicationTargetSelection;
+  value_type?: ShopifyOrderDiscountApplicationValueType;
+  allocation_method?: ShopifyOrderDiscountApplicationAllocationMethod;
+  // e.g. value?: "10.0";
+  value?: string;
+  // e.g. code?: "CEKER10";
+  code?: string;
+}
+export interface IShopifyOrderDiscount {
+  /**
+   * e.g. "CEKER10"
+   */
+  code?: string;
+  /**
+   * e.g. "0.75"
+   */
+  amount?: string;
+  /**
+   * e.g. "percentage"
+   */
+  type?: string;
 }
 export interface IShopifyOrdersResponse {
   orders: Array<IShopifyOrder>;

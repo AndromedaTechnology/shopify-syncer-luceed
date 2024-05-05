@@ -7,6 +7,11 @@ import { limiter } from "../../root/root.service";
 import {
   IShopifyOrder,
   IShopifyOrdersResponse,
+  ShopifyOrderDiscountApplicationAllocationMethod,
+  ShopifyOrderDiscountApplicationTargetSelection,
+  ShopifyOrderDiscountApplicationTargetType,
+  ShopifyOrderDiscountApplicationType,
+  ShopifyOrderDiscountApplicationValueType,
 } from "../interfaces/shopify.interface";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 import { ILuceedCreateOrderProduct } from "../../luceed/interfaces/luceedOrder.interface";
@@ -58,6 +63,66 @@ export interface IShopifyOrderShipping {
  * https://help.shopify.com/en/manual/checkout-settings/test-orders
  */
 class ShopifyOrdersService {
+  /**
+   * Find first coupon code, with percent type
+   *
+   * This is to be applied only to items (without shipping).
+   * If shipping also needs discount - customize this code or the calling code.
+   *
+   * TODO: Optionally implement more detailed coupon code filtering and determining final percentage
+   */
+  getShopifyOrderDiscountPercentage(
+    shopifyOrder: IShopifyOrder
+  ): number | undefined {
+    if (!shopifyOrder) return undefined;
+    if (!shopifyOrder.discount_applications) return undefined;
+
+    let wholeOrderCouponPercentage: string | undefined = undefined;
+    for (const discount_application of shopifyOrder.discount_applications) {
+      if (
+        discount_application.value_type !==
+        ShopifyOrderDiscountApplicationValueType.PERCENTAGE
+      ) {
+        continue;
+      }
+      if (
+        discount_application.type !==
+        ShopifyOrderDiscountApplicationType.DISCOUNT_CODE
+      ) {
+        continue;
+      }
+      if (
+        discount_application.target_type !==
+        ShopifyOrderDiscountApplicationTargetType.LINE_ITEM
+      ) {
+        continue;
+      }
+      if (
+        discount_application.target_selection !==
+        ShopifyOrderDiscountApplicationTargetSelection.ALL
+      ) {
+        continue;
+      }
+      if (
+        discount_application.allocation_method !==
+        ShopifyOrderDiscountApplicationAllocationMethod.ACROSS
+      ) {
+        continue;
+      }
+
+      wholeOrderCouponPercentage = discount_application.value;
+      break;
+    }
+
+    /**
+     * Convert to number
+     */
+    let value: number | undefined = wholeOrderCouponPercentage
+      ? Number.parseFloat(wholeOrderCouponPercentage)
+      : undefined;
+
+    return value;
+  }
   getShopifyOrderEmail(shopifyOrder: IShopifyOrder): string | undefined {
     const email =
       shopifyOrder.email ??
