@@ -213,6 +213,7 @@ class LuceedOrdersService {
     const data: ILuceedCreateOrdersRequest = {
       nalozi_prodaje: [orderData],
     };
+    console.log("luceed order create, data: ", data);
     try {
       const axiosResponse = await axios({
         proxy: AxiosProxyHelper.getProxy(),
