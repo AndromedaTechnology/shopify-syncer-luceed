@@ -206,13 +206,32 @@ class ShopifyService {
 
   /**
    * PLACANJE
-   * TODO:
+   *
+   * TODO: Confirm fields that contain correct total price of the Order.
+   * Currently we use one of three fields.
+   *
+   * Luceed doesn't need total price,
+   * but we send it anyways.
    */
   private async getLuceedPlacanjeIznosFromShopifyOrder(
     shopifyOrder: IShopifyOrder
   ): Promise<number | undefined> {
-    return 123.45;
-    // return undefined;
+    if (!shopifyOrder) return undefined;
+
+    const total_price =
+      shopifyOrder.total_price ??
+      shopifyOrder.total_outstanding ??
+      shopifyOrder.current_total_price;
+
+    if (total_price) {
+      try {
+        return Number.parseFloat(total_price);
+      } catch (error) {
+        //
+      }
+    }
+
+    return undefined;
   }
 
   /**

@@ -260,13 +260,19 @@ export interface IShopifyOrder {
    */
   financial_status?: string;
   currency?: string;
+
   /**
+   * TOTAL PRICE
    * "199.99"
    */
+  total_price?: string;
+  current_total_price?: string;
+  total_outstanding?: string;
+
   subtotal_price?: string;
   current_subtotal_price?: string;
-  current_total_price?: string;
   current_total_tax?: string;
+
   /**
    * 0.00
    */
