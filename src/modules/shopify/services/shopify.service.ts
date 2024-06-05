@@ -187,7 +187,7 @@ class ShopifyService {
       const stavka: ILuceedCreateOrderProduct = {
         artikl_uid: luceedProduct!.artikl_uid!,
         cijena: luceedProduct!.mpc!,
-        cijena_s_porezom: "D",
+        // cijena_s_porezom: "D",
         kolicina: lineItems.quantity, // TODO: Or currentQuanity?
         rabat: shopifyOrderItemDiscountPercentage,
       };

@@ -205,6 +205,9 @@ export interface ILuceedCreateOrderProduct {
    */
   cijena?: number;
   /**
+   * Wrong.
+   * Not used?
+   * TODO: Remove.
    * "D", "N"
    */
   cijena_s_porezom?: string;
