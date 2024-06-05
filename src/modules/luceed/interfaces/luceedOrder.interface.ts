@@ -205,6 +205,10 @@ export interface ILuceedCreateOrderProduct {
    */
   cijena?: number;
   /**
+   * "D", "N"
+   */
+  cijena_s_porezom?: string;
+  /**
    * Optional.
    * Rabat postotak.
    * Default se postavlja cijena iz Luceeda.
