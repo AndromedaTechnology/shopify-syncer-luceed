@@ -15,6 +15,8 @@ import {
 } from "../interfaces/shopify.interface";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 import { ILuceedCreateOrderProduct } from "../../luceed/interfaces/luceedOrder.interface";
+import { ILuceedProduct } from "../../luceed/interfaces/luceedProduct.interface";
+import luceedProductService from "../../luceed/services/luceedProduct.service";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -218,27 +220,42 @@ class ShopifyOrdersService {
    * If no shipping price on ShopifyOrder - add FREE Delivery item.
    * Otherwise, add default delivery item.
    */
-  getShopifyOrderLuceedStavkaForDelivery(
-    shopifyOrder: IShopifyOrder
-  ): ILuceedCreateOrderProduct | undefined {
+  async getShopifyOrderLuceedStavkaForDelivery(
+    shopifyOrder: IShopifyOrder,
+    luceedProducts: Array<ILuceedProduct>
+  ): Promise<ILuceedCreateOrderProduct | undefined> {
     if (!shopifyOrder) return undefined;
     const shippingPrice = this.getShopifyOrderShippingPrice(shopifyOrder);
 
+    let luceedProduct = null;
+
     if (!shippingPrice) {
-      if (config.luceed_nalog_prodaje_dostava_uid_free) {
-        let stavka: ILuceedCreateOrderProduct = {
-          artikl_uid: config.luceed_nalog_prodaje_dostava_uid_free,
-          kolicina: 1,
-        };
-        return stavka;
+      /**
+       * No shipping price. Get Free delivery luceed Product.
+       */
+      if (config.luceed_nalog_prodaje_dostava_sku_free) {
+        luceedProduct = await luceedProductService.getLuceedProductBySKU(
+          config.luceed_nalog_prodaje_dostava_sku_free,
+          luceedProducts
+        );
       }
-      return undefined;
+    } else {
+      /**
+       * Shipping price is set. Get default shipping luceed Product.
+       */
+      if (config.luceed_nalog_prodaje_dostava_sku_default) {
+        luceedProduct = await luceedProductService.getLuceedProductBySKU(
+          config.luceed_nalog_prodaje_dostava_sku_default,
+          luceedProducts
+        );
+      }
     }
 
-    if (config.luceed_nalog_prodaje_dostava_uid_default) {
+    if (luceedProduct) {
       let stavka: ILuceedCreateOrderProduct = {
-        artikl_uid: config.luceed_nalog_prodaje_dostava_uid_default,
+        artikl_uid: luceedProduct.artikl_uid!,
         kolicina: 1,
+        cijena: luceedProduct!.mpc!,
       };
       return stavka;
     }

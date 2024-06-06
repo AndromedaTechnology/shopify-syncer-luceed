@@ -198,7 +198,10 @@ class ShopifyService {
      * Add delivery STAVKA to luceed NalogProdaje
      */
     const shippingStavka =
-      shopifyOrdersService.getShopifyOrderLuceedStavkaForDelivery(shopifyOrder);
+      await shopifyOrdersService.getShopifyOrderLuceedStavkaForDelivery(
+        shopifyOrder,
+        luceedProducts
+      );
     if (shippingStavka) {
       stavke.push(shippingStavka);
     }

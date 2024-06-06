@@ -104,8 +104,8 @@ export interface IConfig {
 
   luceed_nalog_prodaje_name_prefix: string;
 
-  luceed_nalog_prodaje_dostava_uid_default: string;
-  luceed_nalog_prodaje_dostava_uid_free: string;
+  luceed_nalog_prodaje_dostava_sku_default: string;
+  luceed_nalog_prodaje_dostava_sku_free: string;
 
   luceed_nalog_prodaje_poruka_gore: string;
   luceed_nalog_prodaje_poruka_dolje: string;
@@ -150,10 +150,10 @@ const config: IConfig = {
 
   luceed_nalog_prodaje_name_prefix: envVars.LUCEED_NALOG_PRODAJE_NAME_PREFIX,
 
-  luceed_nalog_prodaje_dostava_uid_default:
-    envVars.LUCEED_NALOG_PRODAJE_DOSTAVA_UID_DEFAULT,
-  luceed_nalog_prodaje_dostava_uid_free:
-    envVars.LUCEED_NALOG_PRODAJE_DOSTAVA_UID_FREE,
+  luceed_nalog_prodaje_dostava_sku_default:
+    envVars.LUCEED_NALOG_PRODAJE_DOSTAVA_SKU_DEFAULT,
+  luceed_nalog_prodaje_dostava_sku_free:
+    envVars.LUCEED_NALOG_PRODAJE_DOSTAVA_SKU_FREE,
 
   luceed_nalog_prodaje_poruka_gore: envVars.LUCEED_NALOG_PRODAJE_PORUKA_GORE,
   luceed_nalog_prodaje_poruka_dolje: envVars.LUCEED_NALOG_PRODAJE_PORUKA_DOLJE,
