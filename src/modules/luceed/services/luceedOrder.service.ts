@@ -202,6 +202,7 @@ class LuceedOrdersService {
       /**
        * Payment
        */
+      iznos: placanjeIznos,
       placanja: [placanje],
 
       /**
