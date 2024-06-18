@@ -43,16 +43,23 @@ while having it in Sync with your physical store and inventory (via Luceed).
 - Saving ShopifyOrder to Luceed, with adding one of two Delivery items a) Free Delivery item, b) Default Delivery item.
 -- Based on delivery price on Shopify Order.
 - Continue selling products, when out of stock (configurable via .env variable (true/false))
-
-## Modular
-
-- .env variables: Used to Control behaviour of the Sync process (params to access Luceed and Shopify)
 - Two (2) locations: Shop and Webshop: To show inventory per location
+
+## Environment variables
+
+.env variables: Used to Control behaviour of the Sync process (params to access Luceed and Shopify).
+
+Env variables (.env file):
+
+- var1
+
+Database (e.g. MongoDB Atlas):
+
+- is_visible_in_webshop - [true/false] - is product ACTIVE or in DRAFT in Shopify (visible for customers)? Product is always synced, but potentially hidden from customers.
 
 ## Payments
 
-- Virmansko plaćanje (default),
-- Plaćanje pouzećem.
+- Set default payment by Luceed ID.
 
 ## Shopify
 
