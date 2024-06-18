@@ -195,7 +195,7 @@ class ShopifyProductService {
           sku: productSKU,
           requires_shipping: true,
           inventory_management: "shopify",
-          inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
+          inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
           price: productPrice,
         },
       ],
@@ -281,7 +281,7 @@ class ShopifyProductService {
           price: variantPrice,
           requires_shipping: true,
           inventory_management: "shopify",
-          inventory_policy: ShopifyProductVariantInventoryPolicy.DENY,
+          inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
         },
       ],
     };

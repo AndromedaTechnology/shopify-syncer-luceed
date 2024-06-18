@@ -42,6 +42,7 @@ while having it in Sync with your physical store and inventory (via Luceed).
 -- Then change, optionally and manually, later in Luceed - delivery and contact data
 - Saving ShopifyOrder to Luceed, with adding one of two Delivery items a) Free Delivery item, b) Default Delivery item.
 -- Based on delivery price on Shopify Order.
+- Continue selling products, when out of stock (configurable via .env variable (true/false))
 
 ## Modular
 

@@ -87,7 +87,10 @@ class LuceedService {
       if (!productSKU) continue;
       if (!productTitle) continue;
       if (!productVendor) continue;
-      if (productAmount === undefined) continue;
+      /**
+       * Sync all products, irrespective to available amount.
+       */
+      // if (productAmount === undefined) continue;
 
       /**
        * Sync

@@ -307,6 +307,9 @@ export interface IShopifyOrder {
   po_number?: any;
   updated_at?: any;
   processed_at?: any;
+  /**
+   * TODO: Use this - to determine if cancelled.
+   */
   cancelled_at?: any;
   cart_token?: any;
   checkout_id?: any;
