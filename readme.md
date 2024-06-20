@@ -66,6 +66,15 @@ Database (e.g. MongoDB Atlas):
 - Throttling included - to comply with Shopify request limit (for every call towards Shopify)
 -- Configurable
 
+### Customer (default or real), for orders, synced from Shopify to Luceed
+
+If you don't want to sync customer data to Luceed (by choice or by Shopify plan limitations)...
+Syncer will assign all Orders to a default customer in Luceed (just make sure to provide UID from Luceed Customer in .env file).
+
+On the other hand, if you do have the plan that provides Customer data,
+new customers will be created in Luceed (based on e-mail address and postal address)
+or existing ones will be used (if already in Luceed).
+
 ## Luceed
 
 - Na Webshopu navodimo samo MPC cijene (ne VPC)
