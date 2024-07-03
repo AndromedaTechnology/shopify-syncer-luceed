@@ -130,6 +130,59 @@ class ShopifyProductVariantService {
     return variants ?? [];
   }
 
+  getVariantPriceWithPercentage(
+    originalProductVariantPrice: string,
+    discountPercentage: string
+  ): string {
+    try {
+      let originalPrice = Number.parseFloat(originalProductVariantPrice);
+      let percentage = Number.parseFloat(discountPercentage);
+
+      const percentageDecimal = percentage / 100; // 0.10
+      const percentPart = originalPrice * percentageDecimal;
+      let value: string = (originalPrice - percentPart).toFixed(2);
+      return value;
+    } catch (error) {
+      return originalProductVariantPrice;
+    }
+  }
+
+  /**
+   *
+   */
+  getVariantPricesIfShopWideDiscount(originalProductVariantPrice: string): {
+    price?: string;
+    compare_at_price?: string;
+  } {
+    let discountPercentage: string | null =
+      config.shopify_shopwide_discount_percent ?? "0";
+
+    if (!discountPercentage || discountPercentage === "0") {
+      discountPercentage = null;
+    }
+
+    if (!discountPercentage) {
+      return {
+        price: originalProductVariantPrice,
+      };
+    } else {
+      const newPrice = this.getVariantPriceWithPercentage(
+        originalProductVariantPrice,
+        discountPercentage
+      );
+      if (newPrice !== originalProductVariantPrice) {
+        return {
+          price: newPrice,
+          compare_at_price: originalProductVariantPrice,
+        };
+      } else {
+        return {
+          price: originalProductVariantPrice,
+        };
+      }
+    }
+  }
+
   /**
    * Create new product
    * with default variant
@@ -147,10 +200,14 @@ class ShopifyProductVariantService {
       await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
+    const { price, compare_at_price } =
+      this.getVariantPricesIfShopWideDiscount(productVariantPrice);
+
     data = {
       ...data,
       sku: productVariantSKU,
-      price: productVariantPrice,
+      price: price,
+      compare_at_price: compare_at_price,
       inventory_management: "shopify",
       requires_shipping: true,
       inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,

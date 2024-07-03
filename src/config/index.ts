@@ -33,6 +33,17 @@ const envSchema = Joi.object()
     SHOPIFY_SHOP_LOCATION_ID: Joi.string().optional().default(""),
     SHOPIFY_ACCESS_TOKEN: Joi.string().optional().default(""),
 
+    /**
+     * Only a number
+     * e.g. 10
+     * Without percent.
+     *
+     * Applies discount to all product variants.
+     * Sets compare_at_price to original,
+     * and price to discounted (e.g. 10%).
+     */
+    SHOPIFY_SHOPWIDE_DISCOUNT_PERCENT: Joi.string().optional().default(""),
+
     // LUCEED API
     LUCEED_USERNAME: Joi.string().optional().default(""),
     LUCEED_PASSWORD: Joi.string().optional().default(""),
@@ -96,6 +107,7 @@ export interface IConfig {
   shopify_webshop_location_id: string;
   shopify_shop_location_id: string;
   shopify_access_token: string;
+  shopify_shopwide_discount_percent: string;
 
   // Luceed API
   luceed_username: string;
@@ -143,6 +155,8 @@ const config: IConfig = {
   shopify_webshop_location_id: envVars.SHOPIFY_WEBSHOP_LOCATION_ID,
   shopify_shop_location_id: envVars.SHOPIFY_SHOP_LOCATION_ID,
   shopify_access_token: envVars.SHOPIFY_ACCESS_TOKEN,
+
+  shopify_shopwide_discount_percent: envVars.SHOPIFY_SHOPWIDE_DISCOUNT_PERCENT,
 
   // Luceed API
   luceed_username: envVars.LUCEED_USERNAME,

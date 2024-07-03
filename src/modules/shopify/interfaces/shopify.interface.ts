@@ -25,6 +25,12 @@ export interface IShopifyProductVariant {
    * "20.00"
    */
   price?: string;
+  /**
+   * Compare at Price
+   * Has to be equal or greater than price.
+   * "20.00"
+   */
+  compare_at_price?: string;
 
   /**
    * There is a 1:1 relationship between a product variant and an inventory item.

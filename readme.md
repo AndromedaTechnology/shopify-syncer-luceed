@@ -33,6 +33,7 @@ while having it in Sync with your physical store and inventory (via Luceed).
 
 ## Features
 
+- Define shop wide discounts - via config variable (define percentage) - applied to all products
 - Hide/Show products on Webshop
 - Make products available only offline (in physical shop)
 - Shopify pagination

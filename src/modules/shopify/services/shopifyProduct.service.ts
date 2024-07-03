@@ -183,6 +183,11 @@ class ShopifyProductService {
       await statusService.storeErrorMessageAndThrowException(error_message);
     }
 
+    const { price, compare_at_price } =
+      shopifyProductVariantService.getVariantPricesIfShopWideDiscount(
+        productPrice
+      );
+
     /**
      * Add handle, sku
      */
@@ -196,7 +201,8 @@ class ShopifyProductService {
           requires_shipping: true,
           inventory_management: "shopify",
           inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
-          price: productPrice,
+          price: price,
+          compare_at_price: compare_at_price,
         },
       ],
     };
@@ -267,6 +273,11 @@ class ShopifyProductService {
     //   throw "variant.length > 0 required";
     // }
 
+    const { price, compare_at_price } =
+      shopifyProductVariantService.getVariantPricesIfShopWideDiscount(
+        variantPrice
+      );
+
     /**
      * Add handle, sku
      */
@@ -278,7 +289,8 @@ class ShopifyProductService {
         {
           id: variantId,
           sku: variantSKU,
-          price: variantPrice,
+          price: price,
+          compare_at_price: compare_at_price,
           requires_shipping: true,
           inventory_management: "shopify",
           inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
