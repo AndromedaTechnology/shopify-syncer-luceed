@@ -10,6 +10,10 @@
   <a href="https://ceker.net">Ceker.net - Croatian Natural & Healthy Foods Shop - Official Webshop</a>
 </p>
 
+## Medium.com - Read an article, overview of Features and Use cases
+
+- [📗 Synchronize Your Shopify and Luceed Systems Seamlessly with Andromeda.Technology](https://medium.com/andromeda-technology/synchronize-your-shopify-and-luceed-systems-seamlessly-with-andromeda-technology-1e346c6d84f1)
+
 ## Motivation
 
 Built for easier syncing of Luceed and Shopify.
