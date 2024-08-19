@@ -200,7 +200,9 @@ class ShopifyProductService {
           sku: productSKU,
           requires_shipping: true,
           inventory_management: "shopify",
-          inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
+          inventory_policy:
+            (config.shopify_product_variant_inventory_policy as ShopifyProductVariantInventoryPolicy) ??
+            ShopifyProductVariantInventoryPolicy.CONTINUE,
           price: price,
           compare_at_price: compare_at_price,
         },
@@ -293,7 +295,9 @@ class ShopifyProductService {
           compare_at_price: compare_at_price,
           requires_shipping: true,
           inventory_management: "shopify",
-          inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
+          inventory_policy:
+            (config.shopify_product_variant_inventory_policy as ShopifyProductVariantInventoryPolicy) ??
+            ShopifyProductVariantInventoryPolicy.CONTINUE,
         },
       ],
     };

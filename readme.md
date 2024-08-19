@@ -37,9 +37,11 @@ while having it in Sync with your physical store and inventory (via Luceed).
 
 ## Features
 
-- Define shop wide discounts - via config variable (define percentage) - applied to all products
-- Hide/Show products on Webshop
-- Make products available only offline (in physical shop)
+- .env: Define if product can be sold when inventory levels < 0
+- .env: Define shop wide discounts - via config variable (define percentage) - applied to all products
+- Database: Hide/Show products on Webshop
+- Database: Make products available only offline (in physical shop)
+
 - Shopify pagination
 - Finding, using Shopify PRODUCTS by SKU (defined on product variant)
 -- This way, product HANDLE is used for search engine and display purposes only

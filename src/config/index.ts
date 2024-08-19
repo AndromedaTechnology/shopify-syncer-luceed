@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 import * as dotenv from "dotenv";
+import { ShopifyProductVariantInventoryPolicy } from "../modules/shopify/interfaces/shopify.interface";
 dotenv.config();
 
 /**
@@ -43,6 +44,9 @@ const envSchema = Joi.object()
      * and price to discounted (e.g. 10%).
      */
     SHOPIFY_SHOPWIDE_DISCOUNT_PERCENT: Joi.string().optional().default(""),
+    SHOPIFY_PRODUCT_VARIANT_INVENTORY_POLICY: Joi.string()
+      .optional()
+      .default(ShopifyProductVariantInventoryPolicy.CONTINUE),
 
     // LUCEED API
     LUCEED_USERNAME: Joi.string().optional().default(""),
@@ -108,6 +112,7 @@ export interface IConfig {
   shopify_shop_location_id: string;
   shopify_access_token: string;
   shopify_shopwide_discount_percent: string;
+  shopify_product_variant_inventory_policy: string;
 
   // Luceed API
   luceed_username: string;
@@ -157,6 +162,8 @@ const config: IConfig = {
   shopify_access_token: envVars.SHOPIFY_ACCESS_TOKEN,
 
   shopify_shopwide_discount_percent: envVars.SHOPIFY_SHOPWIDE_DISCOUNT_PERCENT,
+  shopify_product_variant_inventory_policy:
+    envVars.SHOPIFY_PRODUCT_VARIANT_INVENTORY_POLICY,
 
   // Luceed API
   luceed_username: envVars.LUCEED_USERNAME,

@@ -210,7 +210,9 @@ class ShopifyProductVariantService {
       compare_at_price: compare_at_price,
       inventory_management: "shopify",
       requires_shipping: true,
-      inventory_policy: ShopifyProductVariantInventoryPolicy.CONTINUE,
+      inventory_policy:
+        (config.shopify_product_variant_inventory_policy as ShopifyProductVariantInventoryPolicy) ??
+        ShopifyProductVariantInventoryPolicy.CONTINUE,
     };
 
     var url = `https://${shopName}.myshopify.com/admin/api/2024-01/products/${productId}/variants.json`;
