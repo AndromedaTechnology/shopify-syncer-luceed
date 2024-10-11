@@ -36,6 +36,7 @@ class ShopifyProductService {
     productVendor: string,
     productPrice: string,
     is_visible_in_webshop: boolean,
+    shopify_product_variant_inventory_policy?: ShopifyProductVariantInventoryPolicy,
     isDebug = true
   ): Promise<IShopifySyncStatusProduct> {
     let response: IShopifySyncStatusProduct = {
@@ -82,6 +83,7 @@ class ShopifyProductService {
             ? IShopifyProductStatus.ACTIVE
             : IShopifyProductStatus.DRAFT,
         },
+        shopify_product_variant_inventory_policy,
         false
       );
       product = productUpdated;
@@ -257,6 +259,7 @@ class ShopifyProductService {
     variantSKU: string,
     variantPrice: string,
     data: IShopifyProduct,
+    shopify_product_variant_inventory_policy?: ShopifyProductVariantInventoryPolicy,
     isDebug = true
   ): Promise<IShopifyProduct | undefined> {
     if (!productId || !productHandle) {
@@ -286,7 +289,7 @@ class ShopifyProductService {
     data = {
       ...data,
       handle: productHandle,
-      status: data.status,
+      status: data?.status,
       variants: [
         {
           id: variantId,
@@ -296,6 +299,7 @@ class ShopifyProductService {
           requires_shipping: true,
           inventory_management: "shopify",
           inventory_policy:
+            shopify_product_variant_inventory_policy ??
             (config.shopify_product_variant_inventory_policy as ShopifyProductVariantInventoryPolicy) ??
             ShopifyProductVariantInventoryPolicy.CONTINUE,
         },

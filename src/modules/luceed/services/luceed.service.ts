@@ -172,6 +172,7 @@ class LuceedService {
       productVendor,
       productPrice,
       databaseProduct.is_visible_in_webshop ?? false,
+      databaseProduct.shopify_product_variant_inventory_policy,
       isDebug
     );
     const shopifyProduct: IShopifyProduct | undefined = response.product;

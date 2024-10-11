@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { ShopifyProductVariantInventoryPolicy } from "../shopify/interfaces/shopify.interface";
 
 export class ProductDto {
   _id?: mongoose.Types.ObjectId;
@@ -17,6 +18,7 @@ export class ProductDto {
   luceed_product_id?: Number;
   is_visible_in_webshop?: boolean | null;
   is_buyable_only_in_physical_shop?: boolean | null;
+  shopify_product_variant_inventory_policy?: ShopifyProductVariantInventoryPolicy;
   createdAt?: Date;
   updatedAt?: Date;
   syncedAt?: Date;
