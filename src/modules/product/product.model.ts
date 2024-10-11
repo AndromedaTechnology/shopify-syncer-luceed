@@ -85,6 +85,11 @@ const productSchema = new Schema({
     required: false,
     default: false,
   },
+  shopify_product_variant_inventory_policy: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
   /**
    * Shopify ids
    */
