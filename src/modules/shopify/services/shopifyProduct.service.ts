@@ -15,6 +15,7 @@ import shopifyProductVariantService from "./shopifyProductVariant.service";
 import luceedProductService from "../../luceed/services/luceedProduct.service";
 import { AxiosProxyHelper } from "../../../helpers/axiosProxy.helper";
 import statusService from "../../status/status.service";
+import slugify from "slugify";
 
 const shopName = config.shopify_shop_name;
 const accessToken = config.shopify_access_token;
@@ -24,14 +25,33 @@ export interface IShopifySyncStatusProduct {
   product?: IShopifyProduct;
 }
 
-class ShopifyProductService {
+export class ShopifyProductService {
+  static getProductHandle(
+    title?: string,
+    sku?: string,
+    vendor?: string
+  ): string | undefined {
+    let total = "";
+    if (title) {
+      total = total?.length > 0 ? total + "-" + title : title;
+    }
+    if (sku) {
+      total = total?.length > 0 ? total + "-" + sku : sku;
+    }
+    if (vendor) {
+      total = total?.length > 0 ? total + "-" + vendor : vendor;
+    }
+    if (!total) return undefined;
+    return slugify(total);
+  }
+
   /**
    * Create or Update product
    * Make sure it exists.
    */
   async touchProduct(
     product: IShopifyProduct | undefined,
-    productHandle: string,
+    productSKU: string,
     productTitle: string,
     productVendor: string,
     productPrice: string,
@@ -43,6 +63,12 @@ class ShopifyProductService {
       is_created: false,
       product: undefined,
     };
+
+    const productHandle = ShopifyProductService.getProductHandle(
+      productTitle,
+      productSKU,
+      productVendor
+    );
 
     if (product && product!.id) {
       /**
@@ -56,7 +82,7 @@ class ShopifyProductService {
       const productId = product!.id;
       const variant = await shopifyProductVariantService.touchProductVariant(
         product!,
-        productHandle,
+        productSKU,
         productPrice,
         isDebug
       );
@@ -69,15 +95,16 @@ class ShopifyProductService {
          * TODO: Test if variant is created/getted/fetched(touched) and everything passes
          */
       }
+
       const productUpdated = await this.updateProduct(
         productId!,
         productHandle,
         variant!.id!,
-        productHandle,
+        productSKU,
         productPrice,
         {
           title: productTitle,
-          handle: productHandle,
+          handle: productHandle!,
           vendor: productVendor,
           status: is_visible_in_webshop
             ? IShopifyProductStatus.ACTIVE
@@ -95,12 +122,12 @@ class ShopifyProductService {
        * Create
        */
       const productCreated = await this.createProduct(
-        productHandle,
-        productHandle,
+        productHandle!,
+        productSKU,
         productPrice,
         {
           title: productTitle,
-          handle: productHandle,
+          handle: productHandle!,
           vendor: productVendor,
           status: is_visible_in_webshop
             ? IShopifyProductStatus.ACTIVE
@@ -254,7 +281,7 @@ class ShopifyProductService {
    */
   async updateProduct(
     productId: number,
-    productHandle: string,
+    productHandle: string | undefined,
     variantId: number,
     variantSKU: string,
     variantPrice: string,
@@ -288,7 +315,7 @@ class ShopifyProductService {
      */
     data = {
       ...data,
-      handle: productHandle,
+      handle: productHandle!,
       status: data?.status,
       variants: [
         {

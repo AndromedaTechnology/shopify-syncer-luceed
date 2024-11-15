@@ -2,6 +2,7 @@ import config from "../../../config";
 import shopifyProductService, {
   IShopifySyncStatusProduct,
 } from "../../shopify/services/shopifyProduct.service";
+import { ShopifyProductService } from "../../shopify/services/shopifyProduct.service";
 import productService from "../../product/product.service";
 import luceedProductService from "./luceedProduct.service";
 import { ILuceedProduct } from "../interfaces/luceedProduct.interface";
@@ -158,7 +159,11 @@ class LuceedService {
      * Touch product
      */
     let databaseProduct = await productService.touch(undefined, productSKU, {
-      handle: productSKU,
+      handle: ShopifyProductService.getProductHandle(
+        productTitle,
+        productSKU,
+        productVendor
+      ),
       title: productTitle ?? productSKU,
       vendor: productVendor,
       variant_sku: productSKU,
