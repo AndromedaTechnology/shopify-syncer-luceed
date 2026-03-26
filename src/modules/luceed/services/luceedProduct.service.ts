@@ -51,10 +51,10 @@ class LuceedProductService {
    */
   async getLuceedProductBySKU(
     SKUFromShopifyOrderLineItem: string,
-    luceedProducts: Array<ILuceedProduct>
+    luceedProducts: Array<ILuceedProduct>,
   ): Promise<ILuceedProduct | undefined> {
     const skuWithoutPrefixedZeroes = await this.removeSKUPrefix(
-      SKUFromShopifyOrderLineItem
+      SKUFromShopifyOrderLineItem,
     );
     let found: ILuceedProduct | undefined = undefined;
     for (const luceedProduct of luceedProducts) {
@@ -86,14 +86,14 @@ class LuceedProductService {
   }
 
   /**
-   * https://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[0,1000]
+   * https://luceedapi.tomsoft.cloud:3816/datasnap/rest/artikli/lista/[0,1000]
    * @param {string} productIds comma separated stirng list
    */
   async fetchProducts(
     startPosition = 0,
-    amountToReturn = 1000
+    amountToReturn = 1000,
   ): Promise<Array<ILuceedProduct>> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[${startPosition},${amountToReturn}]`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/artikli/lista/[${startPosition},${amountToReturn}]`;
     let response: ILuceedProductsResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({

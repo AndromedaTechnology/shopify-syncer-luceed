@@ -41,7 +41,7 @@ class LuceedCustomerService {
     customers: Array<ILuceedCustomer>,
     email?: string,
     zipCode?: string,
-    cityName?: string
+    cityName?: string,
   ): Array<ILuceedCustomer> {
     return customers?.filter((customer) => {
       let isValid = true;
@@ -70,8 +70,8 @@ class LuceedCustomerService {
    * Fetch by naziv (ALL)
    */
   async fetchCustomers(naziv?: string): Promise<Array<ILuceedCustomer>> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/naziv/${naziv}`;
-    // var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/partneri/naziv/${naziv}`;
+    // var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
     let response: ILuceedCustomersResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
@@ -101,8 +101,8 @@ class LuceedCustomerService {
    * Fetch by email
    */
   async fetchCustomersByEmail(email: string): Promise<Array<ILuceedCustomer>> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/email/${email}`;
-    // var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/partneri/email/${email}`;
+    // var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/partneri/lista/[${startPosition},${amountToReturn}]`;
     let response: ILuceedCustomersByEmailResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
@@ -141,9 +141,9 @@ class LuceedCustomerService {
     mjestoUid?: string,
     adresa?: string,
     customerData: ILuceedCustomer = {},
-    isDebug = true
+    isDebug = true,
   ): Promise<string | undefined> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/partneri/snimi/`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/partneri/snimi/`;
     let response: ILuceedCreateCustomerResponse | undefined = undefined;
 
     customerData = {

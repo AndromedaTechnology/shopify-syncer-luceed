@@ -31,22 +31,22 @@ class LuceedInventoryService {
    */
   getProductInventory(
     product: ILuceedProduct,
-    inventoryItems: Array<ILuceedInventoryItem>
+    inventoryItems: Array<ILuceedInventoryItem>,
   ): ILuceedInventoryItem | undefined {
     return inventoryItems.find(
-      (item) => item.artikl_uid === product.artikl_uid
+      (item) => item.artikl_uid === product.artikl_uid,
     );
   }
 
   /**
-   * https://luceedapi.tomsoft.hr:3816/datasnap/rest/artikli/lista/[0,1000]
+   * https://luceedapi.tomsoft.cloud:3816/datasnap/rest/artikli/lista/[0,1000]
    *
    * gledati skladište 10 čiji je UID 1-3228
    *
    * Svi podaci vezano za stanje i skladište bi se trebali gledati sa skladišta 10 - Skladište Maloprodaje.
    */
   async fetchInventory(): Promise<Array<ILuceedInventoryItem>> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/stanjezalihe/skladiste`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/stanjezalihe/skladiste`;
     let response: ILuceedInventoryResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({

@@ -36,9 +36,9 @@ class LuceedMjestoService {
    */
   async fetchMjesta(
     postanskiBroj: string,
-    dioNazivaMjesta: string
+    dioNazivaMjesta: string,
   ): Promise<Array<ILuceedMjesto>> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/mjesta/postanskibroj/${postanskiBroj}/${dioNazivaMjesta}`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/mjesta/postanskibroj/${postanskiBroj}/${dioNazivaMjesta}`;
     let response: ILuceedMjestaResponse | undefined = undefined;
     try {
       const axiosResponse = await axios({
@@ -72,9 +72,9 @@ class LuceedMjestoService {
     nazivMjesta: string,
     countryUid: string,
     mjestoData: ILuceedMjesto = {},
-    isDebug = true
+    isDebug = true,
   ): Promise<string | undefined> {
-    var url = `https://luceedapi.tomsoft.hr:3816/datasnap/rest/mjesta/snimi/`;
+    var url = `https://luceedapi.tomsoft.cloud:3816/datasnap/rest/mjesta/snimi/`;
     let response: ILuceedCreateMjestoResponse | undefined = undefined;
 
     mjestoData = {
