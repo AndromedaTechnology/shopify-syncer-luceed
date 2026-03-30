@@ -31,10 +31,10 @@ class ShopifyInventoryService {
     productAmount: number,
     productCost: string,
     is_buyable_only_in_physical_shop = false,
-    isDebug = true
+    isDebug = true,
   ): Promise<IShopifyInventoryLevel | undefined> {
     const productVariant = shopifyProductVariantService.getProductVariant(
-      product!
+      product!,
     );
     const productVariantInventoryItemId = productVariant?.inventory_item_id;
     if (isDebug) {
@@ -53,7 +53,7 @@ class ShopifyInventoryService {
     const inventoryItem = await this.setInventoryItemCost(
       productVariantInventoryItemId!,
       productCost,
-      isDebug
+      isDebug,
     );
 
     /**
@@ -71,14 +71,14 @@ class ShopifyInventoryService {
         productVariantInventoryItemId!,
         0,
         true,
-        true
+        true,
       );
       inventoryLevel = await this.setLevelsPerItemPerLocation(
         locationShopId,
         productVariantInventoryItemId!,
         productAmount,
         true,
-        true
+        true,
       );
     } else {
       inventoryLevel = await this.setLevelsPerItemPerLocation(
@@ -86,7 +86,7 @@ class ShopifyInventoryService {
         productVariantInventoryItemId!,
         productAmount,
         true,
-        true
+        true,
       );
       /**
        * Set inventory for physical shop also.
@@ -99,7 +99,7 @@ class ShopifyInventoryService {
         productVariantInventoryItemId!,
         productAmount,
         true,
-        true
+        true,
       );
     }
     if (!inventoryLevel) {
@@ -115,7 +115,7 @@ class ShopifyInventoryService {
   async setInventoryItemCost(
     inventoryItemId: number,
     setCost: string,
-    isDebug = true
+    isDebug = true,
   ): Promise<IShopifyInventoryItem | undefined> {
     var url = `https://${shopName}.myshopify.com/admin/api/2024-01/inventory_items/${inventoryItemId}.json`;
     let response: { inventory_item?: IShopifyInventoryItem } | undefined =
@@ -161,9 +161,14 @@ class ShopifyInventoryService {
     inventoryItemId: number,
     setAmount: number,
     disconnect_if_necessary = true,
-    isDebug = true
+    isDebug = true,
   ): Promise<IShopifyInventoryLevel | undefined> {
-    var url = `https://${shopName}.myshopify.com/admin/api/2024-01/inventory_levels/set.json?location_id=${locationId}&inventory_item_id=${inventoryItemId}&available=${setAmount}`;
+    const shopify_shopwide_product_amount_overwrite: number | undefined =
+      config.shopify_shopwide_product_amount_overwrite ?? undefined;
+
+    const amount = shopify_shopwide_product_amount_overwrite ?? setAmount;
+
+    var url = `https://${shopName}.myshopify.com/admin/api/2024-01/inventory_levels/set.json?location_id=${locationId}&inventory_item_id=${inventoryItemId}&available=${amount}`;
     if (true) {
       url += `&disconnect_if_necessary=${disconnect_if_necessary}`;
     }
@@ -188,7 +193,7 @@ class ShopifyInventoryService {
         //   error,
         //   locationId,
         //   inventoryItemId,
-        //   setAmount,
+        //   amount,
         //   response?.inventory_level
         // );
       }
@@ -198,7 +203,7 @@ class ShopifyInventoryService {
       // console.log(
       //   "--set-inventory-level-" + locationId,
       //   inventoryItemId,
-      //   setAmount,
+      //   amount,
       //   response?.inventory_level
       // );
     }

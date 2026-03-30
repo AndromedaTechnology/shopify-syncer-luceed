@@ -1,18 +1,18 @@
-<h1 align="center">Ceker-Shopify-Luceed - SYNC Worker</h1>
+<h1 align="center">Shopify Connector - Sync products, inventory, customers</h1>
 <p align="center">
-  <a href="https://andromeda.technology"><img src="./storage/static/hero.jpg"  alt="Firestarter API" /></a>
+  <img src="./img/hero.webp" />
   <br />
   <br />
-  <h2 align="center">Keep your Shopify and Luceed in SYNC</h2>
+  <h2 align="center">Keep your Shopify in sync with your inventory</h2>
   <br />
   <a href="https://andromeda.technology">Andromeda.technology - Official Website</a>
   <br />
   <a href="https://ceker.net">Ceker.net - Croatian Natural & Healthy Foods Shop - Official Webshop</a>
 </p>
 
-## Medium.com - Read an article, overview of Features and Use cases
+## Medium.com - Read an article, overview of features and use cases
 
-- [📗 Synchronize Your Shopify and Luceed Systems Seamlessly with Andromeda.Technology](https://medium.com/andromeda-technology/synchronize-your-shopify-and-luceed-systems-seamlessly-with-andromeda-technology-1e346c6d84f1)
+- [📗 Synchronize with Shopify Seamlessly with Andromeda.Technology](https://medium.com/andromeda-technology/synchronize-your-shopify-and-luceed-systems-seamlessly-with-andromeda-technology-1e346c6d84f1)
 
 ## Motivation
 

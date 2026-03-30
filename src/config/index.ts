@@ -44,6 +44,7 @@ const envSchema = Joi.object()
      * and price to discounted (e.g. 10%).
      */
     SHOPIFY_SHOPWIDE_DISCOUNT_PERCENT: Joi.string().optional().default(""),
+    SHOPIFY_SHOPWIDE_PRODUCT_AMOUNT_OVERWRITE: Joi.number().optional(),
     SHOPIFY_PRODUCT_VARIANT_INVENTORY_POLICY: Joi.string()
       .optional()
       .default(ShopifyProductVariantInventoryPolicy.CONTINUE),
@@ -112,6 +113,7 @@ export interface IConfig {
   shopify_shop_location_id: string;
   shopify_access_token: string;
   shopify_shopwide_discount_percent: string;
+  shopify_shopwide_product_amount_overwrite: number;
   shopify_product_variant_inventory_policy: string;
 
   // Luceed API
@@ -161,6 +163,8 @@ const config: IConfig = {
   shopify_shop_location_id: envVars.SHOPIFY_SHOP_LOCATION_ID,
   shopify_access_token: envVars.SHOPIFY_ACCESS_TOKEN,
 
+  shopify_shopwide_product_amount_overwrite:
+    envVars.SHOPIFY_SHOPWIDE_PRODUCT_AMOUNT_OVERWRITE,
   shopify_shopwide_discount_percent: envVars.SHOPIFY_SHOPWIDE_DISCOUNT_PERCENT,
   shopify_product_variant_inventory_policy:
     envVars.SHOPIFY_PRODUCT_VARIANT_INVENTORY_POLICY,
